@@ -1,18 +1,892 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Prototipo BolKristal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BolKristal Lounge & Sports Bar: portal publico, acceso para clientes y panel administrativo.">
+    <title>BolKristal Lounge & Sports Bar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/neon.css">
 </head>
 <body>
-  <h1>Prototipo del sistema BolKristal</h1>
-  <p>Proyecto final de Ingeniería de Requerimientos.</p>
+    <div id="toast-container" class="toast-container"></div>
 
-  <h2>Pantallas principales</h2>
-  <ul>
-    <li><a href="login.html">PNT-01 Login</a></li>
-    <li><a href="dashboard.html">PNT-02 Dashboard</a></li>
-    <li><a href="registro.html">PNT-03 Registro</a></li>
-  </ul>
+    <div id="public-view">
+        <header class="site-topbar">
+            <a href="#inicio-publico" class="site-brand">
+                <span class="site-brand-icon"><i class="fas fa-bowling-ball"></i></span>
+                <span>
+                    <strong>BolKristal</strong>
+                    <small>Lounge & Sports Bar</small>
+                </span>
+            </a>
+            <nav class="site-nav">
+                <button class="site-nav-link" data-scroll-to="quienes-somos">Quienes somos</button>
+                <button class="site-nav-link" data-scroll-to="nuestra-historia">Nuestra historia</button>
+                <button class="site-nav-link" data-scroll-to="promociones-publicas">Promociones</button>
+                <button class="site-nav-link" data-scroll-to="contacto-publico">Contacto</button>
+            </nav>
+            <div class="site-actions">
+                <button class="btn-outline" data-open-auth="login">Iniciar sesion</button>
+                <button class="btn-neon btn-neon-pink" data-open-auth="register">Crear cuenta</button>
+            </div>
+        </header>
+
+        <section id="inicio-publico" class="hero-section">
+            <div class="hero-copy">
+                <span class="section-chip">Experiencia BolKristal</span>
+                <h1>Un acceso para cada tipo de usuario, sin perder el estilo del bar.</h1>
+                <p>
+                    Desde aqui tus clientes conocen la historia del lugar, revisan promociones y crean su cuenta.
+                    El personal administrativo entra a su panel con la misma cuenta desde una ventana de acceso simple.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-neon btn-neon-cyan" data-open-auth="login">
+                        <i class="fas fa-right-to-bracket"></i> Entrar ahora
+                    </button>
+                    <button class="btn-outline" data-scroll-to="quienes-somos">
+                        <i class="fas fa-circle-info"></i> Conocer BolKristal
+                    </button>
+                </div>
+                <div class="hero-metrics">
+                    <div class="metric-card">
+                        <strong>3</strong>
+                        <span>ambientes en un solo lugar</span>
+                    </div>
+                    <div class="metric-card">
+                        <strong>12+</strong>
+                        <span>promociones tematicas al mes</span>
+                    </div>
+                    <div class="metric-card">
+                        <strong>2</strong>
+                        <span>rutas de acceso: cliente y admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-card-badge">Accesos disponibles</div>
+                <div class="access-option">
+                    <div>
+                        <h3>Cliente normal</h3>
+                        <p>Ve promociones, conoce la historia del bar y revisa eventos destacados.</p>
+                    </div>
+                    <button class="btn-neon btn-neon-cyan" data-open-auth="register">Entrar como cliente</button>
+                </div>
+                <div class="access-option">
+                    <div>
+                        <h3>Administrador</h3>
+                        <p>Administra torneos, clientes frecuentes, promociones y reportes internos.</p>
+                    </div>
+                    <button class="btn-neon btn-neon-pink" data-open-auth="login">Ir al panel admin</button>
+                </div>
+                <div class="demo-note">
+                    <strong>Cuenta demo admin:</strong> admin@bolkristal.com / Admin123!
+                </div>
+            </div>
+        </section>
+
+        <section id="quienes-somos" class="info-section">
+            <div class="section-heading">
+                <span class="section-chip">Quienes somos</span>
+                <h2>BolKristal mezcla boliche, billar y bar en una sola experiencia.</h2>
+                <p>
+                    Creamos un espacio para grupos de amigos, parejas y equipos que quieren competir, celebrar o simplemente pasar una noche distinta.
+                </p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <i class="fas fa-bowling-ball"></i>
+                    <h3>Boliche social</h3>
+                    <p>Torneos semanales, rentas por hora y dinamicas para grupos grandes.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-glass-cheers"></i>
+                    <h3>Bar tematico</h3>
+                    <p>Bebidas, snacks y promociones cruzadas para que cada visita tenga algo nuevo.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Comunidad fiel</h3>
+                    <p>Clientes frecuentes, eventos de cumpleanos y experiencias pensadas para regresar.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="nuestra-historia" class="info-section alt-section">
+            <div class="section-heading">
+                <span class="section-chip">Nuestra historia</span>
+                <h2>De un concepto nocturno local a un punto de reunion para competir y convivir.</h2>
+                <p>
+                    Nacimos con la idea de reunir entretenimiento, deporte y convivencia. Con el tiempo sumamos promociones, torneos en parejas y un catalogo para fidelizar a los clientes que mas nos visitan.
+                </p>
+            </div>
+            <div class="timeline-grid">
+                <article class="timeline-card">
+                    <span>2019</span>
+                    <h3>Apertura del concepto</h3>
+                    <p>Inicia el espacio con enfoque en noches tematicas y consumo social.</p>
+                </article>
+                <article class="timeline-card">
+                    <span>2023</span>
+                    <h3>Crecen los torneos</h3>
+                    <p>Se formalizan las ligas en parejas y los clientes frecuentes empiezan a registrarse.</p>
+                </article>
+                <article class="timeline-card">
+                    <span>2026</span>
+                    <h3>Portal por perfiles</h3>
+                    <p>Se separa la experiencia de cliente y administrador para ordenar mejor la operacion.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="promociones-publicas" class="info-section">
+            <div class="section-heading">
+                <span class="section-chip">Promociones</span>
+                <h2>Ofertas que si le interesan al cliente.</h2>
+                <p>
+                    Estas promociones aparecen desde la portada y despues tambien en la vista privada del cliente.
+                </p>
+            </div>
+            <div class="promo-preview-grid">
+                <article class="promo-preview-card">
+                    <span class="badge neon-badge-cyan">Jueves</span>
+                    <h3>Pool & Pins</h3>
+                    <p>Compra una hora de billar y recibe la segunda junto con nachos para compartir.</p>
+                </article>
+                <article class="promo-preview-card">
+                    <span class="badge neon-badge-pink">Fin de semana</span>
+                    <h3>Chuzas & Chelas</h3>
+                    <p>Cubetazo nacional a precio especial al reservar linea de boliche.</p>
+                </article>
+                <article class="promo-preview-card">
+                    <span class="badge neon-badge-yellow">Cumpleanos</span>
+                    <h3>Celebracion Bolera</h3>
+                    <p>Linea gratis por una hora y beneficio extra para el grupo del cumpleanero.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="contacto-publico" class="cta-section">
+            <div>
+                <span class="section-chip">Listo para entrar</span>
+                <h2>Crea tu cuenta o inicia sesion y te llevamos a tu vista correspondiente.</h2>
+                <p>
+                    Si tu cuenta es de administrador entraras al panel interno. Si tu cuenta es de cliente, pasaras a la pagina pensada para visitantes y clientes frecuentes.
+                </p>
+            </div>
+            <div class="cta-actions">
+                <button class="btn-neon btn-neon-pink" data-open-auth="register">Crear cuenta</button>
+                <button class="btn-outline" data-open-auth="login">Iniciar sesion</button>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>BolKristal Lounge & Sports Bar | Av. Adolfo Lopez Mateos Ote. #1001, Aguascalientes, Ags.</p>
+        </footer>
+    </div>
+
+    <div id="cliente-view" hidden>
+        <header class="site-topbar">
+            <button class="site-brand site-brand-button" id="client-home-trigger">
+                <span class="site-brand-icon"><i class="fas fa-star"></i></span>
+                <span>
+                    <strong>Zona Cliente</strong>
+                    <small id="client-user-role-label">Cuenta cliente</small>
+                </span>
+            </button>
+            <nav class="site-nav">
+                <button class="site-nav-link" data-scroll-to="cliente-bienvenida">Inicio</button>
+                <button class="site-nav-link" data-scroll-to="cliente-historia">Historia</button>
+                <button class="site-nav-link" data-scroll-to="cliente-promos">Promociones</button>
+                <button class="site-nav-link" data-scroll-to="cliente-beneficios">Beneficios</button>
+            </nav>
+            <div class="site-actions">
+                <span class="session-pill"><i class="fas fa-user"></i> <span id="client-user-name">Invitado</span></span>
+                <button class="btn-outline" id="client-logout-btn">Cerrar sesion</button>
+            </div>
+        </header>
+
+        <section id="cliente-bienvenida" class="hero-section client-hero">
+            <div class="hero-copy">
+                <span class="section-chip">Vista de usuario</span>
+                <h1>Todo lo que a un cliente le interesa en un solo lugar.</h1>
+                <p>
+                    Aqui mostramos quienes somos, la historia del lugar, promociones vigentes, beneficios para clientes frecuentes y la experiencia que ofrece BolKristal.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-neon btn-neon-cyan" data-scroll-to="cliente-promos">
+                        <i class="fas fa-tags"></i> Ver promociones
+                    </button>
+                    <button class="btn-outline" id="client-back-public">Volver a inicio publico</button>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="hero-card-badge">Bienvenido</div>
+                <h3 id="client-welcome-title">Hola, cliente</h3>
+                <p>Tu cuenta te deja entrar a una pagina mas enfocada en promociones, eventos y contenido del negocio.</p>
+                <div class="metric-card metric-card-inline">
+                    <strong>4</strong>
+                    <span>secciones pensadas para visitantes y clientes frecuentes</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="section-heading">
+                <span class="section-chip">Quienes somos</span>
+                <h2>Somos un punto de encuentro para jugar, celebrar y quedarte un rato mas.</h2>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Torneos vivos</h3>
+                    <p>Ambiente competitivo para quienes quieren algo mas que una salida casual.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-martini-glass-citrus"></i>
+                    <h3>Experiencia nocturna</h3>
+                    <p>Cocteles, musica y espacios para convivir mientras esperas tu siguiente partida.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Eventos especiales</h3>
+                    <p>Noches tematicas, cumpleanos y beneficios para clientes que vuelven seguido.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="cliente-historia" class="info-section alt-section">
+            <div class="section-heading">
+                <span class="section-chip">Historia</span>
+                <h2>Lo que hoy ves como cliente nace de una operacion pensada para que el lugar siempre se sienta vivo.</h2>
+            </div>
+            <div class="timeline-grid">
+                <article class="timeline-card">
+                    <span>Origen</span>
+                    <h3>Una idea simple</h3>
+                    <p>Unir entretenimiento y convivencia en una sola salida nocturna.</p>
+                </article>
+                <article class="timeline-card">
+                    <span>Crecimiento</span>
+                    <h3>Mas comunidad</h3>
+                    <p>Los clientes frecuentes impulsaron nuevas promos y actividades en torno al boliche y al billar.</p>
+                </article>
+                <article class="timeline-card">
+                    <span>Hoy</span>
+                    <h3>Experiencia personalizada</h3>
+                    <p>Ahora cada persona entra a una vista segun su perfil para encontrar lo que realmente necesita.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="cliente-promos" class="info-section">
+            <div class="section-heading">
+                <span class="section-chip">Promociones del mes</span>
+                <h2>Ideas rapidas para animarte a volver.</h2>
+            </div>
+            <div class="promo-preview-grid">
+                <article class="promo-preview-card">
+                    <span class="badge neon-badge-cyan">Lunes a jueves</span>
+                    <h3>Horas dobles de billar</h3>
+                    <p>Reserva temprano y duplica tiempo de juego en horarios seleccionados.</p>
+                </article>
+                <article class="promo-preview-card">
+                    <span class="badge neon-badge-pink">Viernes</span>
+                    <h3>Combo neon</h3>
+                    <p>Boliche + botana + bebidas con precio especial para grupos de 4 personas.</p>
+                </article>
+                <article class="promo-preview-card">
+                    <span class="badge neon-badge-yellow">Festejos</span>
+                    <h3>Paquete cumpleanero</h3>
+                    <p>Decoracion, linea reservada y descuento para invitados del festejado.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="cliente-beneficios" class="cta-section">
+            <div>
+                <span class="section-chip">Beneficios</span>
+                <h2>Tu cuenta de cliente tambien puede crecer contigo.</h2>
+                <p>
+                    Esta vista esta lista para ampliarse despues con reservas, historial de visitas, recompensas y notificaciones personalizadas.
+                </p>
+            </div>
+            <div class="cta-actions stacked-badges">
+                <span class="session-pill"><i class="fas fa-gift"></i> Promociones activas</span>
+                <span class="session-pill"><i class="fas fa-users"></i> Eventos sociales</span>
+                <span class="session-pill"><i class="fas fa-heart"></i> Programa de fidelidad</span>
+            </div>
+        </section>
+    </div>
+
+    <div id="admin-view" class="app-container" hidden>
+        <aside class="admin-aside">
+            <div class="aside-top">
+                <div class="logo-container">
+                    <span class="logo-icon"><i class="fas fa-bowling-ball neon-pink"></i></span>
+                    <div class="logo-text">
+                        <h1>BolKristal</h1>
+                        <p>Panel administrativo</p>
+                    </div>
+                </div>
+
+                <div class="session-card">
+                    <div>
+                        <span class="section-chip">Sesion activa</span>
+                        <h3 id="admin-user-name">Administrador</h3>
+                        <p id="admin-user-email">admin@bolkristal.com</p>
+                    </div>
+                    <button class="btn-outline session-btn" id="admin-logout-btn">Cerrar sesion</button>
+                </div>
+
+                <nav class="admin-nav">
+                    <button class="nav-item active" data-target="resumen" id="nav-btn-resumen">
+                        <i class="fas fa-chart-line"></i> Resumen
+                    </button>
+                    <button class="nav-item nav-torneo" data-target="torneos" id="nav-btn-torneos">
+                        <i class="fas fa-trophy"></i> Torneo Boliche
+                    </button>
+                    <button class="nav-item nav-clientes" data-target="clientes" id="nav-btn-clientes">
+                        <i class="fas fa-users"></i> Clientes Bar
+                    </button>
+                    <button class="nav-item nav-promos" data-target="promociones" id="nav-btn-promociones">
+                        <i class="fas fa-tags"></i> Promociones
+                    </button>
+                    <button class="nav-item" data-target="reportes" id="nav-btn-reportes">
+                        <i class="fas fa-file-invoice-dollar"></i> Reportes
+                    </button>
+                </nav>
+            </div>
+
+            <div class="aside-bottom">
+                <div class="control-panel-aside">
+                    <div class="control-title">
+                        <i class="fas fa-lightbulb"></i> Controles del Bar
+                    </div>
+                    <label class="neon-switch">
+                        <span class="switch-label">Luces neon</span>
+                        <input type="checkbox" id="neon-lights-switch" class="switch-input" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+
+                <div class="jukebox-widget">
+                    <div class="jukebox-header">
+                        <div class="jukebox-title">
+                            <i class="fas fa-music"></i>
+                            <span>Jukebox</span>
+                        </div>
+                        <div class="visualizer" id="jukebox-visualizer">
+                            <span class="visualizer-bar"></span>
+                            <span class="visualizer-bar"></span>
+                            <span class="visualizer-bar"></span>
+                            <span class="visualizer-bar"></span>
+                            <span class="visualizer-bar"></span>
+                            <span class="visualizer-bar"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="jukebox-song-info" id="song-title">Cargando cancion...</div>
+                        <div class="jukebox-genre" id="song-genre">Cargando artista...</div>
+                    </div>
+                    <div class="jukebox-controls">
+                        <button class="jukebox-btn play-btn" id="jukebox-play" aria-label="Reproducir">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="jukebox-btn" id="jukebox-next" title="Siguiente cancion" aria-label="Siguiente cancion">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <section id="resumen" class="page-panel active">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Panel general</h2>
+                        <p>Resumen operativo de BolKristal</p>
+                    </div>
+                    <div class="header-actions">
+                        <span class="badge neon-badge-green"><i class="fas fa-circle"></i> Conexion local estable</span>
+                    </div>
+                </div>
+
+                <div class="card-glass pink-accent banner-card">
+                    <div class="banner-image-wrapper">
+                        <img src="images/neon_banner.png" alt="BolKristal Neon Bar Sign" class="banner-image">
+                        <div class="banner-overlay"></div>
+                        <div class="banner-copy">
+                            <span class="badge neon-badge-pink"><i class="fas fa-glass-martini-alt"></i> Ambiente bar y deportes</span>
+                            <h3>PROTOTIPO INTERACTIVO TO-BE</h3>
+                        </div>
+                    </div>
+                    <div class="banner-text">
+                        <p>
+                            Bienvenido al sistema de administracion de <strong>BolKristal</strong>. Esta interfaz valida los requerimientos funcionales obtenidos durante las entrevistas. Desde aqui puedes gestionar torneos, clientes, promociones y reportes internos.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card-glass pink-accent sum-card">
+                        <div class="sum-icon-container pink"><i class="fas fa-trophy"></i></div>
+                        <div class="sum-details">
+                            <h4>Torneo activo</h4>
+                            <div class="value">Primavera '26</div>
+                        </div>
+                    </div>
+                    <div class="card-glass cyan-accent sum-card">
+                        <div class="sum-icon-container cyan"><i class="fas fa-eye"></i></div>
+                        <div class="sum-details">
+                            <h4>Mesas de billar</h4>
+                            <div class="value">4 activas</div>
+                        </div>
+                    </div>
+                    <div class="card-glass purple-accent sum-card">
+                        <div class="sum-icon-container purple"><i class="fas fa-bullhorn"></i></div>
+                        <div class="sum-details">
+                            <h4>Promociones</h4>
+                            <div class="value">3 vigentes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-glass">
+                    <div class="card-title-group" style="margin-bottom: 24px;">
+                        <h3>Requerimientos no funcionales clave</h3>
+                        <p>Garantias de rendimiento, usabilidad y seguridad de la plataforma</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card-glass subtle-card">
+                            <h4 class="accent-title cyan">
+                                <i class="fas fa-mobile-alt"></i> RNF-01: Portabilidad y usabilidad movil
+                            </h4>
+                            <p>
+                                El sistema prioriza el acceso fluido desde smartphones para que los jugadores revisen rivales, horarios y clasificaciones desde cualquier dispositivo.
+                            </p>
+                        </div>
+                        <div class="card-glass subtle-card">
+                            <h4 class="accent-title pink">
+                                <i class="fas fa-shield-alt"></i> RNF-05: Seguridad y proteccion de datos
+                            </h4>
+                            <p>
+                                Los datos de contacto, facturacion e historial de consumo de los clientes se resguardan de forma privada conforme a la LFPDPPP.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="torneos" class="page-panel">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Gestion de torneo de boliche</h2>
+                        <p>Administracion y visualizacion del torneo Primavera 2026</p>
+                    </div>
+                    <div class="header-actions">
+                        <span class="badge neon-badge-pink"><i class="fas fa-bowling-ball"></i> 2 pistas disponibles</span>
+                    </div>
+                </div>
+
+                <div class="grid-main-columns">
+                    <div class="column-stack">
+                        <div class="card-glass pink-accent">
+                            <div class="card-header-flex">
+                                <div class="card-title-group">
+                                    <h3>Tabla de clasificacion general</h3>
+                                    <p>Clasificacion acumulada por conteo total de pines derribados</p>
+                                </div>
+                                <span class="badge neon-badge-pink"><i class="fas fa-signal"></i> Clasificacion en vivo</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Pos</th>
+                                            <th>Pareja / Integrantes</th>
+                                            <th>Nivel</th>
+                                            <th>Jugados</th>
+                                            <th>Total pines</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leaderboard-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-glass">
+                            <div class="card-header-flex">
+                                <div class="card-title-group">
+                                    <h3>Proxima jornada semanal</h3>
+                                    <p>Enfrentamientos oficiales, asignacion de pistas y horarios</p>
+                                </div>
+                                <span class="badge neon-badge-cyan"><i class="far fa-calendar-alt"></i> Rol de partidas</span>
+                            </div>
+                            <div class="grid-2" id="siguiente-jornada-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="column-stack">
+                        <div class="card-glass purple-accent">
+                            <div class="card-title-group" style="margin-bottom: 20px;">
+                                <h3>Consola del administrador</h3>
+                                <p>Control del ciclo del torneo y generacion de emparejamientos</p>
+                            </div>
+                            <div class="column-stack tight">
+                                <button class="btn-neon btn-neon-pink" id="btn-generar-roles" style="width: 100%;">
+                                    <i class="fas fa-random"></i> Generar emparejamientos semanales
+                                </button>
+                                <p class="helper-text">
+                                    La regla de negocio indica que cada pareja juega una vez por semana y respeta el limite de 2 pistas asignadas.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card-glass pink-accent">
+                            <div class="card-title-group" style="margin-bottom: 16px;">
+                                <h3>Registro de marcadores</h3>
+                                <p>Captura los pines de la jornada para actualizar el ranking</p>
+                            </div>
+                            <div id="admin-captura-container"></div>
+                        </div>
+
+                        <div class="card-glass">
+                            <div class="card-header-flex">
+                                <div class="card-title-group">
+                                    <h3>Inscripcion de parejas</h3>
+                                    <p>Registra un nuevo equipo para la temporada en curso</p>
+                                </div>
+                            </div>
+
+                            <form id="torneo-registration-form">
+                                <div class="form-group">
+                                    <label for="team-name">Nombre de la pareja / equipo</label>
+                                    <div class="form-input-container">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <input type="text" id="team-name" class="form-input" placeholder="Ej. Los Chuzadores del Norte" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="player1-name">Nombre de jugador 1</label>
+                                    <div class="form-input-container">
+                                        <i class="far fa-user"></i>
+                                        <input type="text" id="player1-name" class="form-input" placeholder="Nombre completo" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="player2-name">Nombre del jugador 2</label>
+                                    <div class="form-input-container">
+                                        <i class="far fa-user"></i>
+                                        <input type="text" id="player2-name" class="form-input" placeholder="Nombre completo" required>
+                                    </div>
+                                </div>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label for="player-experience">Nivel de habilidad</label>
+                                        <div class="form-input-container">
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <select id="player-experience" class="form-input form-select" required>
+                                                <option value="Sin Experiencia" selected>Sin experiencia</option>
+                                                <option value="Con Experiencia">Con experiencia (Pro)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group price-box">
+                                        <label>Costo de inscripcion</label>
+                                        <div id="registration-cost">$250 MXN</div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-neon btn-neon-cyan form-submit-btn">
+                                    <i class="fas fa-file-signature"></i> Guardar e inscribir
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="card-glass">
+                            <div class="card-title-group" style="margin-bottom: 16px;">
+                                <h3>Directorio de parejas inscritas</h3>
+                                <p>Administracion y lista interna del torneo</p>
+                            </div>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Equipo</th>
+                                            <th>Integrantes</th>
+                                            <th>Habilidad</th>
+                                            <th>Pago</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-teams-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="clientes" class="page-panel">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Directorio de clientes frecuentes</h2>
+                        <p>Mapeo de preferencias y consumos en billar, torneos y bar</p>
+                    </div>
+                </div>
+
+                <div class="card-glass cyan-accent filter-card">
+                    <div class="filter-row">
+                        <div class="form-input-container search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-clientes" class="form-input" placeholder="Buscar cliente por nombre o telefono...">
+                        </div>
+
+                        <div class="segment-buttons">
+                            <button class="btn-neon active seg-btn" data-segment="Todos">Todos</button>
+                            <button class="btn-neon seg-btn" data-segment="Billar">Clientes billar</button>
+                            <button class="btn-neon seg-btn" data-segment="Cumple">Cumpleanos mayo</button>
+                            <button class="btn-neon seg-btn" data-segment="Frecuentes">Premium (+15 visitas)</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-3" id="clientes-grid"></div>
+            </section>
+
+            <section id="promociones" class="page-panel">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Pizarra digital de promociones</h2>
+                        <p>Catalogo comercial y publicacion interactiva del bar BolKristal</p>
+                    </div>
+                    <div class="header-actions">
+                        <span class="badge neon-badge-yellow"><i class="fas fa-bolt"></i> Metricas vinculadas</span>
+                    </div>
+                </div>
+
+                <div class="promo-board" id="promociones-container"></div>
+
+                <div class="card-glass">
+                    <div class="card-title-group" style="margin-bottom: 20px;">
+                        <h3>Crear promocion y catalogar</h3>
+                        <p>Define una nueva estrategia comercial para el bar, boliche o billar</p>
+                    </div>
+                    <form id="promo-form">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="promo-title">Nombre de la promocion</label>
+                                <div class="form-input-container">
+                                    <i class="fas fa-tag"></i>
+                                    <input type="text" id="promo-title" class="form-input" placeholder="Ej. Viernes de Cubetazo & Chuza" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="promo-area">Area de aplicacion</label>
+                                <div class="form-input-container">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <select id="promo-area" class="form-input form-select" required>
+                                        <option value="Boliche">Boliche / Torneo</option>
+                                        <option value="Billar">Billar / Pool</option>
+                                        <option value="Bar">Bar / Bebidas y alimentos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="promo-desc">Descripcion y restricciones</label>
+                            <div class="form-input-container">
+                                <textarea id="promo-desc" class="form-input form-textarea" placeholder="Describe los beneficios de la promocion y sus restricciones de uso..." required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-neon btn-neon-pink">
+                            <i class="fas fa-save"></i> Guardar y publicar en pizarra
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="reportes" class="page-panel">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Reportes e indicadores de negocio</h2>
+                        <p>Estadisticas del comportamiento de afluencia y rentabilidad comercial</p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card-glass cyan-accent">
+                        <div class="card-header-flex">
+                            <div class="card-title-group">
+                                <h3>Reporte de demanda por areas</h3>
+                                <p>Porcentaje de afluencia y ocupacion en horas pico de fin de semana</p>
+                            </div>
+                            <span class="badge neon-badge-cyan"><i class="fas fa-chart-bar"></i> Trafico promedio</span>
+                        </div>
+
+                        <div class="demand-chart-container">
+                            <div class="demand-bar-group">
+                                <div class="demand-bar-info">
+                                    <span>Lineas de boliche (torneo y renta)</span>
+                                    <span class="pink-text">75% de ocupacion</span>
+                                </div>
+                                <div class="demand-bar-outer">
+                                    <div class="demand-bar-inner pink" data-value="75"></div>
+                                </div>
+                            </div>
+                            <div class="demand-bar-group">
+                                <div class="demand-bar-info">
+                                    <span>Mesas de billar (pool)</span>
+                                    <span class="cyan-text">60% de ocupacion</span>
+                                </div>
+                                <div class="demand-bar-outer">
+                                    <div class="demand-bar-inner cyan" data-value="60"></div>
+                                </div>
+                            </div>
+                            <div class="demand-bar-group">
+                                <div class="demand-bar-info">
+                                    <span>Bar (alimentos, cervezas y snacking)</span>
+                                    <span class="purple-text">90% de ocupacion</span>
+                                </div>
+                                <div class="demand-bar-outer">
+                                    <div class="demand-bar-inner purple" data-value="90"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="report-note">
+                            Indicadores calculados con base en registros de visitas y comandas acumuladas en el sistema. Viernes y sabados presentan la concentracion mas alta.
+                        </p>
+                    </div>
+
+                    <div class="card-glass pink-accent">
+                        <div class="card-header-flex">
+                            <div class="card-title-group">
+                                <h3>Rentabilidad del catalogo comercial</h3>
+                                <p>Metricas de efectividad de las promociones aplicadas en caja</p>
+                            </div>
+                            <span class="badge neon-badge-pink"><i class="fas fa-percentage"></i> Rendimiento</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Promocion</th>
+                                        <th>Canjes</th>
+                                        <th>Efectividad</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Chuzas & Chelas</strong></td>
+                                        <td>215 canjes</td>
+                                        <td class="green-text">94% (Alta)</td>
+                                        <td><span class="badge neon-badge-green">Mantener</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Jueves de Pool & Pins</strong></td>
+                                        <td>84 canjes</td>
+                                        <td class="cyan-text">78% (Media)</td>
+                                        <td><span class="badge neon-badge-cyan">Mantener</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cumpleanero Bolero</strong></td>
+                                        <td>45 canjes</td>
+                                        <td class="muted-text">42% (Baja)</td>
+                                        <td><span class="badge neon-badge-yellow">Optimizar</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="report-note">
+                            El cubetazo cervecero "Chuzas & Chelas" sigue siendo el principal disparador de venta cruzada y eleva el ticket promedio.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="site-footer">
+                <p>BolKristal Lounge & Sports Bar | Prototipo funcional para validacion de requerimientos.</p>
+            </footer>
+        </main>
+    </div>
+
+    <div id="auth-modal" class="auth-modal" hidden>
+        <div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+            <button class="auth-close" id="auth-close-btn" aria-label="Cerrar ventana">
+                <i class="fas fa-xmark"></i>
+            </button>
+
+            <div class="auth-header">
+                <span class="section-chip">Acceso</span>
+                <h2 id="auth-title">Inicia sesion o crea tu cuenta</h2>
+                <p>Segun el tipo de usuario te llevamos al panel de administrador o a la pagina de cliente.</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-auth-tab="login">Iniciar sesion</button>
+                <button class="auth-tab" data-auth-tab="register">Crear cuenta</button>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Correo electronico</label>
+                    <div class="form-input-container">
+                        <i class="far fa-envelope"></i>
+                        <input type="email" id="login-email" class="form-input" placeholder="correo@ejemplo.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contrasena</label>
+                    <div class="form-input-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" class="form-input" placeholder="Tu contrasena" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-neon btn-neon-cyan auth-submit-btn">Entrar</button>
+                <p class="auth-helper">Prueba admin: <strong>admin@bolkristal.com</strong> / <strong>Admin123!</strong></p>
+            </form>
+
+            <form id="register-form" class="auth-form" hidden>
+                <div class="form-group">
+                    <label for="register-name">Nombre completo</label>
+                    <div class="form-input-container">
+                        <i class="far fa-user"></i>
+                        <input type="text" id="register-name" class="form-input" placeholder="Tu nombre" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Correo electronico</label>
+                    <div class="form-input-container">
+                        <i class="far fa-envelope"></i>
+                        <input type="email" id="register-email" class="form-input" placeholder="correo@ejemplo.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Contrasena</label>
+                    <div class="form-input-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" class="form-input" placeholder="Crea una contrasena" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="register-role">Tipo de cuenta</label>
+                    <div class="form-input-container">
+                        <i class="fas fa-id-badge"></i>
+                        <select id="register-role" class="form-input form-select" required>
+                            <option value="cliente">Cliente normal</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-neon btn-neon-pink auth-submit-btn">Crear cuenta</button>
+                <p class="auth-helper">Si eliges administrador entraras directo al panel interno despues del registro.</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
 </body>
 </html>
