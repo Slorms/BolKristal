@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BolKristal Lounge & Sports Bar: portal publico, acceso para clientes y panel administrativo.">
+    <meta name="description" content="BolKristal: torneos de boliche, promociones, fiestas y una experiencia nocturna pensada para jugar, celebrar y volver.">
     <title>BolKristal Lounge & Sports Bar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/neon.css">
@@ -17,14 +17,14 @@
                 <span class="site-brand-icon"><i class="fas fa-bowling-ball"></i></span>
                 <span>
                     <strong>BolKristal</strong>
-                    <small>Lounge & Sports Bar</small>
+                    <small>Torneos, fiestas y lounge</small>
                 </span>
             </a>
             <nav class="site-nav">
-                <button class="site-nav-link" data-scroll-to="quienes-somos">Quienes somos</button>
-                <button class="site-nav-link" data-scroll-to="nuestra-historia">Nuestra historia</button>
+                <button class="site-nav-link" data-scroll-to="quienes-somos">Experiencia</button>
+                <button class="site-nav-link" data-scroll-to="torneos-publicos">Torneos</button>
                 <button class="site-nav-link" data-scroll-to="promociones-publicas">Promociones</button>
-                <button class="site-nav-link" data-scroll-to="contacto-publico">Contacto</button>
+                <button class="site-nav-link" data-scroll-to="contacto-publico">Acceso</button>
             </nav>
             <div class="site-actions">
                 <button class="btn-outline" data-open-auth="login">Iniciar sesion</button>
@@ -32,107 +32,159 @@
             </div>
         </header>
 
-        <section id="inicio-publico" class="hero-section">
+        <section id="inicio-publico" class="hero-section hero-showcase">
             <div class="hero-copy">
-                <span class="section-chip">Experiencia BolKristal</span>
-                <h1>Un acceso para cada tipo de usuario, sin perder el estilo del bar.</h1>
+                <span class="section-chip">Boliche, fiestas y noches especiales</span>
+                <h1>BolKristal convierte cada noche en torneo, fiesta y boliche con estilo.</h1>
                 <p>
-                    Desde aqui tus clientes conocen la historia del lugar, revisan promociones y crean su cuenta.
-                    El personal administrativo entra a su panel con la misma cuenta desde una ventana de acceso simple.
+                    Vive una noche entre strikes, luces neon, celebraciones y promociones pensadas para
+                    grupos, parejas y quienes siempre encuentran una buena razon para volver.
                 </p>
                 <div class="hero-actions">
                     <button class="btn-neon btn-neon-cyan" data-open-auth="login">
-                        <i class="fas fa-right-to-bracket"></i> Entrar ahora
+                        <i class="fas fa-right-to-bracket"></i> Iniciar sesion
                     </button>
-                    <button class="btn-outline" data-scroll-to="quienes-somos">
-                        <i class="fas fa-circle-info"></i> Conocer BolKristal
+                    <button class="btn-outline" data-scroll-to="torneos-publicos">
+                        <i class="fas fa-trophy"></i> Ver torneo activo
                     </button>
                 </div>
                 <div class="hero-metrics">
                     <div class="metric-card">
+                        <strong>4</strong>
+                        <span>pistas registradas en operacion</span>
+                    </div>
+                    <div class="metric-card">
                         <strong>3</strong>
-                        <span>ambientes en un solo lugar</span>
+                        <span>formas de vivir la experiencia: jugar, celebrar y compartir</span>
                     </div>
                     <div class="metric-card">
-                        <strong>12+</strong>
-                        <span>promociones tematicas al mes</span>
+                        <strong>1</strong>
+                        <span>torneo de verano con jornada programada</span>
                     </div>
-                    <div class="metric-card">
-                        <strong>2</strong>
-                        <span>rutas de acceso: cliente y admin</span>
-                    </div>
+                </div>
+                <div class="spotlight-grid">
+                    <article class="spotlight-card">
+                        <span class="badge neon-badge-cyan"><i class="fas fa-bowling-ball"></i> Boliche</span>
+                        <h3>Ligas, duplas y marcadores</h3>
+                        <p>Parejas, puntuacion, jornadas y clasificacion conectadas a una misma experiencia.</p>
+                    </article>
+                    <article class="spotlight-card">
+                        <span class="badge neon-badge-pink"><i class="fas fa-cake-candles"></i> Fiestas</span>
+                        <h3>Eventos con vibra real</h3>
+                        <p>Decoracion, luces, tiras de fiesta y paquetes para cumpleanos o grupos grandes.</p>
+                    </article>
                 </div>
             </div>
 
-            <div class="hero-card">
-                <div class="hero-card-badge">Accesos disponibles</div>
-                <div class="access-option">
-                    <div>
-                        <h3>Cliente normal</h3>
-                        <p>Ve promociones, conoce la historia del bar y revisa eventos destacados.</p>
+            <div class="hero-visual-stack">
+                <article class="hero-visual-card">
+                    <img src="images/hero-bowling-party.png" alt="Boliche neon con pinos, bolas y decoracion de fiesta" class="hero-scene-image">
+                    <div class="visual-badge-group">
+                        <span class="badge neon-badge-pink"><i class="fas fa-star"></i> Noche de strikes</span>
+                        <span class="badge neon-badge-yellow"><i class="fas fa-champagne-glasses"></i> Ambiente de fiesta</span>
                     </div>
-                    <button class="btn-neon btn-neon-cyan" data-open-auth="register">Entrar como cliente</button>
-                </div>
-                <div class="access-option">
-                    <div>
-                        <h3>Administrador</h3>
-                        <p>Administra torneos, clientes frecuentes, promociones y reportes internos.</p>
-                    </div>
-                    <button class="btn-neon btn-neon-pink" data-open-auth="login">Ir al panel admin</button>
+                </article>
+                <div class="mini-gallery">
+                    <article class="gallery-card compact-card">
+                        <img src="images/party-package.png" alt="Paquete de fiesta con pastel, globos y boliche">
+                        <div class="gallery-copy">
+                            <h3>Paquetes para festejar</h3>
+                            <p>Lane reservada, snacks, pastel y decoracion lista para entrar.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-card compact-card">
+                        <img src="images/tournament-strike.png" alt="Impacto de una bola de boliche derribando pinos">
+                        <div class="gallery-copy">
+                            <h3>Torneo con energia</h3>
+                            <p>Partidas semanales, ranking y duelo entre parejas registrado en vivo.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <section id="quienes-somos" class="info-section">
             <div class="section-heading">
-                <span class="section-chip">Quienes somos</span>
-                <h2>BolKristal mezcla boliche, billar y bar en una sola experiencia.</h2>
+                <span class="section-chip">Experiencia BolKristal</span>
+                <h2>Un lugar pensado para jugar, celebrar y volver.</h2>
                 <p>
-                    Creamos un espacio para grupos de amigos, parejas y equipos que quieren competir, celebrar o simplemente pasar una noche distinta.
+                    BolKristal mezcla competencia amistosa, ambiente de fiesta y servicio para que cada
+                    visita se sienta distinta, ya sea que vengas por una reta, una celebracion o una noche casual.
                 </p>
             </div>
             <div class="feature-grid">
                 <article class="feature-card">
-                    <i class="fas fa-bowling-ball"></i>
-                    <h3>Boliche social</h3>
-                    <p>Torneos semanales, rentas por hora y dinamicas para grupos grandes.</p>
+                    <i class="fas fa-people-group"></i>
+                    <h3>Duplas y comunidad</h3>
+                    <p>Torneos en pareja y un ambiente ideal para convivir con amigos, rivales y nuevos equipos.</p>
                 </article>
                 <article class="feature-card">
-                    <i class="fas fa-glass-cheers"></i>
-                    <h3>Bar tematico</h3>
-                    <p>Bebidas, snacks y promociones cruzadas para que cada visita tenga algo nuevo.</p>
+                    <i class="fas fa-calendar-week"></i>
+                    <h3>Jornadas claras</h3>
+                    <p>Fechas, horarios y pistas organizadas para que tu unica preocupacion sea tirar otra chuza.</p>
                 </article>
                 <article class="feature-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Comunidad fiel</h3>
-                    <p>Clientes frecuentes, eventos de cumpleanos y experiencias pensadas para regresar.</p>
+                    <i class="fas fa-bullhorn"></i>
+                    <h3>Promociones vivas</h3>
+                    <p>Promociones para volver entre semana, armar plan de fin de semana o traer a todo tu grupo.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-user-check"></i>
+                    <h3>Atencion personalizada</h3>
+                    <p>Celebraciones, visitas frecuentes y experiencias pensadas para que siempre quieras regresar.</p>
                 </article>
             </div>
         </section>
 
-        <section id="nuestra-historia" class="info-section alt-section">
+        <section id="torneos-publicos" class="info-section alt-section">
             <div class="section-heading">
-                <span class="section-chip">Nuestra historia</span>
-                <h2>De un concepto nocturno local a un punto de reunion para competir y convivir.</h2>
+                <span class="section-chip">Torneo activo</span>
+                <h2>Torneo de Verano 2026: lo importante se entiende de un vistazo.</h2>
                 <p>
-                    Nacimos con la idea de reunir entretenimiento, deporte y convivencia. Con el tiempo sumamos promociones, torneos en parejas y un catalogo para fidelizar a los clientes que mas nos visitan.
+                    Sigue el torneo de la temporada, conoce la primera jornada y ubica a las parejas que ya
+                    estan listas para competir sobre la pista.
                 </p>
             </div>
-            <div class="timeline-grid">
-                <article class="timeline-card">
-                    <span>2019</span>
-                    <h3>Apertura del concepto</h3>
-                    <p>Inicia el espacio con enfoque en noches tematicas y consumo social.</p>
+            <div class="schedule-grid">
+                <article class="schedule-card">
+                    <span class="badge neon-badge-pink">Convocatoria abierta</span>
+                    <h3>Torneo de Verano 2026</h3>
+                    <p>
+                        Formato en parejas, del 1 de julio al 31 de agosto, con criterio por puntos y
+                        administrado desde la cuenta principal del establecimiento.
+                    </p>
+                    <div class="data-grid">
+                        <span class="data-pill"><i class="fas fa-user-shield"></i> Admin: Laura Martinez</span>
+                        <span class="data-pill"><i class="fas fa-medal"></i> Niveles: principiante y profesional</span>
+                        <span class="data-pill"><i class="fas fa-money-bill-wave"></i> Desde $150 MXN</span>
+                        <span class="data-pill"><i class="fas fa-globe"></i> Tipo publico</span>
+                    </div>
                 </article>
-                <article class="timeline-card">
-                    <span>2023</span>
-                    <h3>Crecen los torneos</h3>
-                    <p>Se formalizan las ligas en parejas y los clientes frecuentes empiezan a registrarse.</p>
+                <article class="schedule-card">
+                    <span class="badge neon-badge-cyan">Jornada 1</span>
+                    <h3>Primera fecha programada</h3>
+                    <p>
+                        La jornada arranca del 7 al 13 de julio y ya tiene una partida agendada para el
+                        8 de julio de 2026 a las 18:00 hrs en la pista 1.
+                    </p>
+                    <div class="data-grid">
+                        <span class="data-pill"><i class="far fa-calendar"></i> 07-13 julio</span>
+                        <span class="data-pill"><i class="far fa-clock"></i> 08 julio, 18:00</span>
+                        <span class="data-pill"><i class="fas fa-road"></i> Pista 1 disponible</span>
+                        <span class="data-pill"><i class="fas fa-flag-checkered"></i> Estado programada</span>
+                    </div>
                 </article>
-                <article class="timeline-card">
-                    <span>2026</span>
-                    <h3>Portal por perfiles</h3>
-                    <p>Se separa la experiencia de cliente y administrador para ordenar mejor la operacion.</p>
+                <article class="schedule-card">
+                    <span class="badge neon-badge-yellow">Parejas semilla</span>
+                    <h3>Equipos registrados</h3>
+                    <p>
+                        Los Truenos y Bola de Fuego ya aparecen inscritos, cada uno con dos integrantes y
+                        pagos acorde a su nivel competitivo.
+                    </p>
+                    <div class="ranking-list">
+                        <div class="ranking-pill"><strong>1.</strong> Los Truenos <span>Ana + Luis</span></div>
+                        <div class="ranking-pill"><strong>2.</strong> Bola de Fuego <span>Maria + Pedro</span></div>
+                    </div>
                 </article>
             </div>
         </section>
@@ -140,36 +192,38 @@
         <section id="promociones-publicas" class="info-section">
             <div class="section-heading">
                 <span class="section-chip">Promociones</span>
-                <h2>Ofertas que si le interesan al cliente.</h2>
+                <h2>Ofertas pensadas para jugar mas, celebrar mejor y volver seguido.</h2>
                 <p>
-                    Estas promociones aparecen desde la portada y despues tambien en la vista privada del cliente.
+                    Desde promos para pista hasta paquetes de celebracion, aqui encuentras ideas faciles para
+                    convertir cualquier salida en una gran noche.
                 </p>
             </div>
             <div class="promo-preview-grid">
                 <article class="promo-preview-card">
-                    <span class="badge neon-badge-cyan">Jueves</span>
-                    <h3>Pool & Pins</h3>
-                    <p>Compra una hora de billar y recibe la segunda junto con nachos para compartir.</p>
+                    <span class="badge neon-badge-green">Activa</span>
+                    <h3>2x1 en boliche</h3>
+                    <p>Paga 1 hora y juega 2 horas en pista del 1 al 15 de julio, ideal para clientes principiantes.</p>
                 </article>
                 <article class="promo-preview-card">
-                    <span class="badge neon-badge-pink">Fin de semana</span>
-                    <h3>Chuzas & Chelas</h3>
-                    <p>Cubetazo nacional a precio especial al reservar linea de boliche.</p>
+                    <span class="badge neon-badge-pink">Instagram + Facebook</span>
+                    <h3>Noche de equipos</h3>
+                    <p>Reserva una dupla y recibe precio especial en bebida para quienes lleguen uniformados.</p>
                 </article>
                 <article class="promo-preview-card">
                     <span class="badge neon-badge-yellow">Cumpleanos</span>
-                    <h3>Celebracion Bolera</h3>
-                    <p>Linea gratis por una hora y beneficio extra para el grupo del cumpleanero.</p>
+                    <h3>Fiesta en pista</h3>
+                    <p>Decoracion, linea reservada, botanas y ambientacion para celebrar dentro del boliche.</p>
                 </article>
             </div>
         </section>
 
         <section id="contacto-publico" class="cta-section">
             <div>
-                <span class="section-chip">Listo para entrar</span>
-                <h2>Crea tu cuenta o inicia sesion y te llevamos a tu vista correspondiente.</h2>
+                <span class="section-chip">Acceso BolKristal</span>
+                <h2>Crea tu cuenta o inicia sesion para entrar a tu espacio en BolKristal.</h2>
                 <p>
-                    Si tu cuenta es de administrador entraras al panel interno. Si tu cuenta es de cliente, pasaras a la pagina pensada para visitantes y clientes frecuentes.
+                    Desde aqui puedes entrar para consultar torneos, promociones, novedades y todo lo que
+                    forma parte de la experiencia BolKristal.
                 </p>
             </div>
             <div class="cta-actions">
@@ -188,13 +242,13 @@
             <button class="site-brand site-brand-button" id="client-home-trigger">
                 <span class="site-brand-icon"><i class="fas fa-star"></i></span>
                 <span>
-                    <strong>Zona Cliente</strong>
-                    <small id="client-user-role-label">Cuenta cliente</small>
+                    <strong>Zona Jugador</strong>
+                    <small id="client-user-role-label">Cuenta jugador</small>
                 </span>
             </button>
             <nav class="site-nav">
                 <button class="site-nav-link" data-scroll-to="cliente-bienvenida">Inicio</button>
-                <button class="site-nav-link" data-scroll-to="cliente-historia">Historia</button>
+                <button class="site-nav-link" data-scroll-to="cliente-torneo">Mi torneo</button>
                 <button class="site-nav-link" data-scroll-to="cliente-promos">Promociones</button>
                 <button class="site-nav-link" data-scroll-to="cliente-beneficios">Beneficios</button>
             </nav>
@@ -206,113 +260,147 @@
 
         <section id="cliente-bienvenida" class="hero-section client-hero">
             <div class="hero-copy">
-                <span class="section-chip">Vista de usuario</span>
-                <h1>Todo lo que a un cliente le interesa en un solo lugar.</h1>
+                <span class="section-chip">Vista del jugador</span>
+                <h1>Tu cuenta te lleva directo a torneos, promos y proximas partidas.</h1>
                 <p>
-                    Aqui mostramos quienes somos, la historia del lugar, promociones vigentes, beneficios para clientes frecuentes y la experiencia que ofrece BolKristal.
+                    Esta vista ya se siente conectada al modelo de la base: pareja, jornada, promo activa,
+                    pistas y beneficios para quien regresa seguido a jugar o celebrar.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn-neon btn-neon-cyan" data-scroll-to="cliente-promos">
-                        <i class="fas fa-tags"></i> Ver promociones
+                    <button class="btn-neon btn-neon-cyan" data-scroll-to="cliente-torneo">
+                        <i class="fas fa-trophy"></i> Ver mi torneo
+                    </button>
+                    <button class="btn-outline" data-scroll-to="cliente-bracket">
+                        <i class="fas fa-diagram-project"></i> Ver bracket completo
                     </button>
                     <button class="btn-outline" id="client-back-public">Volver a inicio publico</button>
                 </div>
+                <div class="hero-metrics">
+                    <div class="metric-card">
+                        <strong>1</strong>
+                        <span>jornada programada para arrancar la temporada</span>
+                    </div>
+                    <div class="metric-card">
+                        <strong>2</strong>
+                        <span>parejas base listas para competir</span>
+                    </div>
+                    <div class="metric-card">
+                        <strong>1</strong>
+                        <span>promocion activa lista para canjear</span>
+                    </div>
+                </div>
             </div>
-            <div class="hero-card">
-                <div class="hero-card-badge">Bienvenido</div>
-                <h3 id="client-welcome-title">Hola, cliente</h3>
-                <p>Tu cuenta te deja entrar a una pagina mas enfocada en promociones, eventos y contenido del negocio.</p>
-                <div class="metric-card metric-card-inline">
-                    <strong>4</strong>
-                    <span>secciones pensadas para visitantes y clientes frecuentes</span>
+            <div class="hero-card hero-card-media">
+                <div class="hero-card-badge">Bienvenido al juego</div>
+                <h3 id="client-welcome-title">Hola, jugador</h3>
+                <p>Consulta rapido el torneo de verano, el estado de tu jornada y las promociones que si te sirven para volver con tu pareja o grupo.</p>
+                <img src="images/tournament-strike.png" alt="Tiro de boliche en plena accion con pinos volando" class="card-scene-image">
+            </div>
+        </section>
+
+        <section id="cliente-torneo" class="info-section">
+            <div class="section-heading">
+                <span class="section-chip">Mi torneo</span>
+                <h2>Todo lo importante del Torneo de Verano 2026 en una sola pantalla.</h2>
+                <p>
+                    Ya no es una vista generica: ahora se entiende mejor que un jugador necesita ver su
+                    torneo, la siguiente jornada, las pistas y quienes ya estan marcando el ritmo de la temporada.
+                </p>
+            </div>
+            <div class="schedule-grid">
+                <article class="schedule-card">
+                    <span class="badge neon-badge-cyan">Proxima partida</span>
+                    <h3>Jornada 1 en pista 1</h3>
+                    <p>La primera partida esta programada para el 8 de julio de 2026 a las 18:00 hrs dentro de la semana inaugural.</p>
+                    <div class="data-grid">
+                        <span class="data-pill"><i class="far fa-clock"></i> 18:00 hrs</span>
+                        <span class="data-pill"><i class="fas fa-road"></i> Pista 1</span>
+                        <span class="data-pill"><i class="fas fa-circle-play"></i> Estado programada</span>
+                    </div>
+                </article>
+                <article class="schedule-card">
+                    <span class="badge neon-badge-pink">Parejas destacadas</span>
+                    <h3>Equipos semilla del torneo</h3>
+                    <p>Los Truenos y Bola de Fuego aparecen como las primeras parejas confirmadas para esta temporada.</p>
+                    <div class="ranking-list">
+                        <div class="ranking-pill"><strong>Los Truenos</strong> <span>Ana Torres + Luis Herrera</span></div>
+                        <div class="ranking-pill"><strong>Bola de Fuego</strong> <span>Maria Gomez + Pedro Diaz</span></div>
+                    </div>
+                </article>
+                <article class="schedule-card">
+                    <span class="badge neon-badge-yellow">Estado general</span>
+                    <h3>Pistas y precios</h3>
+                    <p>Hay 4 pistas registradas, 3 disponibles y 1 en mantenimiento, con tarifas por nivel de juego.</p>
+                    <div class="data-grid">
+                        <span class="data-pill"><i class="fas fa-bowling-ball"></i> 3 pistas listas</span>
+                        <span class="data-pill"><i class="fas fa-screwdriver-wrench"></i> 1 mantenimiento</span>
+                        <span class="data-pill"><i class="fas fa-money-check-dollar"></i> $150 / $200</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="cliente-bracket" class="info-section alt-section client-bracket-section">
+            <div class="section-heading">
+                <span class="section-chip">Bracket en vivo</span>
+                <h2>Sigue todo el torneo desde tu cuenta.</h2>
+                <p>
+                    Aqui puedes revisar como va la eliminatoria completa, desde la fase inicial hasta la final,
+                    con el mismo cuadro oficial que usa administracion pero en modo solo lectura.
+                </p>
+            </div>
+            <div class="card-glass cyan-accent client-bracket-card">
+                <div class="card-header-flex">
+                    <div class="card-title-group">
+                        <h3>Cuadro oficial del torneo</h3>
+                        <p>Vista grande del avance de parejas, rondas activas y campeon cuando se defina.</p>
+                    </div>
+                    <span class="badge neon-badge-cyan" id="client-bracket-status-badge"><i class="fas fa-eye"></i> Solo lectura</span>
+                </div>
+                <div id="client-tournament-progress-strip" class="tournament-progress-strip"></div>
+                <div class="bracket-scroll-area player">
+                    <div id="client-tournament-bracket" class="tournament-bracket-host modal readonly"></div>
                 </div>
             </div>
         </section>
 
-        <section class="info-section">
-            <div class="section-heading">
-                <span class="section-chip">Quienes somos</span>
-                <h2>Somos un punto de encuentro para jugar, celebrar y quedarte un rato mas.</h2>
-            </div>
-            <div class="feature-grid">
-                <article class="feature-card">
-                    <i class="fas fa-trophy"></i>
-                    <h3>Torneos vivos</h3>
-                    <p>Ambiente competitivo para quienes quieren algo mas que una salida casual.</p>
-                </article>
-                <article class="feature-card">
-                    <i class="fas fa-martini-glass-citrus"></i>
-                    <h3>Experiencia nocturna</h3>
-                    <p>Cocteles, musica y espacios para convivir mientras esperas tu siguiente partida.</p>
-                </article>
-                <article class="feature-card">
-                    <i class="fas fa-calendar-check"></i>
-                    <h3>Eventos especiales</h3>
-                    <p>Noches tematicas, cumpleanos y beneficios para clientes que vuelven seguido.</p>
-                </article>
-            </div>
-        </section>
-
-        <section id="cliente-historia" class="info-section alt-section">
-            <div class="section-heading">
-                <span class="section-chip">Historia</span>
-                <h2>Lo que hoy ves como cliente nace de una operacion pensada para que el lugar siempre se sienta vivo.</h2>
-            </div>
-            <div class="timeline-grid">
-                <article class="timeline-card">
-                    <span>Origen</span>
-                    <h3>Una idea simple</h3>
-                    <p>Unir entretenimiento y convivencia en una sola salida nocturna.</p>
-                </article>
-                <article class="timeline-card">
-                    <span>Crecimiento</span>
-                    <h3>Mas comunidad</h3>
-                    <p>Los clientes frecuentes impulsaron nuevas promos y actividades en torno al boliche y al billar.</p>
-                </article>
-                <article class="timeline-card">
-                    <span>Hoy</span>
-                    <h3>Experiencia personalizada</h3>
-                    <p>Ahora cada persona entra a una vista segun su perfil para encontrar lo que realmente necesita.</p>
-                </article>
-            </div>
-        </section>
-
-        <section id="cliente-promos" class="info-section">
+        <section id="cliente-promos" class="info-section alt-section">
             <div class="section-heading">
                 <span class="section-chip">Promociones del mes</span>
-                <h2>Ideas rapidas para animarte a volver.</h2>
+                <h2>Promos pensadas para jugar mas y celebrar mejor.</h2>
             </div>
             <div class="promo-preview-grid">
                 <article class="promo-preview-card">
-                    <span class="badge neon-badge-cyan">Lunes a jueves</span>
-                    <h3>Horas dobles de billar</h3>
-                    <p>Reserva temprano y duplica tiempo de juego en horarios seleccionados.</p>
+                    <span class="badge neon-badge-green">Activa hasta 15 julio</span>
+                    <h3>2x1 en boliche</h3>
+                    <p>La promo sembrada en la base ya aparece aqui como beneficio directo para jugadores principiantes.</p>
                 </article>
                 <article class="promo-preview-card">
-                    <span class="badge neon-badge-pink">Viernes</span>
-                    <h3>Combo neon</h3>
-                    <p>Boliche + botana + bebidas con precio especial para grupos de 4 personas.</p>
+                    <span class="badge neon-badge-cyan">Redes</span>
+                    <h3>Comparte y gana vistas</h3>
+                    <p>Instagram y Facebook se usan como canales para mover promociones y medir alcance.</p>
                 </article>
                 <article class="promo-preview-card">
-                    <span class="badge neon-badge-yellow">Festejos</span>
-                    <h3>Paquete cumpleanero</h3>
-                    <p>Decoracion, linea reservada y descuento para invitados del festejado.</p>
+                    <span class="badge neon-badge-pink">Fiestas</span>
+                    <h3>Paquete de cumple en pista</h3>
+                    <p>Ideal si quieres convertir una fecha del torneo o una salida casual en celebracion completa.</p>
                 </article>
             </div>
         </section>
 
         <section id="cliente-beneficios" class="cta-section">
             <div>
-                <span class="section-chip">Beneficios</span>
-                <h2>Tu cuenta de cliente tambien puede crecer contigo.</h2>
+                <span class="section-chip">Beneficios de la cuenta</span>
+                <h2>Tu perfil ya esta listo para crecer con historial, recompensas y comentarios.</h2>
                 <p>
-                    Esta vista esta lista para ampliarse despues con reservas, historial de visitas, recompensas y notificaciones personalizadas.
+                    El modelo ya contempla historial de actividad, uso de promociones y comentarios, asi que
+                    esta vista puede ampliarse despues sin rehacer la estructura del sitio.
                 </p>
             </div>
             <div class="cta-actions stacked-badges">
                 <span class="session-pill"><i class="fas fa-gift"></i> Promociones activas</span>
-                <span class="session-pill"><i class="fas fa-users"></i> Eventos sociales</span>
-                <span class="session-pill"><i class="fas fa-heart"></i> Programa de fidelidad</span>
+                <span class="session-pill"><i class="fas fa-comments"></i> Comentarios sobre promos</span>
+                <span class="session-pill"><i class="fas fa-chart-line"></i> Historial de actividad</span>
             </div>
         </section>
     </div>
@@ -320,40 +408,53 @@
     <div id="admin-view" class="app-container" hidden>
         <aside class="admin-aside">
             <div class="aside-top">
-                <div class="logo-container">
-                    <span class="logo-icon"><i class="fas fa-bowling-ball neon-pink"></i></span>
-                    <div class="logo-text">
-                        <h1>BolKristal</h1>
-                        <p>Panel administrativo</p>
+                <div class="admin-mobile-header">
+                    <div class="logo-container">
+                        <span class="logo-icon"><i class="fas fa-bowling-ball neon-pink"></i></span>
+                        <div class="logo-text">
+                            <h1>BolKristal</h1>
+                            <p>Panel administrativo</p>
+                        </div>
                     </div>
+                    <button class="admin-menu-toggle" id="admin-menu-toggle" aria-label="Abrir menu administrativo" aria-expanded="false" aria-controls="admin-menu-panel">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
 
-                <div class="session-card">
-                    <div>
-                        <span class="section-chip">Sesion activa</span>
-                        <h3 id="admin-user-name">Administrador</h3>
-                        <p id="admin-user-email">admin@bolkristal.com</p>
+                <div class="admin-menu-panel" id="admin-menu-panel">
+                    <div class="session-card">
+                        <div>
+                            <span class="section-chip">Sesion activa</span>
+                            <h3 id="admin-user-name">Administrador</h3>
+                            <p id="admin-user-email">admin@bolkristal.mx</p>
+                        </div>
+                        <button class="btn-outline session-btn" id="admin-logout-btn">Cerrar sesion</button>
                     </div>
-                    <button class="btn-outline session-btn" id="admin-logout-btn">Cerrar sesion</button>
-                </div>
 
-                <nav class="admin-nav">
-                    <button class="nav-item active" data-target="resumen" id="nav-btn-resumen">
-                        <i class="fas fa-chart-line"></i> Resumen
-                    </button>
-                    <button class="nav-item nav-torneo" data-target="torneos" id="nav-btn-torneos">
-                        <i class="fas fa-trophy"></i> Torneo Boliche
-                    </button>
-                    <button class="nav-item nav-clientes" data-target="clientes" id="nav-btn-clientes">
-                        <i class="fas fa-users"></i> Clientes Bar
-                    </button>
-                    <button class="nav-item nav-promos" data-target="promociones" id="nav-btn-promociones">
-                        <i class="fas fa-tags"></i> Promociones
-                    </button>
-                    <button class="nav-item" data-target="reportes" id="nav-btn-reportes">
-                        <i class="fas fa-file-invoice-dollar"></i> Reportes
-                    </button>
-                </nav>
+                    <nav class="admin-nav">
+                        <button class="nav-item active" data-target="resumen" id="nav-btn-resumen">
+                            <i class="fas fa-chart-line"></i> Resumen
+                        </button>
+                        <button class="nav-item nav-torneo" data-target="torneos" id="nav-btn-torneos">
+                            <i class="fas fa-trophy"></i> Torneo Boliche
+                        </button>
+                        <button class="nav-item nav-jornadas" data-target="jornadas" id="nav-btn-jornadas">
+                            <i class="fas fa-calendar-week"></i> Jornadas
+                        </button>
+                        <button class="nav-item nav-inscripciones" data-target="inscripciones" id="nav-btn-inscripciones">
+                            <i class="fas fa-user-plus"></i> Inscripciones
+                        </button>
+                        <button class="nav-item nav-clientes" data-target="clientes" id="nav-btn-clientes">
+                            <i class="fas fa-users"></i> Clientes Bar
+                        </button>
+                        <button class="nav-item nav-promos" data-target="promociones" id="nav-btn-promociones">
+                            <i class="fas fa-tags"></i> Promociones
+                        </button>
+                        <button class="nav-item" data-target="reportes" id="nav-btn-reportes">
+                            <i class="fas fa-file-invoice-dollar"></i> Reportes
+                        </button>
+                    </nav>
+                </div>
             </div>
 
             <div class="aside-bottom">
@@ -413,16 +514,16 @@
 
                 <div class="card-glass pink-accent banner-card">
                     <div class="banner-image-wrapper">
-                        <img src="images/neon_banner.png" alt="BolKristal Neon Bar Sign" class="banner-image">
+                        <img src="images/hero-bowling-party.png" alt="Boliche neon con decoracion de fiesta en BolKristal" class="banner-image">
                         <div class="banner-overlay"></div>
                         <div class="banner-copy">
-                            <span class="badge neon-badge-pink"><i class="fas fa-glass-martini-alt"></i> Ambiente bar y deportes</span>
-                            <h3>PROTOTIPO INTERACTIVO TO-BE</h3>
+                            <span class="badge neon-badge-pink"><i class="fas fa-bowling-ball"></i> Torneo + fiesta + CRM</span>
+                            <h3>BOLKRISTAL 2026</h3>
                         </div>
                     </div>
                     <div class="banner-text">
                         <p>
-                            Bienvenido al sistema de administracion de <strong>BolKristal</strong>. Esta interfaz valida los requerimientos funcionales obtenidos durante las entrevistas. Desde aqui puedes gestionar torneos, clientes, promociones y reportes internos.
+                            Desde aqui el equipo de <strong>BolKristal</strong> puede dar seguimiento a torneos, promociones, clientes frecuentes y actividad comercial del negocio.
                         </p>
                     </div>
                 </div>
@@ -432,45 +533,45 @@
                         <div class="sum-icon-container pink"><i class="fas fa-trophy"></i></div>
                         <div class="sum-details">
                             <h4>Torneo activo</h4>
-                            <div class="value">Primavera '26</div>
+                            <div class="value">Verano '26</div>
                         </div>
                     </div>
                     <div class="card-glass cyan-accent sum-card">
-                        <div class="sum-icon-container cyan"><i class="fas fa-eye"></i></div>
+                        <div class="sum-icon-container cyan"><i class="fas fa-road"></i></div>
                         <div class="sum-details">
-                            <h4>Mesas de billar</h4>
-                            <div class="value">4 activas</div>
+                            <h4>Pistas registradas</h4>
+                            <div class="value">4 lanes</div>
                         </div>
                     </div>
                     <div class="card-glass purple-accent sum-card">
                         <div class="sum-icon-container purple"><i class="fas fa-bullhorn"></i></div>
                         <div class="sum-details">
-                            <h4>Promociones</h4>
-                            <div class="value">3 vigentes</div>
+                            <h4>Promocion activa</h4>
+                            <div class="value">2x1 boliche</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-glass">
                     <div class="card-title-group" style="margin-bottom: 24px;">
-                        <h3>Requerimientos no funcionales clave</h3>
-                        <p>Garantias de rendimiento, usabilidad y seguridad de la plataforma</p>
+                        <h3>Prioridades de operacion</h3>
+                        <p>Aspectos clave para mantener una experiencia ordenada dentro del negocio</p>
                     </div>
                     <div class="grid-2">
                         <div class="card-glass subtle-card">
                             <h4 class="accent-title cyan">
-                                <i class="fas fa-mobile-alt"></i> RNF-01: Portabilidad y usabilidad movil
+                                <i class="fas fa-mobile-alt"></i> Acceso rapido desde cualquier dispositivo
                             </h4>
                             <p>
-                                El sistema prioriza el acceso fluido desde smartphones para que los jugadores revisen rivales, horarios y clasificaciones desde cualquier dispositivo.
+                                El equipo puede revisar horarios, parejas, clientes y promociones desde celular o escritorio sin perder visibilidad.
                             </p>
                         </div>
                         <div class="card-glass subtle-card">
                             <h4 class="accent-title pink">
-                                <i class="fas fa-shield-alt"></i> RNF-05: Seguridad y proteccion de datos
+                                <i class="fas fa-shield-alt"></i> Cuidado de datos y seguimiento interno
                             </h4>
                             <p>
-                                Los datos de contacto, facturacion e historial de consumo de los clientes se resguardan de forma privada conforme a la LFPDPPP.
+                                La informacion de clientes, consumo, promociones y actividad del negocio se mantiene organizada para uso interno.
                             </p>
                         </div>
                     </div>
@@ -485,6 +586,87 @@
                     </div>
                     <div class="header-actions">
                         <span class="badge neon-badge-pink"><i class="fas fa-bowling-ball"></i> 2 pistas disponibles</span>
+                    </div>
+                </div>
+
+                <div class="column-stack torneos-single-column">
+                    <div class="card-glass cyan-accent tournament-showcase">
+                        <div class="tournament-showcase-copy">
+                            <span class="badge neon-badge-cyan"><i class="fas fa-trophy"></i> Llave oficial 2026</span>
+                            <h3>Cuadro de eliminacion desde 16avos hasta la final</h3>
+                            <p>Visualiza cruces, clasificados y campeon del torneo de boliche con avance directo por cada enfrentamiento.</p>
+                            <div class="tournament-showcase-meta">
+                                <span><i class="fas fa-users"></i> 32 participantes</span>
+                                <span><i class="fas fa-layer-group"></i> 5 fases</span>
+                                <span><i class="fas fa-database"></i> Guardado local</span>
+                            </div>
+                        </div>
+                        <div class="tournament-showcase-media">
+                            <img src="images/tournament-strike.png" alt="Torneo de boliche">
+                        </div>
+                    </div>
+
+                    <div class="card-glass cyan-accent bracket-admin-shell">
+                        <div class="card-header-flex">
+                            <div class="card-title-group">
+                                <h3>Control de eliminatoria</h3>
+                                <p>Selecciona parejas inscritas, define la fase inicial y administra el cuadro del torneo</p>
+                            </div>
+                            <span class="badge neon-badge-cyan"><i class="fas fa-sliders-h"></i> Admin</span>
+                        </div>
+                        <div id="bracket-admin-panel" class="column-stack tight"></div>
+                    </div>
+
+                    <div class="card-glass cyan-accent bracket-preview-card">
+                        <div class="card-header-flex">
+                            <div class="card-title-group">
+                                <h3>Bracket del torneo</h3>
+                                <p>Vista compacta del cuadro oficial del torneo.</p>
+                            </div>
+                            <div class="header-actions">
+                                <span class="badge neon-badge-yellow" id="bracket-status-badge-preview"><i class="fas fa-bolt"></i> En curso</span>
+                            </div>
+                        </div>
+                        <div id="tournament-progress-strip-preview" class="tournament-progress-strip"></div>
+                        <div class="bracket-scroll-area compact">
+                            <div id="tournament-bracket-preview" class="tournament-bracket-host compact readonly"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bracket-modal" id="bracket-modal" hidden>
+                    <div class="bracket-modal-backdrop" id="bracket-modal-backdrop"></div>
+                    <div class="bracket-modal-dialog">
+                        <div class="card-glass cyan-accent bracket-modal-card">
+                            <div class="card-header-flex">
+                                <div class="card-title-group">
+                                    <h3>Bracket completo del torneo</h3>
+                                    <p>Formato espejo: 16avos a ambos lados y la final al centro</p>
+                                </div>
+                                <div class="header-actions">
+                                    <span class="badge neon-badge-yellow" id="bracket-status-badge-modal"><i class="fas fa-bolt"></i> En curso</span>
+                                    <button type="button" class="btn-neon btn-neon-pink bracket-expand-btn" id="btn-close-bracket-modal">
+                                        <i class="fas fa-times"></i> Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="tournament-progress-strip-modal" class="tournament-progress-strip"></div>
+                            <div class="bracket-scroll-area modal">
+                                <div id="tournament-bracket-modal" class="tournament-bracket-host modal readonly"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="jornadas" class="page-panel">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Jornadas semanales</h2>
+                        <p>Emparejamientos, horarios, pistas y captura de marcadores de la semana</p>
+                    </div>
+                    <div class="header-actions">
+                        <span class="badge neon-badge-cyan"><i class="fas fa-calendar-check"></i> Operacion semanal</span>
                     </div>
                 </div>
 
@@ -513,6 +695,7 @@
                                 </table>
                             </div>
                         </div>
+
                         <div class="card-glass">
                             <div class="card-header-flex">
                                 <div class="card-title-group">
@@ -523,23 +706,6 @@
                             </div>
                             <div class="grid-2" id="siguiente-jornada-container"></div>
                         </div>
-                    </div>
-
-                    <div class="column-stack">
-                        <div class="card-glass purple-accent">
-                            <div class="card-title-group" style="margin-bottom: 20px;">
-                                <h3>Consola del administrador</h3>
-                                <p>Control del ciclo del torneo y generacion de emparejamientos</p>
-                            </div>
-                            <div class="column-stack tight">
-                                <button class="btn-neon btn-neon-pink" id="btn-generar-roles" style="width: 100%;">
-                                    <i class="fas fa-random"></i> Generar emparejamientos semanales
-                                </button>
-                                <p class="helper-text">
-                                    La regla de negocio indica que cada pareja juega una vez por semana y respeta el limite de 2 pistas asignadas.
-                                </p>
-                            </div>
-                        </div>
 
                         <div class="card-glass pink-accent">
                             <div class="card-title-group" style="margin-bottom: 16px;">
@@ -548,7 +714,40 @@
                             </div>
                             <div id="admin-captura-container"></div>
                         </div>
+                    </div>
 
+                    <div class="column-stack">
+                        <div class="card-glass purple-accent">
+                            <div class="card-title-group" style="margin-bottom: 20px;">
+                                <h3>Consola del administrador</h3>
+                                <p>Control de la jornada semanal, cruces, horarios y uso de pistas</p>
+                            </div>
+                            <div class="column-stack tight">
+                                <button class="btn-neon btn-neon-pink" id="btn-generar-roles" style="width: 100%;">
+                                    <i class="fas fa-random"></i> Generar emparejamientos semanales
+                                </button>
+                                <p class="helper-text">
+                                    Genera la siguiente jornada para organizar cruces, horarios y pistas disponibles.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="inscripciones" class="page-panel">
+                <div class="header-main">
+                    <div class="header-title">
+                        <h2>Inscripciones de parejas</h2>
+                        <p>Registro de equipos y administracion del directorio interno del torneo</p>
+                    </div>
+                    <div class="header-actions">
+                        <span class="badge neon-badge-yellow"><i class="fas fa-user-pen"></i> Alta de parejas</span>
+                    </div>
+                </div>
+
+                <div class="grid-main-columns">
+                    <div class="column-stack">
                         <div class="card-glass">
                             <div class="card-header-flex">
                                 <div class="card-title-group">
@@ -585,14 +784,14 @@
                                         <div class="form-input-container">
                                             <i class="fas fa-star-half-alt"></i>
                                             <select id="player-experience" class="form-input form-select" required>
-                                                <option value="Sin Experiencia" selected>Sin experiencia</option>
-                                                <option value="Con Experiencia">Con experiencia (Pro)</option>
+                                                <option value="principiante" selected>Principiante</option>
+                                                <option value="profesional">Profesional</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group price-box">
                                         <label>Costo de inscripcion</label>
-                                        <div id="registration-cost">$250 MXN</div>
+                                        <div id="registration-cost">$150 MXN</div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn-neon btn-neon-cyan form-submit-btn">
@@ -600,12 +799,15 @@
                                 </button>
                             </form>
                         </div>
+                    </div>
 
+                    <div class="column-stack">
                         <div class="card-glass">
                             <div class="card-title-group" style="margin-bottom: 16px;">
                                 <h3>Directorio de parejas inscritas</h3>
                                 <p>Administracion y lista interna del torneo</p>
                             </div>
+                            <div id="team-category-summary" class="team-category-summary"></div>
                             <div class="table-responsive">
                                 <table>
                                     <thead>
@@ -752,7 +954,7 @@
                             </div>
                         </div>
                         <p class="report-note">
-                            Indicadores calculados con base en registros de visitas y comandas acumuladas en el sistema. Viernes y sabados presentan la concentracion mas alta.
+                            Viernes y sabados concentran la mayor afluencia del negocio, con el bar y las pistas como principales motores de movimiento.
                         </p>
                     </div>
 
@@ -805,7 +1007,7 @@
             </section>
 
             <footer class="site-footer">
-                <p>BolKristal Lounge & Sports Bar | Prototipo funcional para validacion de requerimientos.</p>
+                <p>BolKristal Lounge & Sports Bar | Panel interno de operacion y seguimiento comercial.</p>
             </footer>
         </main>
     </div>
@@ -819,7 +1021,7 @@
             <div class="auth-header">
                 <span class="section-chip">Acceso</span>
                 <h2 id="auth-title">Inicia sesion o crea tu cuenta</h2>
-                <p>Segun el tipo de usuario te llevamos al panel de administrador o a la pagina de cliente.</p>
+                <p>Segun tu rol te llevamos a la vista de jugador o al panel de administracion y marketing.</p>
             </div>
 
             <div class="auth-tabs">
@@ -872,13 +1074,14 @@
                     <div class="form-input-container">
                         <i class="fas fa-id-badge"></i>
                         <select id="register-role" class="form-input form-select" required>
-                            <option value="cliente">Cliente normal</option>
-                            <option value="admin">Administrador</option>
+                            <option value="jugador">Jugador</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="marketing">Marketing</option>
                         </select>
                     </div>
                 </div>
                 <button type="submit" class="btn-neon btn-neon-pink auth-submit-btn">Crear cuenta</button>
-                <p class="auth-helper">Si eliges administrador entraras directo al panel interno despues del registro.</p>
+                <p class="auth-helper">Elige el tipo de cuenta que mejor se adapte a tu experiencia dentro de BolKristal.</p>
             </form>
         </div>
     </div>
