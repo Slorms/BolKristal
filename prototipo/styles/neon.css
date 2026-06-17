@@ -1579,6 +1579,11 @@ button {
     margin: 0 auto;
 }
 
+.inscripciones-single-column {
+    width: min(100%, 1280px);
+    margin: 0 auto;
+}
+
 .torneos-single-column .tournament-showcase,
 .torneos-single-column .bracket-preview-card,
 .torneos-single-column .bracket-admin-shell {

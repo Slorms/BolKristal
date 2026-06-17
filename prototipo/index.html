@@ -746,83 +746,79 @@
                     </div>
                 </div>
 
-                <div class="grid-main-columns">
-                    <div class="column-stack">
-                        <div class="card-glass">
-                            <div class="card-header-flex">
-                                <div class="card-title-group">
-                                    <h3>Inscripcion de parejas</h3>
-                                    <p>Registra un nuevo equipo para la temporada en curso</p>
+                <div class="column-stack inscripciones-single-column">
+                    <div class="card-glass">
+                        <div class="card-header-flex">
+                            <div class="card-title-group">
+                                <h3>Inscripcion de parejas</h3>
+                                <p>Registra un nuevo equipo para la temporada en curso</p>
+                            </div>
+                        </div>
+
+                        <form id="torneo-registration-form">
+                            <div class="form-group">
+                                <label for="team-name">Nombre de la pareja / equipo</label>
+                                <div class="form-input-container">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <input type="text" id="team-name" class="form-input" placeholder="Ej. Los Chuzadores del Norte" required>
                                 </div>
                             </div>
-
-                            <form id="torneo-registration-form">
+                            <div class="form-group">
+                                <label for="player1-name">Nombre de jugador 1</label>
+                                <div class="form-input-container">
+                                    <i class="far fa-user"></i>
+                                    <input type="text" id="player1-name" class="form-input" placeholder="Nombre completo" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="player2-name">Nombre del jugador 2</label>
+                                <div class="form-input-container">
+                                    <i class="far fa-user"></i>
+                                    <input type="text" id="player2-name" class="form-input" placeholder="Nombre completo" required>
+                                </div>
+                            </div>
+                            <div class="grid-2">
                                 <div class="form-group">
-                                    <label for="team-name">Nombre de la pareja / equipo</label>
+                                    <label for="player-experience">Nivel de habilidad</label>
                                     <div class="form-input-container">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <input type="text" id="team-name" class="form-input" placeholder="Ej. Los Chuzadores del Norte" required>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <select id="player-experience" class="form-input form-select" required>
+                                            <option value="principiante" selected>Principiante</option>
+                                            <option value="profesional">Profesional</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="player1-name">Nombre de jugador 1</label>
-                                    <div class="form-input-container">
-                                        <i class="far fa-user"></i>
-                                        <input type="text" id="player1-name" class="form-input" placeholder="Nombre completo" required>
-                                    </div>
+                                <div class="form-group price-box">
+                                    <label>Costo de inscripcion</label>
+                                    <div id="registration-cost">$150 MXN</div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="player2-name">Nombre del jugador 2</label>
-                                    <div class="form-input-container">
-                                        <i class="far fa-user"></i>
-                                        <input type="text" id="player2-name" class="form-input" placeholder="Nombre completo" required>
-                                    </div>
-                                </div>
-                                <div class="grid-2">
-                                    <div class="form-group">
-                                        <label for="player-experience">Nivel de habilidad</label>
-                                        <div class="form-input-container">
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <select id="player-experience" class="form-input form-select" required>
-                                                <option value="principiante" selected>Principiante</option>
-                                                <option value="profesional">Profesional</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group price-box">
-                                        <label>Costo de inscripcion</label>
-                                        <div id="registration-cost">$150 MXN</div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn-neon btn-neon-cyan form-submit-btn">
-                                    <i class="fas fa-file-signature"></i> Guardar e inscribir
-                                </button>
-                            </form>
-                        </div>
+                            </div>
+                            <button type="submit" class="btn-neon btn-neon-cyan form-submit-btn">
+                                <i class="fas fa-file-signature"></i> Guardar e inscribir
+                            </button>
+                        </form>
                     </div>
 
-                    <div class="column-stack">
-                        <div class="card-glass">
-                            <div class="card-title-group" style="margin-bottom: 16px;">
-                                <h3>Directorio de parejas inscritas</h3>
-                                <p>Administracion y lista interna del torneo</p>
-                            </div>
-                            <div id="team-category-summary" class="team-category-summary"></div>
-                            <div class="table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Equipo</th>
-                                            <th>Integrantes</th>
-                                            <th>Habilidad</th>
-                                            <th>Pago</th>
-                                            <th>Eliminar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-teams-tbody"></tbody>
-                                </table>
-                            </div>
+                    <div class="card-glass">
+                        <div class="card-title-group" style="margin-bottom: 16px;">
+                            <h3>Directorio de parejas inscritas</h3>
+                            <p>Administracion y lista interna del torneo</p>
+                        </div>
+                        <div id="team-category-summary" class="team-category-summary"></div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Equipo</th>
+                                        <th>Integrantes</th>
+                                        <th>Habilidad</th>
+                                        <th>Pago</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-teams-tbody"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1086,6 +1082,6 @@
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script src="js/app.js?v=3"></script>
 </body>
 </html>

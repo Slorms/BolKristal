@@ -161,17 +161,22 @@ function normalizeUserRecord(user) {
 }
 
 function mergeUsersWithDefaults(users) {
-    const normalizedUsers = users.map(normalizeUserRecord);
-    const merged = [...normalizedUsers];
+    const normalizedUsers = Array.isArray(users)
+        ? users.map(normalizeUserRecord)
+        : [];
 
-    DEFAULT_USERS.forEach((defaultUser) => {
-        const exists = merged.some((user) => user.email.toLowerCase() === defaultUser.email.toLowerCase());
-        if (!exists) {
-            merged.push(defaultUser);
-        }
+    const userMap = new Map();
+
+    normalizedUsers.forEach((user) => {
+        if (!user || !user.email) return;
+        userMap.set(user.email.toLowerCase(), user);
     });
 
-    return merged;
+    DEFAULT_USERS.forEach((defaultUser) => {
+        userMap.set(defaultUser.email.toLowerCase(), { ...defaultUser });
+    });
+
+    return Array.from(userMap.values());
 }
 
 function cloneData(data) {
@@ -214,24 +219,23 @@ function showToast(message, type = 'info') {
 
 function getUsers() {
     const raw = localStorage.getItem(USERS_STORAGE_KEY);
+
     if (!raw) {
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
-        return [...DEFAULT_USERS];
+        const defaults = cloneData(DEFAULT_USERS);
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaults));
+        return defaults;
     }
 
     try {
         const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed) || !parsed.length) {
-            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
-            return [...DEFAULT_USERS];
-        }
-
         const merged = mergeUsersWithDefaults(parsed);
+
         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(merged));
         return merged;
     } catch (error) {
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
-        return [...DEFAULT_USERS];
+        const defaults = cloneData(DEFAULT_USERS);
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaults));
+        return defaults;
     }
 }
 
@@ -2121,7 +2125,7 @@ function initAuth() {
             event.preventDefault();
 
             const email = document.getElementById('login-email').value.trim().toLowerCase();
-            const password = document.getElementById('login-password').value;
+            const password = document.getElementById('login-password').value.trim();          
             const users = getUsers();
             const user = users.find((item) => item.email.toLowerCase() === email && item.password === password);
 
