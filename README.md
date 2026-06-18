@@ -1,75 +1,98 @@
-# <div align="center">BolKristal Lounge & Sports Bar</div>
+# <div align="center">🎳 BolKristal Lounge & Sports Bar</div>
 
 <div align="center">
 
-Prototipo web para la operacion visual de BolKristal: torneos de boliche, jornadas, inscripciones, promociones y experiencia de jugador.
+### ✨ Prototipo web para torneo, jornadas, inscripciones, promociones y experiencia de jugador
 
-[Abrir pagina](https://slorms.github.io/BolKristal/prototipo/)
+[![Abrir pagina](https://img.shields.io/badge/🌐%20Abrir%20pagina-BolKristal-ff0055?style=for-the-badge&logo=google-chrome&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
+[![Estado](https://img.shields.io/badge/Estado-Prototipo%20activo-00c2ff?style=for-the-badge)](https://slorms.github.io/BolKristal/prototipo/)
+[![Frontend](https://img.shields.io/badge/Stack-HTML%20%7C%20CSS%20%7C%20JS-ffb703?style=for-the-badge)](https://slorms.github.io/BolKristal/prototipo/)
+
+<br>
+
+<img src="images/hero-bowling-party.png" alt="BolKristal portada" width="880">
 
 </div>
 
 ---
 
-## Acceso rapido
+## 🚀 Acceso directo
 
-- URL publica del prototipo:
-  `https://slorms.github.io/BolKristal/prototipo/`
-- Archivo principal del proyecto:
-  `index.html`
-- Frontend base:
-  `styles/neon.css` y `js/app.js`
+<div align="center">
 
-## Resumen general
+## [👉 Entrar a la pagina](https://slorms.github.io/BolKristal/prototipo/)
 
-Este proyecto evoluciono de una pagina estatica a un prototipo visual mucho mas completo para BolKristal. Hoy incluye:
+</div>
 
-- vista publica de la marca con enfoque en boliche, fiestas y promociones
-- modal de acceso con inicio de sesion
-- vista de jugador
-- panel administrativo responsivo
-- modulo de torneo con bracket eliminatorio
-- modulo de jornadas
-- modulo de inscripciones
-- modulo de promociones
-- directorio de clientes
-- jukebox visual en el panel admin
+**URL publica del proyecto:**  
+`https://slorms.github.io/BolKristal/prototipo/`
 
-## Vistas disponibles
+---
 
-### 1. Vista publica
+## 🧭 Que es este proyecto
 
-La vista publica presenta la identidad del negocio y funciona como portada principal.
+BolKristal es un prototipo visual pensado para mostrar la operacion digital de un negocio de boliche con ambiente de fiesta. La pagina ya integra:
 
-Incluye:
+- 🎉 portada publica con imagenes, promociones y acceso
+- 👤 vista de jugador
+- 🛠️ panel administrativo responsivo
+- 🏆 torneo con bracket eliminatorio
+- 📅 jornadas semanales
+- 📝 inscripciones de parejas
+- 👥 directorio de clientes
+- 📣 promociones
+- 🎵 jukebox visual dentro del panel admin
 
-- hero principal con imagenes de boliche y fiesta
-- seccion de experiencia BolKristal
+---
+
+## 🖼️ Vista general
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="images/tournament-strike.png" alt="Torneo" width="100%">
+      <br>
+      <strong>Modulo de torneo</strong>
+    </td>
+    <td align="center" width="50%">
+      <img src="images/party-package.png" alt="Promos y fiestas" width="100%">
+      <br>
+      <strong>Promociones y experiencia del negocio</strong>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🧩 Vistas disponibles
+
+### 🌐 Vista publica
+
+La portada principal ya incluye:
+
+- hero visual de boliche y fiesta
+- experiencia BolKristal
 - torneo activo
 - promociones
 - acceso a login
 - menu hamburguesa en movil
 
-### 2. Vista de jugador
+### 👤 Vista de jugador
 
-Cuando un usuario entra con cuenta de jugador, se le muestra una zona propia con:
+Cuando entra un jugador, puede ver:
 
 - bienvenida personalizada
-- resumen de torneo
+- resumen del torneo
 - bracket oficial en solo lectura
-- promociones
-- seccion de beneficios
+- promociones del mes
+- bloque de beneficios
 - menu hamburguesa en movil
 
-Importante:
+> Nota: hoy esta vista es informativa. Todavia no muestra estadisticas reales personalizadas por jugador o pareja.
 
-- hoy esta vista es informativa
-- aun no tiene analiticas personales reales ligadas a una pareja o a un historial individual
+### 🛠️ Vista administrativa
 
-### 3. Vista administrativa
-
-El panel administrativo concentra la operacion interna del prototipo.
-
-Secciones actuales:
+El panel admin ya tiene:
 
 - `Resumen`
 - `Torneo Boliche`
@@ -81,216 +104,185 @@ Secciones actuales:
 
 En movil:
 
-- la barra lateral se convierte en menu hamburguesa
-- el panel lateral queda fijo y desplegable
+- la barra lateral pasa a menu hamburguesa
+- el panel se mantiene fijo
+- la navegacion se despliega sin tapar toda la experiencia
 
-## Modulo de autenticacion
+---
 
-El acceso se hace desde un modal con pestanas:
+## 🔐 Acceso y cuentas
+
+El modal de acceso tiene dos pestañas:
 
 - `Iniciar sesion`
 - `Crear cuenta`
 
-### Estado actual de login
+### ✅ Login activo
 
-Funciona con cuentas guardadas en `localStorage`.
+Actualmente si funciona:
 
-Claves usadas:
+- inicio de sesion con usuarios demo
+- enrutamiento segun rol
+- persistencia de sesion local
+
+### 🧪 Cuentas demo
+
+| Rol | Correo | Contrasena |
+|---|---|---|
+| Administrador | `admin@bolkristal.mx` | `Admin123!` |
+| Marketing | `marketing@bolkristal.mx` | `Marketing123!` |
+| Jugador | `ana@gmail.com` | `Jugador123!` |
+
+### 🚧 Crear cuenta
+
+La pestaña de crear cuenta:
+
+- sigue visible
+- ya no permite crear administradores ni marketing
+- esta cubierta con un diseno tipo construccion
+- muestra cintas cruzadas y letrero de `EN CONSTRUCCION`
+- actualmente no registra usuarios nuevos
+
+### 💾 Donde se guarda
+
+Por ahora todo se guarda en `localStorage` del navegador:
 
 - usuarios: `bolkristal-users`
 - sesion: `bolkristal-session`
+- parejas: `bolkristal-teams`
+- bracket: `bolkristal-bracket-demo`
+- configuracion del bracket: `bolkristal-bracket-builder`
 
-### Cuentas demo incluidas
+> Importante: esto significa que una cuenta creada o datos guardados en un navegador no aparecen automaticamente en otro.
 
-- Administrador:
-  `admin@bolkristal.mx` / `Admin123!`
-- Marketing:
-  `marketing@bolkristal.mx` / `Marketing123!`
-- Jugador:
-  `ana@gmail.com` / `Jugador123!`
+---
 
-### Crear cuenta
+## 🏆 Modulo de torneo
 
-Actualmente la pestana de `Crear cuenta`:
+Es una de las partes mas completas del proyecto.
 
-- sigue visible
-- muestra una superposicion estilo construccion
-- esta bloqueada visualmente con cintas cruzadas
-- no registra usuarios nuevos por el momento
+### Lo que ya hace
 
-Ademas:
-
-- si en el futuro se activa el flujo publico, las cuentas creadas desde esa pantalla deben entrar solo como `jugador`
-
-### Limitacion actual importante
-
-Las cuentas se guardan solo en el navegador local. Eso significa:
-
-- no existe aun una base de datos compartida entre navegadores o dispositivos
-
-## Modulo de torneo
-
-Es una de las partes mas trabajadas del proyecto.
-
-### Bracket eliminatorio
-
-El sistema ya incluye:
-
-- eliminatoria desde `16avos` hasta `Final`
-- soporte para iniciar en distintas fases:
+- bracket eliminatorio desde `16avos` hasta `Final`
+- inicio configurable en:
   `16avos`, `8avos`, `Cuartos`, `Semifinal` o `Final`
-- espejo visual del bracket
-- vista compacta
-- vista grande para jugador en solo lectura
-- guardado local del estado del cuadro
+- seleccion de parejas inscritas
+- sorteo de posiciones
+- validacion de cupo minimo exacto segun la fase elegida
+- avance de rondas
+- campeon visual con pino y corona
+- guardado local del estado del torneo
 
-### Control de eliminatoria
+### Estado actual del bracket
 
-Dentro del panel admin se puede:
+- el bracket compacto ya no se edita con clic
+- el bracket grande ya no funciona como editor manual
+- el jugador lo ve en solo lectura
+- el admin sigue controlando el avance desde el bloque del enfrentamiento actual
 
-- elegir categoria del torneo
-- elegir fase inicial
-- seleccionar parejas inscritas
-- sortear posiciones dentro del cuadro
-- generar el bracket
-- revisar progreso del torneo
-- ver siguiente duelo
-- ver avance por ronda
+---
 
-Tambien se agrego validacion para que:
+## 🎳 Captura del enfrentamiento actual
 
-- no se genere un cuadro si faltan parejas para completar la fase elegida
-- el sistema muestre cuantas parejas faltan
+Dentro del torneo existe un bloque de captura para el duelo activo.
 
-### Estado visual del bracket
+### Incluye
 
-Actualmente:
-
-- el bracket admin ya no se edita dando clic sobre equipos
-- el bracket chico ya no es editable
-- el bracket grande ya no se usa como editor manual
-- la lectura del avance se hace desde el panel y desde el bloque de enfrentamiento actual
-
-### Campeon del torneo
-
-Cuando ya hay campeon:
-
-- aparece una imagen de pino con corona
-- se refleja tanto en vista compacta como en vista grande del cuadro
-
-## Captura de enfrentamiento actual
-
-Se agrego un bloque especial para capturar el partido activo dentro del torneo.
-
-Incluye:
-
-- marcador por pareja
+- score por pareja
 - 10 frames por pareja
-- validacion de score de boliche
-- calculo automatico del ganador
-- avance automatico del ganador al siguiente cruce
+- validacion de tiros
+- calculo de score de boliche
+- avance automatico del ganador
 
-### Como esta modelado hoy
+### Mejoras aplicadas
 
-El marcador actual funciona como score por `pareja`, parecido a una dinamica tipo Baker:
-
-- 10 frames por pareja
-- hasta 2 tiros por frame
-- tiro extra en frame 10 cuando aplica
-
-### Mejoras ya hechas en esta parte
-
-- el frame 10 ya solo crece cuando aparece el tiro bonus
+- el frame 10 solo se expande si aparece el tiro bonus
 - los tiros se habilitan de forma guiada
-- si hay strike, se bloquea el segundo tiro del frame
-- el flujo evita capturas imposibles
+- si hay strike se bloquea el segundo tiro del frame
+- ya no brinca automaticamente al siguiente campo al escribir
+- se pueden capturar valores como `10` sin problema
 - se quitaron las flechas de los inputs numericos
-- ya no brinca automaticamente a otra casilla al escribir, para permitir capturar `10`
 
-## Modulo de jornadas
+---
 
-Se separo la logica semanal del torneo.
+## 📅 Jornadas semanales
 
-Actualmente se puede:
+Se separo la logica de jornadas del modulo principal de torneo.
 
-- generar una jornada semanal
-- revisar cruces
+Actualmente permite:
+
+- generar la proxima jornada
+- ver cruces
 - ver horarios
 - ver pistas asignadas
-- revisar estado de las partidas
-- capturar marcadores semanales en su propia seccion
+- revisar estado de partidas
+- capturar marcadores semanales
 
-## Modulo de inscripciones
+---
 
-La seccion de inscripciones ya esta organizada en una sola columna.
+## 📝 Inscripciones
+
+La seccion de inscripciones ya esta organizada en una sola columna para que sea mas clara.
 
 Incluye:
 
 - formulario de alta de parejas
-- costo segun nivel
-- tabla de parejas inscritas
+- costo segun categoria
+- tabla de directorio
 - conteo por categoria
-- total de registros
+- total de parejas registradas
 
 Categorias actuales:
 
 - `Profesional`
 - `Principiante`
 
-## Directorio de clientes
+---
 
-El modulo de clientes incluye:
+## 👥 Clientes y promociones
 
-- listado visual de clientes
-- filtros de busqueda
-- segmentos de interes
-- datos de contacto
+### Clientes
+
+El directorio de clientes muestra:
+
+- nombre y contacto
 - visitas
 - torneos jugados
 - consumo
-- promos usadas
+- promociones usadas
+- filtros y segmentos visuales
 
-## Modulo de promociones
+### Promociones
 
-El panel de promociones permite:
+El modulo de promociones ya permite:
 
-- mostrar promociones activas
-- registrar nuevas promociones en la pizarra
+- ver promos activas
+- registrar nuevas promos en pizarra
 - simular canje de promo
 - simular alcance promocional en redes
 
-Importante:
+> El boton de redes **no publica de verdad** en Facebook o Instagram. Solo incrementa un contador local y muestra una notificacion visual.
 
-- el boton de redes no publica en Facebook ni Instagram de verdad
-- solo incrementa un contador local y muestra un mensaje de simulacion
+---
 
-## Diseno y experiencia visual
+## 📱 Responsividad y UX
 
-Durante el desarrollo se trabajaron muchos ajustes de interfaz:
+Durante el desarrollo se trabajaron muchos ajustes:
 
-- diseno mas llamativo para el inicio
-- imagenes de boliche y fiesta
-- pagina mas corporativa y menos explicativa del proceso de construccion
-- textos depurados para que hablen del negocio y no del prototipo
+- menu hamburguesa para vista publica
+- menu hamburguesa para vista de jugador
+- menu hamburguesa para panel admin
 - panel admin mas compacto
-- menu admin fijo
-- menu hamburguesa en pantallas verticales
-- animacion del menu de arriba hacia abajo
-- mejoras de responsividad en multiples bloques
+- mejor uso de espacio en movil
+- modal de acceso mas claro
+- botones de login y registro mejor alineados
+- formulario de score mas usable
+- bracket movil mas visible y desplazable
+- textos menos tecnicos y mas orientados al negocio
 
-## Responsividad
+---
 
-Se ajustaron varios puntos importantes:
-
-- formulario de acceso y registro
-- botones de login y crear cuenta
-- panel administrativo
-- menu hamburguesa en movil
-- bracket en vista de jugador
-- tablero de score del enfrentamiento actual
-- pagina de inscripciones en una sola columna
-
-## Estructura principal del proyecto
+## 🗂️ Estructura del proyecto
 
 ```text
 prototipo/
@@ -302,40 +294,52 @@ prototipo/
 |- images/
 ```
 
-## Tecnologias usadas
+---
 
-- HTML
-- CSS
-- JavaScript vanilla
-- `localStorage` para persistencia local del prototipo
+## 🧪 Tecnologias
 
-## Estado actual del proyecto
+<div align="center">
+
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111)
+![Storage](https://img.shields.io/badge/localStorage-444?style=for-the-badge)
+
+</div>
+
+---
+
+## ✅ Estado actual
 
 Hoy el prototipo ya sirve para:
 
-- presentar la marca
+- presentar visualmente la marca
 - iniciar sesion con usuarios demo
 - navegar entre vista publica, jugador y admin
 - administrar parejas inscritas
 - generar y seguir un bracket
 - capturar scores del enfrentamiento actual
 - revisar jornadas
-- mostrar promociones y clientes
+- mostrar clientes y promociones
 
-## Limitaciones actuales
+---
 
-Todavia no esta resuelto:
+## ⚠️ Limitaciones actuales
+
+Todavia no incluye:
 
 - backend real
 - base de datos compartida
-- cuentas sincronizadas entre navegadores
-- analiticas personalizadas para cada jugador
-- relacion real entre usuario, pareja inscrita y estadisticas historicas
+- sincronizacion entre navegadores
+- analiticas personalizadas por jugador
+- vinculacion real entre usuario y pareja inscrita
 - publicacion real a redes sociales
 
-## Siguiente paso recomendado
+---
 
-Si este prototipo va a seguir creciendo, el paso mas importante seria conectar:
+## 🎯 Siguiente paso recomendado
+
+Si este prototipo sigue creciendo, el paso mas importante seria conectar:
 
 - usuarios
 - parejas inscritas
@@ -343,12 +347,15 @@ Si este prototipo va a seguir creciendo, el paso mas importante seria conectar:
 - resultados
 - estadisticas
 
-a una persistencia real, para que el sistema funcione igual en cualquier navegador o dispositivo.
+con una persistencia real para que funcione igual en cualquier navegador o dispositivo.
 
 ---
 
-## Acceso directo
+## 💖 Acceso final
 
-Para entrar a la pagina usa:
+<div align="center">
 
-`https://slorms.github.io/BolKristal/prototipo/`
+[![Entrar a BolKristal](https://img.shields.io/badge/🎳%20Entrar%20a%20BolKristal-ff0055?style=for-the-badge&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
+
+</div>
+
