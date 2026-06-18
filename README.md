@@ -10,7 +10,7 @@
 
 <br>
 
-<img src="images/hero-bowling-party.png" alt="BolKristal portada" width="880">
+<img src="/prototipo/images/hero-bowling-party.png" alt="BolKristal portada" width="880">
 
 </div>
 
@@ -50,12 +50,12 @@ BolKristal es un prototipo visual pensado para mostrar la operacion digital de u
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="images/tournament-strike.png" alt="Torneo" width="100%">
+      <img src="/prototipo/images/tournament-strike.png" alt="Torneo" width="100%">
       <br>
       <strong>Modulo de torneo</strong>
     </td>
     <td align="center" width="50%">
-      <img src="images/party-package.png" alt="Promos y fiestas" width="100%">
+      <img src="/prototipo/images/party-package.png" alt="Promos y fiestas" width="100%">
       <br>
       <strong>Promociones y experiencia del negocio</strong>
     </td>
