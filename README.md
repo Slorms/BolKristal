@@ -126,7 +126,6 @@ Ademas:
 
 Las cuentas se guardan solo en el navegador local. Eso significa:
 
-- si una cuenta se crea en Firefox, Chrome no la ve
 - no existe aun una base de datos compartida entre navegadores o dispositivos
 
 ## Modulo de torneo
