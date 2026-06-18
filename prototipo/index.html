@@ -12,23 +12,30 @@
     <div id="toast-container" class="toast-container"></div>
 
     <div id="public-view">
-        <header class="site-topbar">
-            <a href="#inicio-publico" class="site-brand">
-                <span class="site-brand-icon"><i class="fas fa-bowling-ball"></i></span>
-                <span>
-                    <strong>BolKristal</strong>
-                    <small>Torneos, fiestas y lounge</small>
-                </span>
-            </a>
-            <nav class="site-nav">
-                <button class="site-nav-link" data-scroll-to="quienes-somos">Experiencia</button>
-                <button class="site-nav-link" data-scroll-to="torneos-publicos">Torneos</button>
-                <button class="site-nav-link" data-scroll-to="promociones-publicas">Promociones</button>
-                <button class="site-nav-link" data-scroll-to="contacto-publico">Acceso</button>
-            </nav>
-            <div class="site-actions">
-                <button class="btn-outline" data-open-auth="login">Iniciar sesion</button>
-                <button class="btn-neon btn-neon-pink" data-open-auth="register">Crear cuenta</button>
+        <header class="site-topbar" id="public-topbar">
+            <div class="site-topbar-head">
+                <a href="#inicio-publico" class="site-brand">
+                    <span class="site-brand-icon"><i class="fas fa-bowling-ball"></i></span>
+                    <span>
+                        <strong>BolKristal</strong>
+                        <small>Torneos, fiestas y lounge</small>
+                    </span>
+                </a>
+                <button class="site-menu-toggle" id="public-menu-toggle" aria-label="Abrir menu principal" aria-expanded="false" aria-controls="public-site-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="site-menu-panel" id="public-site-menu">
+                <nav class="site-nav">
+                    <button class="site-nav-link" data-scroll-to="quienes-somos">Experiencia</button>
+                    <button class="site-nav-link" data-scroll-to="torneos-publicos">Torneos</button>
+                    <button class="site-nav-link" data-scroll-to="promociones-publicas">Promociones</button>
+                    <button class="site-nav-link" data-scroll-to="contacto-publico">Acceso</button>
+                </nav>
+                <div class="site-actions">
+                    <button class="btn-outline" data-open-auth="login">Iniciar sesion</button>
+                    <button class="btn-neon btn-neon-pink" data-open-auth="register">Crear cuenta</button>
+                </div>
             </div>
         </header>
 
@@ -151,7 +158,7 @@
                     <h3>Torneo de Verano 2026</h3>
                     <p>
                         Formato en parejas, del 1 de julio al 31 de agosto, con criterio por puntos y
-                        administrado desde la cuenta principal del establecimiento.
+                        organizacion semanal para mantener el torneo en movimiento.
                     </p>
                     <div class="data-grid">
                         <span class="data-pill"><i class="fas fa-user-shield"></i> Admin: Laura Martinez</span>
@@ -178,8 +185,8 @@
                     <span class="badge neon-badge-yellow">Parejas semilla</span>
                     <h3>Equipos registrados</h3>
                     <p>
-                        Los Truenos y Bola de Fuego ya aparecen inscritos, cada uno con dos integrantes y
-                        pagos acorde a su nivel competitivo.
+                        Los Truenos y Bola de Fuego ya estan inscritos, cada uno con dos integrantes y
+                        categoria definida para arrancar la temporada.
                     </p>
                     <div class="ranking-list">
                         <div class="ranking-pill"><strong>1.</strong> Los Truenos <span>Ana + Luis</span></div>
@@ -205,7 +212,7 @@
                     <p>Paga 1 hora y juega 2 horas en pista del 1 al 15 de julio, ideal para clientes principiantes.</p>
                 </article>
                 <article class="promo-preview-card">
-                    <span class="badge neon-badge-pink">Instagram + Facebook</span>
+                    <span class="badge neon-badge-pink">Redes</span>
                     <h3>Noche de equipos</h3>
                     <p>Reserva una dupla y recibe precio especial en bebida para quienes lleguen uniformados.</p>
                 </article>
@@ -238,23 +245,30 @@
     </div>
 
     <div id="cliente-view" hidden>
-        <header class="site-topbar">
-            <button class="site-brand site-brand-button" id="client-home-trigger">
-                <span class="site-brand-icon"><i class="fas fa-star"></i></span>
-                <span>
-                    <strong>Zona Jugador</strong>
-                    <small id="client-user-role-label">Cuenta jugador</small>
-                </span>
-            </button>
-            <nav class="site-nav">
-                <button class="site-nav-link" data-scroll-to="cliente-bienvenida">Inicio</button>
-                <button class="site-nav-link" data-scroll-to="cliente-torneo">Mi torneo</button>
-                <button class="site-nav-link" data-scroll-to="cliente-promos">Promociones</button>
-                <button class="site-nav-link" data-scroll-to="cliente-beneficios">Beneficios</button>
-            </nav>
-            <div class="site-actions">
-                <span class="session-pill"><i class="fas fa-user"></i> <span id="client-user-name">Invitado</span></span>
-                <button class="btn-outline" id="client-logout-btn">Cerrar sesion</button>
+        <header class="site-topbar" id="client-topbar">
+            <div class="site-topbar-head">
+                <button class="site-brand site-brand-button" id="client-home-trigger">
+                    <span class="site-brand-icon"><i class="fas fa-star"></i></span>
+                    <span>
+                        <strong>Zona Jugador</strong>
+                        <small id="client-user-role-label">Cuenta jugador</small>
+                    </span>
+                </button>
+                <button class="site-menu-toggle" id="client-menu-toggle" aria-label="Abrir menu de jugador" aria-expanded="false" aria-controls="client-site-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="site-menu-panel" id="client-site-menu">
+                <nav class="site-nav">
+                    <button class="site-nav-link" data-scroll-to="cliente-bienvenida">Inicio</button>
+                    <button class="site-nav-link" data-scroll-to="cliente-torneo">Mi torneo</button>
+                    <button class="site-nav-link" data-scroll-to="cliente-promos">Promociones</button>
+                    <button class="site-nav-link" data-scroll-to="cliente-beneficios">Beneficios</button>
+                </nav>
+                <div class="site-actions">
+                    <span class="session-pill"><i class="fas fa-user"></i> <span id="client-user-name">Invitado</span></span>
+                    <button class="btn-outline" id="client-logout-btn">Cerrar sesion</button>
+                </div>
             </div>
         </header>
 
@@ -263,8 +277,8 @@
                 <span class="section-chip">Vista del jugador</span>
                 <h1>Tu cuenta te lleva directo a torneos, promos y proximas partidas.</h1>
                 <p>
-                    Esta vista ya se siente conectada al modelo de la base: pareja, jornada, promo activa,
-                    pistas y beneficios para quien regresa seguido a jugar o celebrar.
+                    Consulta en un solo lugar tu torneo, la siguiente jornada, las promociones activas
+                    y la informacion mas importante para volver a jugar o celebrar.
                 </p>
                 <div class="hero-actions">
                     <button class="btn-neon btn-neon-cyan" data-scroll-to="cliente-torneo">
@@ -303,8 +317,8 @@
                 <span class="section-chip">Mi torneo</span>
                 <h2>Todo lo importante del Torneo de Verano 2026 en una sola pantalla.</h2>
                 <p>
-                    Ya no es una vista generica: ahora se entiende mejor que un jugador necesita ver su
-                    torneo, la siguiente jornada, las pistas y quienes ya estan marcando el ritmo de la temporada.
+                    Revisa tu torneo, la siguiente jornada, las pistas disponibles y las parejas que
+                    ya estan marcando el ritmo de la temporada.
                 </p>
             </div>
             <div class="schedule-grid">
@@ -346,7 +360,7 @@
                 <h2>Sigue todo el torneo desde tu cuenta.</h2>
                 <p>
                     Aqui puedes revisar como va la eliminatoria completa, desde la fase inicial hasta la final,
-                    con el mismo cuadro oficial que usa administracion pero en modo solo lectura.
+                    con el cuadro oficial del torneo siempre actualizado.
                 </p>
             </div>
             <div class="card-glass cyan-accent client-bracket-card">
@@ -373,12 +387,12 @@
                 <article class="promo-preview-card">
                     <span class="badge neon-badge-green">Activa hasta 15 julio</span>
                     <h3>2x1 en boliche</h3>
-                    <p>La promo sembrada en la base ya aparece aqui como beneficio directo para jugadores principiantes.</p>
+                    <p>Una promo pensada para volver a la pista entre semana y aprovechar mas tiempo de juego.</p>
                 </article>
                 <article class="promo-preview-card">
                     <span class="badge neon-badge-cyan">Redes</span>
                     <h3>Comparte y gana vistas</h3>
-                    <p>Instagram y Facebook se usan como canales para mover promociones y medir alcance.</p>
+                    <p>Consulta las promociones activas y enterate de las dinamicas que se mueven en redes del negocio.</p>
                 </article>
                 <article class="promo-preview-card">
                     <span class="badge neon-badge-pink">Fiestas</span>
@@ -391,10 +405,10 @@
         <section id="cliente-beneficios" class="cta-section">
             <div>
                 <span class="section-chip">Beneficios de la cuenta</span>
-                <h2>Tu perfil ya esta listo para crecer con historial, recompensas y comentarios.</h2>
+                <h2>Tu cuenta concentra beneficios, actividad y promociones activas.</h2>
                 <p>
-                    El modelo ya contempla historial de actividad, uso de promociones y comentarios, asi que
-                    esta vista puede ampliarse despues sin rehacer la estructura del sitio.
+                    Desde aqui puedes seguir tus beneficios, promociones disponibles y movimientos clave
+                    relacionados con tu experiencia dentro de BolKristal.
                 </p>
             </div>
             <div class="cta-actions stacked-badges">
@@ -554,24 +568,24 @@
 
                 <div class="card-glass">
                     <div class="card-title-group" style="margin-bottom: 24px;">
-                        <h3>Prioridades de operacion</h3>
-                        <p>Aspectos clave para mantener una experiencia ordenada dentro del negocio</p>
+                        <h3>Operacion del dia</h3>
+                        <p>Seguimiento rapido de lo que mas se mueve en BolKristal</p>
                     </div>
                     <div class="grid-2">
                         <div class="card-glass subtle-card">
                             <h4 class="accent-title cyan">
-                                <i class="fas fa-mobile-alt"></i> Acceso rapido desde cualquier dispositivo
+                                <i class="fas fa-calendar-check"></i> Jornadas y horarios
                             </h4>
                             <p>
-                                El equipo puede revisar horarios, parejas, clientes y promociones desde celular o escritorio sin perder visibilidad.
+                                Consulta cruces, horarios y pistas para mantener ordenada la operacion del torneo durante la semana.
                             </p>
                         </div>
                         <div class="card-glass subtle-card">
                             <h4 class="accent-title pink">
-                                <i class="fas fa-shield-alt"></i> Cuidado de datos y seguimiento interno
+                                <i class="fas fa-bullhorn"></i> Promociones y clientes
                             </h4>
                             <p>
-                                La informacion de clientes, consumo, promociones y actividad del negocio se mantiene organizada para uso interno.
+                                Da seguimiento a promociones activas, consumo frecuente y actividad de clientes para reforzar la experiencia del negocio.
                             </p>
                         </div>
                     </div>
@@ -598,7 +612,7 @@
                             <div class="tournament-showcase-meta">
                                 <span><i class="fas fa-users"></i> 32 participantes</span>
                                 <span><i class="fas fa-layer-group"></i> 5 fases</span>
-                                <span><i class="fas fa-database"></i> Guardado local</span>
+                                <span><i class="fas fa-clipboard-check"></i> Seguimiento diario</span>
                             </div>
                         </div>
                         <div class="tournament-showcase-media">
@@ -1017,7 +1031,7 @@
             <div class="auth-header">
                 <span class="section-chip">Acceso</span>
                 <h2 id="auth-title">Inicia sesion o crea tu cuenta</h2>
-                <p>Segun tu rol te llevamos a la vista de jugador o al panel de administracion y marketing.</p>
+                <p>Accede a tu cuenta para entrar a tu espacio como jugador o a la administracion del negocio.</p>
             </div>
 
             <div class="auth-tabs">
@@ -1069,15 +1083,12 @@
                     <label for="register-role">Tipo de cuenta</label>
                     <div class="form-input-container">
                         <i class="fas fa-id-badge"></i>
-                        <select id="register-role" class="form-input form-select" required>
-                            <option value="jugador">Jugador</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="marketing">Marketing</option>
-                        </select>
+                        <input type="text" id="register-role-display" class="form-input" value="Jugador" readonly>
+                        <input type="hidden" id="register-role" value="jugador">
                     </div>
                 </div>
                 <button type="submit" class="btn-neon btn-neon-pink auth-submit-btn">Crear cuenta</button>
-                <p class="auth-helper">Elige el tipo de cuenta que mejor se adapte a tu experiencia dentro de BolKristal.</p>
+                <p class="auth-helper">Las cuentas creadas desde esta pantalla entran como jugador.</p>
             </form>
         </div>
     </div>

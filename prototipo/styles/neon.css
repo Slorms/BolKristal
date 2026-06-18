@@ -253,6 +253,13 @@ button {
     background: rgba(7, 4, 12, 0.82);
 }
 
+.site-topbar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
 .site-brand,
 .site-brand-button {
     display: inline-flex;
@@ -297,6 +304,33 @@ button {
     gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.site-menu-panel {
+    display: contents;
+}
+
+.site-menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.site-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 240, 255, 0.28);
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.14);
+}
+
+.site-menu-toggle i {
+    transition: transform 0.25s ease;
 }
 
 .site-nav-link {
@@ -1707,6 +1741,8 @@ button {
     transform: translateY(-50%);
     color: var(--text-muted);
     transition: color 0.3s;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .form-input {
@@ -1743,7 +1779,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .form-select {
-    padding-left: 16px;
+    padding-left: 40px;
+    padding-right: 42px;
     cursor: pointer;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a79cb5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
@@ -3231,13 +3268,56 @@ body.lights-off .logo-text p {
     .site-topbar {
         padding: 18px 20px;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+    }
+
+    .site-topbar-head {
+        width: 100%;
+    }
+
+    .site-menu-toggle {
+        display: inline-flex;
+        flex: 0 0 auto;
+    }
+
+    .site-menu-panel {
+        display: block;
+        width: 100%;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: max-height 0.34s ease, opacity 0.24s ease, transform 0.34s ease, margin-top 0.34s ease;
+    }
+
+    .site-topbar.menu-open .site-menu-panel {
+        max-height: 420px;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+        margin-top: 12px;
+    }
+
+    .site-topbar.menu-open .site-menu-toggle i {
+        transform: rotate(90deg) scale(1.02);
     }
 
     .site-nav,
     .site-actions {
         width: 100%;
         justify-content: flex-start;
+    }
+
+    .site-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .site-actions {
+        margin-top: 12px;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .app-container {
@@ -3537,16 +3617,28 @@ body.lights-off .logo-text p {
     }
 
     .tournament-bracket-host.compact {
-        width: min(100%, 620px);
-        min-width: 620px;
+        width: min(100%, 560px);
+        min-width: 560px;
     }
 
     .tournament-bracket-host.modal {
-        min-width: 1180px;
+        min-width: 980px;
     }
 
     .client-bracket-card .tournament-bracket-host.modal {
-        min-width: 1080px;
+        min-width: 920px;
+    }
+
+    .bracket-scroll-area.compact {
+        justify-content: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .bracket-scroll-area.player {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 
     .data-pill {

@@ -1979,6 +1979,7 @@ function setActiveView(viewId) {
     });
 
     AppState.currentView = viewId;
+    closeAllSiteMenus();
 
     if (viewId !== 'admin-view') {
         toggleBracketModal(false);
@@ -2031,6 +2032,25 @@ function scrollToSection(sectionId) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function setSiteMenuState(topbar, toggleButton, isOpen) {
+    if (!topbar || !toggleButton) return;
+    topbar.classList.toggle('menu-open', isOpen);
+    toggleButton.setAttribute('aria-expanded', String(isOpen));
+}
+
+function closeAllSiteMenus() {
+    const menuConfigs = [
+        { topbarId: 'public-topbar', toggleId: 'public-menu-toggle' },
+        { topbarId: 'client-topbar', toggleId: 'client-menu-toggle' }
+    ];
+
+    menuConfigs.forEach((config) => {
+        const topbar = document.getElementById(config.topbarId);
+        const toggleButton = document.getElementById(config.toggleId);
+        setSiteMenuState(topbar, toggleButton, false);
+    });
+}
+
 function openAuthModal(mode = 'login') {
     const modal = document.getElementById('auth-modal');
     if (!modal) return;
@@ -2060,9 +2080,27 @@ function switchAuthTab(mode) {
 }
 
 function initEntryNavigation() {
+    const menuConfigs = [
+        { topbarId: 'public-topbar', toggleId: 'public-menu-toggle' },
+        { topbarId: 'client-topbar', toggleId: 'client-menu-toggle' }
+    ];
+
+    menuConfigs.forEach((config) => {
+        const topbar = document.getElementById(config.topbarId);
+        const toggleButton = document.getElementById(config.toggleId);
+        if (!topbar || !toggleButton) return;
+
+        toggleButton.addEventListener('click', () => {
+            const isOpen = topbar.classList.contains('menu-open');
+            closeAllSiteMenus();
+            setSiteMenuState(topbar, toggleButton, !isOpen);
+        });
+    });
+
     const scrollButtons = document.querySelectorAll('[data-scroll-to]');
     scrollButtons.forEach((button) => {
         button.addEventListener('click', () => {
+            closeAllSiteMenus();
             scrollToSection(button.dataset.scrollTo);
         });
     });
@@ -2070,6 +2108,7 @@ function initEntryNavigation() {
     const authButtons = document.querySelectorAll('[data-open-auth]');
     authButtons.forEach((button) => {
         button.addEventListener('click', () => {
+            closeAllSiteMenus();
             openAuthModal(button.dataset.openAuth || 'login');
         });
     });
@@ -2084,6 +2123,7 @@ function initEntryNavigation() {
     const clientHomeTrigger = document.getElementById('client-home-trigger');
     if (clientHomeTrigger) {
         clientHomeTrigger.addEventListener('click', () => {
+            closeAllSiteMenus();
             scrollToSection('cliente-bienvenida');
         });
     }
@@ -2149,7 +2189,7 @@ function initAuth() {
             const name = document.getElementById('register-name').value.trim();
             const email = document.getElementById('register-email').value.trim().toLowerCase();
             const password = document.getElementById('register-password').value;
-            const role = document.getElementById('register-role').value;
+            const role = 'jugador';
 
             if (!name || !email || !password) {
                 showToast('Completa todos los campos del registro.', 'error');
@@ -2851,8 +2891,8 @@ function renderPromociones() {
                 <button class="btn-neon btn-neon-cyan" onclick="simularUsoPromo('${promo.id}')" style="flex: 1; padding: 10px; font-size: 0.8rem; border-radius: 10px">
                     <i class="fas fa-barcode"></i> Canjear promo
                 </button>
-                <button class="btn-neon" onclick="publicarRedes('${promo.id}')" style="padding: 10px; border-radius: 10px">
-                    <i class="fab fa-facebook-square"></i>
+                <button class="btn-neon" onclick="publicarRedes('${promo.id}')" title="Simular alcance en redes" aria-label="Simular alcance en redes" style="padding: 10px 12px; border-radius: 10px">
+                    <i class="fas fa-bullhorn"></i>
                 </button>
             </div>
         `;
@@ -2876,7 +2916,7 @@ window.publicarRedes = function publicarRedes(id) {
     if (!promo) return;
 
     promo.vistas += Math.floor(Math.random() * 50) + 20;
-    showToast('Publicacion compartida en Facebook e Instagram.');
+    showToast('Alcance promocional simulado en redes actualizado.');
     renderPromociones();
 };
 
