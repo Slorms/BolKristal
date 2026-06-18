@@ -10,7 +10,7 @@
 
 <br>
 
-<img src="/prototipo/images/hero-bowling-party.png" alt="BolKristal portada" width="880">
+<img src="/prototipo/images/hero-bowling-party.png" alt="BolKristal portada" width="330">
 
 </div>
 
