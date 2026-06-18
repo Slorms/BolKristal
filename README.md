@@ -1,239 +1,355 @@
-# BolKristal
+# <div align="center">BolKristal Lounge & Sports Bar</div>
 
-Portal web prototipo para **BolKristal Lounge & Sports Bar**, diseñado para mostrar una experiencia separada por tipo de usuario:
+<div align="center">
 
-- **Vista pública** para presentar el negocio.
-- **Vista de cliente** con contenido de interés como historia, promociones y beneficios.
-- **Vista de administrador** para operar torneos, clientes, promociones y reportes.
+Prototipo web para la operacion visual de BolKristal: torneos de boliche, jornadas, inscripciones, promociones y experiencia de jugador.
 
-Este proyecto fue pensado como una propuesta visual y funcional para una plataforma de gestión y atención digital dentro de un bar temático con boliche, billar y promociones comerciales.
+[Abrir pagina](https://slorms.github.io/BolKristal/prototipo/)
 
----
-
-## Vista General
-
-BolKristal no solo muestra información del negocio, también plantea una experiencia de acceso por perfiles:
-
-- Un visitante puede entrar a una **landing page pública**.
-- Un usuario registrado como **cliente** accede a una vista enfocada en contenido comercial e informativo.
-- Un usuario con perfil **administrador** entra a un panel de gestión con herramientas operativas.
-
-La aplicación funciona actualmente del lado del cliente con **HTML, CSS y JavaScript puro**, utilizando `localStorage` para simular cuentas y sesión.
+</div>
 
 ---
 
-## Características Principales
+## Acceso rapido
 
-### Portal público
+- URL publica del prototipo:
+  `https://slorms.github.io/BolKristal/prototipo/`
+- Archivo principal del proyecto:
+  `index.html`
+- Frontend base:
+  `styles/neon.css` y `js/app.js`
 
-- Barra de navegación con acceso rápido a:
-  - Quiénes somos
-  - Nuestra historia
-  - Promociones
-  - Contacto
-- Botones visibles de:
-  - `Iniciar sesión`
-  - `Crear cuenta`
-- Modal de autenticación y registro desde la misma página principal
+## Resumen general
 
-### Vista de cliente
+Este proyecto evoluciono de una pagina estatica a un prototipo visual mucho mas completo para BolKristal. Hoy incluye:
 
-- Sección de bienvenida personalizada
-- Información sobre el negocio
-- Historia de BolKristal
-- Promociones destacadas
-- Beneficios potenciales para clientes frecuentes
+- vista publica de la marca con enfoque en boliche, fiestas y promociones
+- modal de acceso con inicio de sesion
+- vista de jugador
+- panel administrativo responsivo
+- modulo de torneo con bracket eliminatorio
+- modulo de jornadas
+- modulo de inscripciones
+- modulo de promociones
+- directorio de clientes
+- jukebox visual en el panel admin
 
-### Panel de administrador
+## Vistas disponibles
 
-- Resumen general del negocio
-- Gestión de torneo de boliche
-- Registro de equipos
-- Tabla de clasificación
-- Generación de jornadas
-- Captura de marcadores
-- Directorio de clientes frecuentes
-- Gestión de promociones
-- Reportes de demanda y rentabilidad
-- Controles visuales como luces y jukebox temática
+### 1. Vista publica
 
----
+La vista publica presenta la identidad del negocio y funciona como portada principal.
 
-## Roles de Usuario
+Incluye:
 
-El sistema contempla dos roles:
+- hero principal con imagenes de boliche y fiesta
+- seccion de experiencia BolKristal
+- torneo activo
+- promociones
+- acceso a login
+- menu hamburguesa en movil
 
-| Rol | Acceso |
-|---|---|
-| `cliente` | Vista enfocada en contenido, promociones e identidad del negocio |
-| `admin` | Panel interno con herramientas operativas |
+### 2. Vista de jugador
 
-Cuando un usuario inicia sesión o crea una cuenta, el sistema detecta el rol y lo redirige automáticamente a la vista correspondiente.
+Cuando un usuario entra con cuenta de jugador, se le muestra una zona propia con:
 
----
+- bienvenida personalizada
+- resumen de torneo
+- bracket oficial en solo lectura
+- promociones
+- seccion de beneficios
+- menu hamburguesa en movil
 
-## Credenciales Demo
+Importante:
 
-Puedes probar el flujo administrativo con esta cuenta:
+- hoy esta vista es informativa
+- aun no tiene analiticas personales reales ligadas a una pareja o a un historial individual
 
-```txt
-Correo: admin@bolkristal.com
-Contraseña: Admin123!
+### 3. Vista administrativa
+
+El panel administrativo concentra la operacion interna del prototipo.
+
+Secciones actuales:
+
+- `Resumen`
+- `Torneo Boliche`
+- `Jornadas`
+- `Inscripciones`
+- `Clientes Bar`
+- `Promociones`
+- `Reportes`
+
+En movil:
+
+- la barra lateral se convierte en menu hamburguesa
+- el panel lateral queda fijo y desplegable
+
+## Modulo de autenticacion
+
+El acceso se hace desde un modal con pestanas:
+
+- `Iniciar sesion`
+- `Crear cuenta`
+
+### Estado actual de login
+
+Funciona con cuentas guardadas en `localStorage`.
+
+Claves usadas:
+
+- usuarios: `bolkristal-users`
+- sesion: `bolkristal-session`
+
+### Cuentas demo incluidas
+
+- Administrador:
+  `admin@bolkristal.mx` / `Admin123!`
+- Marketing:
+  `marketing@bolkristal.mx` / `Marketing123!`
+- Jugador:
+  `ana@gmail.com` / `Jugador123!`
+
+### Crear cuenta
+
+Actualmente la pestana de `Crear cuenta`:
+
+- sigue visible
+- muestra una superposicion estilo construccion
+- esta bloqueada visualmente con cintas cruzadas
+- no registra usuarios nuevos por el momento
+
+Ademas:
+
+- si en el futuro se activa el flujo publico, las cuentas creadas desde esa pantalla deben entrar solo como `jugador`
+
+### Limitacion actual importante
+
+Las cuentas se guardan solo en el navegador local. Eso significa:
+
+- si una cuenta se crea en Firefox, Chrome no la ve
+- no existe aun una base de datos compartida entre navegadores o dispositivos
+
+## Modulo de torneo
+
+Es una de las partes mas trabajadas del proyecto.
+
+### Bracket eliminatorio
+
+El sistema ya incluye:
+
+- eliminatoria desde `16avos` hasta `Final`
+- soporte para iniciar en distintas fases:
+  `16avos`, `8avos`, `Cuartos`, `Semifinal` o `Final`
+- espejo visual del bracket
+- vista compacta
+- vista grande para jugador en solo lectura
+- guardado local del estado del cuadro
+
+### Control de eliminatoria
+
+Dentro del panel admin se puede:
+
+- elegir categoria del torneo
+- elegir fase inicial
+- seleccionar parejas inscritas
+- sortear posiciones dentro del cuadro
+- generar el bracket
+- revisar progreso del torneo
+- ver siguiente duelo
+- ver avance por ronda
+
+Tambien se agrego validacion para que:
+
+- no se genere un cuadro si faltan parejas para completar la fase elegida
+- el sistema muestre cuantas parejas faltan
+
+### Estado visual del bracket
+
+Actualmente:
+
+- el bracket admin ya no se edita dando clic sobre equipos
+- el bracket chico ya no es editable
+- el bracket grande ya no se usa como editor manual
+- la lectura del avance se hace desde el panel y desde el bloque de enfrentamiento actual
+
+### Campeon del torneo
+
+Cuando ya hay campeon:
+
+- aparece una imagen de pino con corona
+- se refleja tanto en vista compacta como en vista grande del cuadro
+
+## Captura de enfrentamiento actual
+
+Se agrego un bloque especial para capturar el partido activo dentro del torneo.
+
+Incluye:
+
+- marcador por pareja
+- 10 frames por pareja
+- validacion de score de boliche
+- calculo automatico del ganador
+- avance automatico del ganador al siguiente cruce
+
+### Como esta modelado hoy
+
+El marcador actual funciona como score por `pareja`, parecido a una dinamica tipo Baker:
+
+- 10 frames por pareja
+- hasta 2 tiros por frame
+- tiro extra en frame 10 cuando aplica
+
+### Mejoras ya hechas en esta parte
+
+- el frame 10 ya solo crece cuando aparece el tiro bonus
+- los tiros se habilitan de forma guiada
+- si hay strike, se bloquea el segundo tiro del frame
+- el flujo evita capturas imposibles
+- se quitaron las flechas de los inputs numericos
+- ya no brinca automaticamente a otra casilla al escribir, para permitir capturar `10`
+
+## Modulo de jornadas
+
+Se separo la logica semanal del torneo.
+
+Actualmente se puede:
+
+- generar una jornada semanal
+- revisar cruces
+- ver horarios
+- ver pistas asignadas
+- revisar estado de las partidas
+- capturar marcadores semanales en su propia seccion
+
+## Modulo de inscripciones
+
+La seccion de inscripciones ya esta organizada en una sola columna.
+
+Incluye:
+
+- formulario de alta de parejas
+- costo segun nivel
+- tabla de parejas inscritas
+- conteo por categoria
+- total de registros
+
+Categorias actuales:
+
+- `Profesional`
+- `Principiante`
+
+## Directorio de clientes
+
+El modulo de clientes incluye:
+
+- listado visual de clientes
+- filtros de busqueda
+- segmentos de interes
+- datos de contacto
+- visitas
+- torneos jugados
+- consumo
+- promos usadas
+
+## Modulo de promociones
+
+El panel de promociones permite:
+
+- mostrar promociones activas
+- registrar nuevas promociones en la pizarra
+- simular canje de promo
+- simular alcance promocional en redes
+
+Importante:
+
+- el boton de redes no publica en Facebook ni Instagram de verdad
+- solo incrementa un contador local y muestra un mensaje de simulacion
+
+## Diseno y experiencia visual
+
+Durante el desarrollo se trabajaron muchos ajustes de interfaz:
+
+- diseno mas llamativo para el inicio
+- imagenes de boliche y fiesta
+- pagina mas corporativa y menos explicativa del proceso de construccion
+- textos depurados para que hablen del negocio y no del prototipo
+- panel admin mas compacto
+- menu admin fijo
+- menu hamburguesa en pantallas verticales
+- animacion del menu de arriba hacia abajo
+- mejoras de responsividad en multiples bloques
+
+## Responsividad
+
+Se ajustaron varios puntos importantes:
+
+- formulario de acceso y registro
+- botones de login y crear cuenta
+- panel administrativo
+- menu hamburguesa en movil
+- bracket en vista de jugador
+- tablero de score del enfrentamiento actual
+- pagina de inscripciones en una sola columna
+
+## Estructura principal del proyecto
+
+```text
+prototipo/
+|- index.html
+|- styles/
+|  |- neon.css
+|- js/
+|  |- app.js
+|- images/
 ```
 
-También existe una cuenta cliente de ejemplo:
+## Tecnologias usadas
 
-```txt
-Correo: cliente@bolkristal.com
-Contraseña: Cliente123!
-```
+- HTML
+- CSS
+- JavaScript vanilla
+- `localStorage` para persistencia local del prototipo
 
----
+## Estado actual del proyecto
 
-## Tecnologías Utilizadas
+Hoy el prototipo ya sirve para:
 
-- **HTML5**
-- **CSS3**
-- **JavaScript Vanilla**
-- **Font Awesome** para iconografía
-- **Google Fonts** para tipografía visual
-- **localStorage** para persistencia simple de usuarios y sesión
+- presentar la marca
+- iniciar sesion con usuarios demo
+- navegar entre vista publica, jugador y admin
+- administrar parejas inscritas
+- generar y seguir un bracket
+- capturar scores del enfrentamiento actual
+- revisar jornadas
+- mostrar promociones y clientes
 
----
+## Limitaciones actuales
 
-## Estructura del Proyecto
+Todavia no esta resuelto:
 
-```txt
-BolKristal_Bar/
-│
-├── index.html
-├── README.md
-├── images/
-│   └── neon_banner.png
-├── js/
-│   └── app.js
-└── styles/
-    └── neon.css
-```
+- backend real
+- base de datos compartida
+- cuentas sincronizadas entre navegadores
+- analiticas personalizadas para cada jugador
+- relacion real entre usuario, pareja inscrita y estadisticas historicas
+- publicacion real a redes sociales
 
----
+## Siguiente paso recomendado
 
-## Cómo Ejecutarlo
+Si este prototipo va a seguir creciendo, el paso mas importante seria conectar:
 
-Este proyecto no requiere instalación de dependencias.
+- usuarios
+- parejas inscritas
+- jornadas
+- resultados
+- estadisticas
 
-### Opción 1: abrir directamente
-
-Abre el archivo `index.html` en tu navegador.
-
-### Opción 2: usar un servidor local
-
-Si prefieres probarlo con un servidor local, puedes usar cualquiera de estas opciones:
-
-```bash
-# Con VS Code Live Server
-Abrir index.html con Live Server
-```
-
-```bash
-# Con Python
-python -m http.server
-```
-
-Luego abre en tu navegador una ruta similar a:
-
-```txt
-http://localhost:8000/
-```
+a una persistencia real, para que el sistema funcione igual en cualquier navegador o dispositivo.
 
 ---
 
-## Flujo de Uso
+## Acceso directo
 
-### 1. Entrada pública
+Para entrar a la pagina usa:
 
-El usuario llega a la página principal y puede:
-
-- explorar información del negocio
-- revisar promociones
-- abrir el modal de autenticación
-
-### 2. Iniciar sesión o crear cuenta
-
-Desde el modal puede:
-
-- iniciar sesión con una cuenta existente
-- registrarse como `cliente` o `admin`
-
-### 3. Redirección por rol
-
-- Si la cuenta es `cliente`, entra a la vista de cliente.
-- Si la cuenta es `admin`, entra al panel administrativo.
-
-### 4. Persistencia local
-
-La sesión queda guardada en `localStorage`, por lo que al recargar la página se intenta restaurar automáticamente.
-
----
-
-## Diseño y Enfoque Visual
-
-El proyecto utiliza una estética **neón / lounge / nightlife**, alineada con la identidad del negocio:
-
-- fondos oscuros con degradados
-- tarjetas tipo glassmorphism
-- acentos en rosa, cian, verde y amarillo neón
-- navegación moderna
-- modal de acceso integrado
-- diseño responsive para escritorio y móvil
-
----
-
-## Estado Actual del Proyecto
-
-Actualmente el sistema funciona como **prototipo funcional de interfaz**:
-
-- la autenticación es simulada con almacenamiento local
-- no existe backend conectado
-- no hay base de datos real
-- la información administrativa se mantiene en memoria durante la ejecución
-
-Esto lo hace ideal para:
-
-- demostraciones académicas
-- presentación de propuesta funcional
-- validación de requerimientos
-- evolución futura hacia una aplicación completa
-
----
-
-## Mejoras Futuras Recomendadas
-
-- Conectar autenticación con backend real
-- Guardar usuarios en base de datos
-- Implementar recuperación de contraseña
-- Agregar reservas en línea
-- Crear historial real de visitas y promociones
-- Incorporar panel de métricas dinámicas
-- Separar vistas en componentes o módulos más escalables
-- Migrar a un framework como React, Vue o Angular si el proyecto crece
-
----
-
-## Objetivo del Proyecto
-
-Este proyecto busca demostrar cómo una misma plataforma puede atender necesidades distintas dentro del negocio:
-
-- **marketing y presentación** para visitantes
-- **experiencia informativa** para clientes
-- **operación interna** para administración
-
-La separación por perfiles mejora la organización del sistema y hace más clara la experiencia de uso para cada tipo de usuario.
-
----
-
-## Autoría
-
-Proyecto desarrollado como prototipo para **BolKristal Lounge & Sports Bar**, con enfoque en experiencia visual, navegación por roles y validación funcional.
-
-Si este repositorio se publica en GitHub, este `README` puede servir como base oficial de presentación del proyecto.
+`https://slorms.github.io/BolKristal/prototipo/`
