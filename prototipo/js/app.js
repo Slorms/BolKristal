@@ -2185,6 +2185,8 @@ function initAuth() {
     if (registerForm) {
         registerForm.addEventListener('submit', (event) => {
             event.preventDefault();
+            showToast('Crear cuenta esta en desarrollo por el momento.', 'info');
+            return;
 
             const name = document.getElementById('register-name').value.trim();
             const email = document.getElementById('register-email').value.trim().toLowerCase();

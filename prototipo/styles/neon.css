@@ -1012,7 +1012,19 @@ button {
 }
 
 .auth-form {
+    position: relative;
     animation: fade-in 0.25s ease-out;
+}
+
+.auth-form.construction-mode {
+    min-height: 470px;
+}
+
+.auth-form.construction-mode > *:not(.construction-overlay) {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.42;
+    filter: saturate(0.7);
 }
 
 .auth-submit-btn {
@@ -1022,6 +1034,87 @@ button {
 .auth-helper {
     margin-top: 14px;
     font-size: 0.88rem;
+}
+
+.construction-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 5;
+    pointer-events: auto;
+}
+
+.construction-tape {
+    position: absolute;
+    left: -14%;
+    width: 128%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            #f7c400 0 18px,
+            #141414 18px 36px
+        );
+    color: #111;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+.construction-tape-a {
+    transform: rotate(24deg);
+}
+
+.construction-tape-b {
+    transform: rotate(-24deg);
+}
+
+.construction-sign {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 280px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+    padding: 18px 16px;
+    border-radius: 22px;
+    border: 3px solid rgba(255, 196, 0, 0.9);
+    background: linear-gradient(180deg, rgba(79, 48, 4, 0.96), rgba(33, 19, 2, 0.94));
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.38), 0 0 0 6px rgba(255, 183, 3, 0.12);
+}
+
+.construction-sign-top {
+    color: rgba(255, 236, 179, 0.88);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.construction-sign strong {
+    color: #fff7d1;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.construction-sign small {
+    color: rgba(255, 242, 207, 0.86);
+    font-size: 0.78rem;
+    line-height: 1.4;
 }
 
 .app-container {
