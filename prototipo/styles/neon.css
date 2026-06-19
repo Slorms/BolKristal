@@ -1034,6 +1034,7 @@ button {
 .auth-helper {
     margin-top: 14px;
     font-size: 0.88rem;
+    color: var(--text-secondary);
 }
 
 .construction-overlay {
@@ -1679,6 +1680,11 @@ button {
     gap: 16px;
 }
 
+.client-registration-layout {
+    margin-top: 20px;
+    align-items: start;
+}
+
 .grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1897,7 +1903,8 @@ input[type="number"]::-webkit-inner-spin-button {
     text-align: right;
 }
 
-.price-box #registration-cost {
+.price-box #registration-cost,
+.price-box #client-registration-cost {
     font-size: 1.15rem;
     font-weight: 800;
     color: var(--neon-cyan);

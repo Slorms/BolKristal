@@ -261,6 +261,7 @@
             <div class="site-menu-panel" id="client-site-menu">
                 <nav class="site-nav">
                     <button class="site-nav-link" data-scroll-to="cliente-bienvenida">Inicio</button>
+                    <button class="site-nav-link" data-scroll-to="cliente-inscripcion">Inscribirme</button>
                     <button class="site-nav-link" data-scroll-to="cliente-torneo">Mi torneo</button>
                     <button class="site-nav-link" data-scroll-to="cliente-promos">Promociones</button>
                     <button class="site-nav-link" data-scroll-to="cliente-beneficios">Beneficios</button>
@@ -281,7 +282,7 @@
                     y la informacion mas importante para volver a jugar o celebrar.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn-neon btn-neon-cyan" data-scroll-to="cliente-torneo">
+                    <button class="btn-neon btn-neon-cyan" id="client-primary-action" data-scroll-to="cliente-inscripcion">
                         <i class="fas fa-trophy"></i> Ver mi torneo
                     </button>
                     <button class="btn-outline" data-scroll-to="cliente-bracket">
@@ -312,6 +313,81 @@
             </div>
         </section>
 
+        <section id="cliente-inscripcion" class="info-section alt-section">
+            <div class="section-heading">
+                <span class="section-chip">Inscribirme al torneo</span>
+                <h2>Registra tu pareja en linea y asegura tu lugar.</h2>
+                <p>
+                    Completa los datos obligatorios del torneo, confirma el nivel de experiencia y
+                    revisa cuantas parejas quedan por entrar antes de cerrar convocatoria.
+                </p>
+            </div>
+            <div id="client-registration-summary" class="schedule-grid"></div>
+            <div class="grid-2 client-registration-layout">
+                <div class="card-glass cyan-accent">
+                    <div class="card-title-group" style="margin-bottom: 18px;">
+                        <h3>Formulario de inscripcion</h3>
+                        <p>Este torneo se maneja solo por parejas y no permite registros duplicados.</p>
+                    </div>
+                    <form id="client-registration-form">
+                        <div class="form-group">
+                            <label for="client-team-name">Nombre de la pareja / equipo</label>
+                            <div class="form-input-container">
+                                <i class="fas fa-shield-alt"></i>
+                                <input type="text" id="client-team-name" class="form-input" placeholder="Ej. Los Chuzadores del Norte" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="client-player-name">Tu nombre completo</label>
+                            <div class="form-input-container">
+                                <i class="far fa-user"></i>
+                                <input type="text" id="client-player-name" class="form-input" placeholder="Tu nombre" readonly required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="client-partner-name">Nombre completo de tu pareja</label>
+                            <div class="form-input-container">
+                                <i class="fas fa-user-group"></i>
+                                <input type="text" id="client-partner-name" class="form-input" placeholder="Nombre completo de tu pareja" required>
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="client-player-experience">Nivel de experiencia</label>
+                                <div class="form-input-container">
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <select id="client-player-experience" class="form-input form-select" required>
+                                        <option value="principiante" selected>Sin experiencia previa / Principiante</option>
+                                        <option value="profesional">Con experiencia previa / Profesional</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group price-box">
+                                <label>Costo de inscripcion</label>
+                                <div id="client-registration-cost">$150 MXN</div>
+                            </div>
+                        </div>
+                        <button type="submit" id="client-registration-submit" class="btn-neon btn-neon-pink form-submit-btn">
+                            <i class="fas fa-file-signature"></i> Confirmar inscripcion
+                        </button>
+                        <p class="auth-helper" id="client-registration-helper">Todos los campos son obligatorios.</p>
+                    </form>
+                </div>
+                <div class="card-glass pink-accent">
+                    <div class="card-title-group" style="margin-bottom: 18px;">
+                        <h3>Validaciones del torneo</h3>
+                        <p>La plataforma revisa tus datos antes de guardar la inscripcion.</p>
+                    </div>
+                    <div class="column-stack tight">
+                        <span class="session-pill"><i class="fas fa-check"></i> Nombre del jugador obligatorio</span>
+                        <span class="session-pill"><i class="fas fa-check"></i> Nombre de la pareja obligatorio</span>
+                        <span class="session-pill"><i class="fas fa-check"></i> Nivel con precio diferenciado</span>
+                        <span class="session-pill"><i class="fas fa-check"></i> Sin jugadores repetidos en el torneo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="cliente-torneo" class="info-section">
             <div class="section-heading">
                 <span class="section-chip">Mi torneo</span>
@@ -322,35 +398,9 @@
                 </p>
             </div>
             <div class="schedule-grid">
-                <article class="schedule-card">
-                    <span class="badge neon-badge-cyan">Proxima partida</span>
-                    <h3>Jornada 1 en pista 1</h3>
-                    <p>La primera partida esta programada para el 8 de julio de 2026 a las 18:00 hrs dentro de la semana inaugural.</p>
-                    <div class="data-grid">
-                        <span class="data-pill"><i class="far fa-clock"></i> 18:00 hrs</span>
-                        <span class="data-pill"><i class="fas fa-road"></i> Pista 1</span>
-                        <span class="data-pill"><i class="fas fa-circle-play"></i> Estado programada</span>
-                    </div>
-                </article>
-                <article class="schedule-card">
-                    <span class="badge neon-badge-pink">Parejas destacadas</span>
-                    <h3>Equipos semilla del torneo</h3>
-                    <p>Los Truenos y Bola de Fuego aparecen como las primeras parejas confirmadas para esta temporada.</p>
-                    <div class="ranking-list">
-                        <div class="ranking-pill"><strong>Los Truenos</strong> <span>Ana Torres + Luis Herrera</span></div>
-                        <div class="ranking-pill"><strong>Bola de Fuego</strong> <span>Maria Gomez + Pedro Diaz</span></div>
-                    </div>
-                </article>
-                <article class="schedule-card">
-                    <span class="badge neon-badge-yellow">Estado general</span>
-                    <h3>Pistas y precios</h3>
-                    <p>Hay 4 pistas registradas, 3 disponibles y 1 en mantenimiento, con tarifas por nivel de juego.</p>
-                    <div class="data-grid">
-                        <span class="data-pill"><i class="fas fa-bowling-ball"></i> 3 pistas listas</span>
-                        <span class="data-pill"><i class="fas fa-screwdriver-wrench"></i> 1 mantenimiento</span>
-                        <span class="data-pill"><i class="fas fa-money-check-dollar"></i> $150 / $200</span>
-                    </div>
-                </article>
+                <article class="schedule-card" id="client-team-status-card"></article>
+                <article class="schedule-card" id="client-next-match-card"></article>
+                <article class="schedule-card" id="client-overview-card"></article>
             </div>
         </section>
 
@@ -756,11 +806,18 @@
                         <p>Registro de equipos y administracion del directorio interno del torneo</p>
                     </div>
                     <div class="header-actions">
-                        <span class="badge neon-badge-yellow"><i class="fas fa-user-pen"></i> Alta de parejas</span>
+                        <span class="badge neon-badge-yellow" id="registration-status-badge"><i class="fas fa-user-pen"></i> Alta de parejas</span>
+                        <button type="button" class="btn-neon btn-neon-cyan" id="btn-open-registration">
+                            <i class="fas fa-door-open"></i> Abrir convocatoria
+                        </button>
+                        <button type="button" class="btn-neon btn-neon-pink" id="btn-close-registration">
+                            <i class="fas fa-door-closed"></i> Cerrar inscripciones
+                        </button>
                     </div>
                 </div>
 
                 <div class="column-stack inscripciones-single-column">
+                    <div id="admin-registration-summary" class="team-category-summary"></div>
                     <div class="card-glass">
                         <div class="card-header-flex">
                             <div class="card-title-group">
@@ -828,6 +885,8 @@
                                         <th>Integrantes</th>
                                         <th>Habilidad</th>
                                         <th>Pago</th>
+                                        <th>Registro</th>
+                                        <th>Origen</th>
                                         <th>Eliminar</th>
                                     </tr>
                                 </thead>
@@ -1057,12 +1116,12 @@
                 <button type="submit" class="btn-neon btn-neon-cyan auth-submit-btn">Entrar</button>
             </form>
 
-            <form id="register-form" class="auth-form construction-mode" hidden>
+            <form id="register-form" class="auth-form" hidden>
                 <div class="form-group">
                     <label for="register-name">Nombre completo</label>
                     <div class="form-input-container">
                         <i class="far fa-user"></i>
-                        <input type="text" id="register-name" class="form-input" placeholder="Tu nombre" required>
+                        <input type="text" id="register-name" class="form-input" placeholder="Tu nombre completo" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -1076,7 +1135,7 @@
                     <label for="register-password">Contrasena</label>
                     <div class="form-input-container">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="register-password" class="form-input" placeholder="Crea una contrasena" required>
+                        <input type="password" id="register-password" class="form-input" placeholder="Crea una contrasena" minlength="6" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -1088,16 +1147,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn-neon btn-neon-pink auth-submit-btn">Crear cuenta</button>
-                <p class="auth-helper">Las cuentas creadas desde esta pantalla entran como jugador.</p>
-                <div class="construction-overlay" aria-hidden="true">
-                    <span class="construction-tape construction-tape-a">En desarrollo</span>
-                    <span class="construction-tape construction-tape-b">En desarrollo</span>
-                    <div class="construction-sign">
-                        <span class="construction-sign-top">BolKristal</span>
-                        <strong>EN CONSTRUCCION</strong>
-                        <small>Registro de cuentas disponible mas adelante</small>
-                    </div>
-                </div>
+                <p class="auth-helper">Las cuentas creadas desde esta pantalla entran como jugador y despues pueden inscribirse al torneo.</p>
             </form>
         </div>
     </div>

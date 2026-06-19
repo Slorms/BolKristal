@@ -3,6 +3,9 @@ const SESSION_STORAGE_KEY = 'bolkristal-session';
 const TEAMS_STORAGE_KEY = 'bolkristal-teams';
 const BRACKET_STORAGE_KEY = 'bolkristal-bracket-demo';
 const BRACKET_BUILDER_STORAGE_KEY = 'bolkristal-bracket-builder';
+const CLIENTS_STORAGE_KEY = 'bolkristal-clientes';
+const TOURNAMENT_STORAGE_KEY = 'bolkristal-torneo-activo';
+const MATCHUPS_STORAGE_KEY = 'bolkristal-jornada-semanal';
 
 const BRACKET_ROUNDS = [
     { key: 'dieciseisavos', label: '16avos', matchCount: 16 },
@@ -14,38 +17,40 @@ const BRACKET_ROUNDS = [
 const BOWLING_FRAME_COUNT = 10;
 
 const DEFAULT_TEAMS = [
-    { id: 1, nombre: 'Impacto 300', jugador1: 'Ana Torres', jugador2: 'Luis Herrera', nivel: 'profesional', precio: 200, puntos: 268, jugados: 1 },
-    { id: 2, nombre: 'Chuza Real', jugador1: 'Maria Gomez', jugador2: 'Pedro Diaz', nivel: 'principiante', precio: 150, puntos: 215, jugados: 1 },
-    { id: 3, nombre: 'Neon Rollers', jugador1: 'Fernanda Ruiz', jugador2: 'Jorge Salas', nivel: 'profesional', precio: 200, puntos: 240, jugados: 1 },
-    { id: 4, nombre: 'Power Pins', jugador1: 'Sofia Luna', jugador2: 'Diego Ortiz', nivel: 'principiante', precio: 150, puntos: 184, jugados: 1 },
-    { id: 5, nombre: 'Strikers Club', jugador1: 'Valeria Mora', jugador2: 'Ivan Reyes', nivel: 'profesional', precio: 200, puntos: 251, jugados: 1 },
-    { id: 6, nombre: 'Pista Central', jugador1: 'Daniela Ponce', jugador2: 'Mario Silva', nivel: 'principiante', precio: 150, puntos: 176, jugados: 1 },
-    { id: 7, nombre: 'Golden Frames', jugador1: 'Karen Soto', jugador2: 'Elias Medina', nivel: 'profesional', precio: 200, puntos: 233, jugados: 1 },
-    { id: 8, nombre: 'Turbo Split', jugador1: 'Paola Campos', jugador2: 'Rene Vega', nivel: 'principiante', precio: 150, puntos: 171, jugados: 1 },
-    { id: 9, nombre: 'Black Lanes', jugador1: 'Lucia Roman', jugador2: 'Axel Cruz', nivel: 'profesional', precio: 200, puntos: 247, jugados: 1 },
-    { id: 10, nombre: 'King Bowlers', jugador1: 'Elena Castro', jugador2: 'Pablo Nunez', nivel: 'principiante', precio: 150, puntos: 188, jugados: 1 },
-    { id: 11, nombre: 'Flash Team', jugador1: 'Andrea Villa', jugador2: 'Hugo Rosales', nivel: 'profesional', precio: 200, puntos: 221, jugados: 1 },
-    { id: 12, nombre: 'Perfect Roll', jugador1: 'Miriam Acosta', jugador2: 'Sergio Galvan', nivel: 'principiante', precio: 150, puntos: 194, jugados: 1 },
-    { id: 13, nombre: 'Royal Strike', jugador1: 'Camila Rocha', jugador2: 'Alonso Meza', nivel: 'profesional', precio: 200, puntos: 259, jugados: 1 },
-    { id: 14, nombre: 'Blue Sparks', jugador1: 'Bianca Rios', jugador2: 'Omar Valle', nivel: 'principiante', precio: 150, puntos: 182, jugados: 1 },
-    { id: 15, nombre: 'Silver Bowl', jugador1: 'Natalia Rangel', jugador2: 'Cesar Tapia', nivel: 'profesional', precio: 200, puntos: 238, jugados: 1 },
-    { id: 16, nombre: 'Luna Pins', jugador1: 'Grecia Cardenas', jugador2: 'Julio Mena', nivel: 'principiante', precio: 150, puntos: 169, jugados: 1 },
-    { id: 17, nombre: 'Titanes 10', jugador1: 'Erika Bravo', jugador2: 'Raul Ochoa', nivel: 'profesional', precio: 200, puntos: 227, jugados: 1 },
-    { id: 18, nombre: 'Zona Chuza', jugador1: 'Ximena Solis', jugador2: 'Bruno Rivas', nivel: 'principiante', precio: 150, puntos: 178, jugados: 1 },
-    { id: 19, nombre: 'Lane Masters', jugador1: 'Danna Hurtado', jugador2: 'Nestor Lara', nivel: 'profesional', precio: 200, puntos: 244, jugados: 1 },
-    { id: 20, nombre: 'Diamante Bowl', jugador1: 'Alexa Padilla', jugador2: 'Tadeo Velez', nivel: 'principiante', precio: 150, puntos: 191, jugados: 1 },
-    { id: 21, nombre: 'Orbit Strikers', jugador1: 'Paula Ibarra', jugador2: 'Ramon Juarez', nivel: 'profesional', precio: 200, puntos: 236, jugados: 1 },
-    { id: 22, nombre: 'Lucky Lane', jugador1: 'Regina Baeza', jugador2: 'Kevin Flores', nivel: 'principiante', precio: 150, puntos: 186, jugados: 1 },
-    { id: 23, nombre: 'Spin Masters', jugador1: 'Melissa Trejo', jugador2: 'Gael Prieto', nivel: 'profesional', precio: 200, puntos: 242, jugados: 1 },
-    { id: 24, nombre: 'Glow Roll', jugador1: 'Carla Montalvo', jugador2: 'Jesus Tovar', nivel: 'principiante', precio: 150, puntos: 173, jugados: 1 },
-    { id: 25, nombre: 'Phantom Pins', jugador1: 'Jimena Huerta', jugador2: 'Adrian Sosa', nivel: 'profesional', precio: 200, puntos: 254, jugados: 1 },
-    { id: 26, nombre: 'Night Bowl', jugador1: 'Daniela Cota', jugador2: 'Emilio Paredes', nivel: 'principiante', precio: 150, puntos: 189, jugados: 1 },
-    { id: 27, nombre: 'Crown Splitters', jugador1: 'Renata Bonilla', jugador2: 'Saul Beltran', nivel: 'profesional', precio: 200, puntos: 249, jugados: 1 },
-    { id: 28, nombre: 'Fire Lanes', jugador1: 'Ariadna Escobar', jugador2: 'Ian Ceballos', nivel: 'principiante', precio: 150, puntos: 177, jugados: 1 },
-    { id: 29, nombre: 'Vector Rollers', jugador1: 'Monica Yanez', jugador2: 'Rodrigo Tapia', nivel: 'profesional', precio: 200, puntos: 231, jugados: 1 },
-    { id: 30, nombre: 'Strike Nova', jugador1: 'Marisol Figueroa', jugador2: 'Alan Nieto', nivel: 'principiante', precio: 150, puntos: 192, jugados: 1 },
-    { id: 31, nombre: 'Velocity Pins', jugador1: 'Gabriela Arce', jugador2: 'Fabian Rosas', nivel: 'profesional', precio: 200, puntos: 246, jugados: 1 },
-    { id: 32, nombre: 'Crystal Frames', jugador1: 'Natalie Rosales', jugador2: 'Tomas Ledezma', nivel: 'principiante', precio: 150, puntos: 181, jugados: 1 }
+    {
+        id: 1,
+        nombre: 'Los Truenos',
+        jugador1: 'Ana Torres',
+        jugador2: 'Luis Herrera',
+        nivel: 'profesional',
+        precio: 200,
+        puntos: 268,
+        jugados: 1,
+        ownerUserId: 'U-JUGADOR-1',
+        createdBy: 'demo',
+        createdAt: '2026-06-01T10:00:00.000Z'
+    },
+    {
+        id: 2,
+        nombre: 'Bola de Fuego',
+        jugador1: 'Maria Gomez',
+        jugador2: 'Pedro Diaz',
+        nivel: 'principiante',
+        precio: 150,
+        puntos: 215,
+        jugados: 1,
+        ownerUserId: null,
+        createdBy: 'demo',
+        createdAt: '2026-06-02T10:00:00.000Z'
+    }
+];
+
+const DEFAULT_CLIENTS = [
+    { id: 'C001', nombre: 'Ana Torres', email: 'ana@gmail.com', tel: '449-111-2233', cumple: '14 de Mayo', visitasBillar: 8, torneosJugados: 1, compras: '$3,200 MXN', preferido: 'Boliche', promoUsadas: 2 },
+    { id: 'C002', nombre: 'Luis Herrera', email: 'luis@gmail.com', tel: '449-444-5566', cumple: '03 de Junio', visitasBillar: 6, torneosJugados: 1, compras: '$2,980 MXN', preferido: 'Billar', promoUsadas: 1 },
+    { id: 'C003', nombre: 'Maria Gomez', email: 'maria@gmail.com', tel: '449-777-8899', cumple: '28 de Mayo', visitasBillar: 17, torneosJugados: 1, compras: '$2,150 MXN', preferido: 'Billar', promoUsadas: 3 },
+    { id: 'C004', nombre: 'Pedro Diaz', email: 'pedro@gmail.com', tel: '449-333-4455', cumple: '22 de Agosto', visitasBillar: 9, torneosJugados: 1, compras: '$1,840 MXN', preferido: 'Boliche', promoUsadas: 1 },
+    { id: 'C005', nombre: 'Carlos Ramos', email: 'marketing@bolkristal.mx', tel: '449-765-4321', cumple: '10 de Noviembre', visitasBillar: 4, torneosJugados: 0, compras: '$890 MXN', preferido: 'Bar / Consumo', promoUsadas: 0 }
 ];
 
 const DEFAULT_USERS = [
@@ -81,11 +86,14 @@ const AppState = {
         {
             id: 'T1',
             nombre: 'Torneo de Verano 2026',
-            estado: 'Convocatoria',
+            estado: 'Convocatoria abierta',
             pistas: 4,
             fechaInicio: '2026-07-01',
             fechaFin: '2026-08-31',
-            criterio: 'Puntos'
+            criterio: 'Puntos',
+            tipo: 'publico',
+            cupoParejas: 32,
+            inscripcionAbierta: true
         }
     ],
     bracket: null,
@@ -96,13 +104,7 @@ const AppState = {
     ],
     siguienteJornadaGenerada: false,
     partidasSiguiente: [],
-    clientes: [
-        { id: 'C001', nombre: 'Ana Torres', email: 'ana@gmail.com', tel: '449-111-2233', cumple: '14 de Mayo', visitasBillar: 8, torneosJugados: 4, compras: '$3,200 MXN', preferido: 'Boliche', promoUsadas: 2 },
-        { id: 'C002', nombre: 'Luis Herrera', email: 'luis@gmail.com', tel: '449-444-5566', cumple: '03 de Junio', visitasBillar: 6, torneosJugados: 4, compras: '$2,980 MXN', preferido: 'Billar', promoUsadas: 1 },
-        { id: 'C003', nombre: 'Maria Gomez', email: 'maria@gmail.com', tel: '449-777-8899', cumple: '28 de Mayo', visitasBillar: 17, torneosJugados: 2, compras: '$2,150 MXN', preferido: 'Billar', promoUsadas: 3 },
-        { id: 'C004', nombre: 'Pedro Diaz', email: 'pedro@gmail.com', tel: '449-333-4455', cumple: '22 de Agosto', visitasBillar: 9, torneosJugados: 2, compras: '$1,840 MXN', preferido: 'Boliche', promoUsadas: 1 },
-        { id: 'C005', nombre: 'Carlos Ramos', email: 'marketing@bolkristal.mx', tel: '449-765-4321', cumple: '10 de Noviembre', visitasBillar: 4, torneosJugados: 0, compras: '$890 MXN', preferido: 'Bar / Consumo', promoUsadas: 0 }
-    ],
+    clientes: cloneData(DEFAULT_CLIENTS),
     promociones: [
         { id: 'P1', titulo: '2x1 en boliche', desc: 'Paga 1 hora y juega 2 horas en pista. Promocion activa enfocada a jugadores principiantes.', vistas: 205, usos: 34, engagement: 'Activa' },
         { id: 'P2', titulo: 'Noche de equipos', desc: 'Inscribe tu dupla y recibe precio especial en bebidas para la jornada de apertura.', vistas: 145, usos: 18, engagement: 'Instagram + Facebook' },
@@ -243,6 +245,264 @@ function saveUsers(users) {
     localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
 }
 
+function getActiveTournament() {
+    return AppState.torneos[0] || null;
+}
+
+function saveTournamentConfig() {
+    const tournament = getActiveTournament();
+    if (!tournament) return;
+    localStorage.setItem(TOURNAMENT_STORAGE_KEY, JSON.stringify(tournament));
+}
+
+function loadTournamentConfig() {
+    const current = getActiveTournament();
+    if (!current) return;
+
+    const raw = localStorage.getItem(TOURNAMENT_STORAGE_KEY);
+    if (!raw) {
+        saveTournamentConfig();
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(raw);
+        AppState.torneos[0] = {
+            ...current,
+            ...parsed,
+            pistas: Number(parsed?.pistas) || current.pistas,
+            cupoParejas: Number(parsed?.cupoParejas) || current.cupoParejas,
+            inscripcionAbierta: parsed?.inscripcionAbierta !== false
+        };
+    } catch (error) {
+        AppState.torneos[0] = { ...current };
+    }
+
+    saveTournamentConfig();
+}
+
+function loadClients() {
+    const raw = localStorage.getItem(CLIENTS_STORAGE_KEY);
+
+    if (!raw) {
+        AppState.clientes = cloneData(DEFAULT_CLIENTS);
+        localStorage.setItem(CLIENTS_STORAGE_KEY, JSON.stringify(AppState.clientes));
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(raw);
+        AppState.clientes = Array.isArray(parsed) ? parsed : cloneData(DEFAULT_CLIENTS);
+    } catch (error) {
+        AppState.clientes = cloneData(DEFAULT_CLIENTS);
+    }
+
+    localStorage.setItem(CLIENTS_STORAGE_KEY, JSON.stringify(AppState.clientes));
+}
+
+function saveClients() {
+    localStorage.setItem(CLIENTS_STORAGE_KEY, JSON.stringify(AppState.clientes));
+}
+
+function loadWeeklyMatchups() {
+    const raw = localStorage.getItem(MATCHUPS_STORAGE_KEY);
+
+    if (!raw) {
+        AppState.siguienteJornadaGenerada = false;
+        AppState.partidasSiguiente = [];
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(raw);
+        AppState.siguienteJornadaGenerada = Boolean(parsed?.siguienteJornadaGenerada);
+        AppState.partidasSiguiente = Array.isArray(parsed?.partidasSiguiente)
+            ? parsed.partidasSiguiente.map((match, index) => ({
+                id: match?.id || `N${index + 1}`,
+                equipoA: String(match?.equipoA || '').trim(),
+                equipoB: String(match?.equipoB || '').trim(),
+                equipoAId: Number(match?.equipoAId) || null,
+                equipoBId: Number(match?.equipoBId) || null,
+                pista: Number(match?.pista) || 1,
+                horario: String(match?.horario || '19:00').trim(),
+                scoreA: Number(match?.scoreA) || 0,
+                scoreB: Number(match?.scoreB) || 0,
+                estado: match?.estado === 'Completado' ? 'Completado' : 'Pendiente'
+            }))
+            : [];
+    } catch (error) {
+        AppState.siguienteJornadaGenerada = false;
+        AppState.partidasSiguiente = [];
+    }
+}
+
+function saveWeeklyMatchups() {
+    localStorage.setItem(MATCHUPS_STORAGE_KEY, JSON.stringify({
+        siguienteJornadaGenerada: AppState.siguienteJornadaGenerada,
+        partidasSiguiente: AppState.partidasSiguiente
+    }));
+}
+
+function normalizeName(value) {
+    return String(value || '')
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ');
+}
+
+function getRegistrationPrice(level) {
+    return level === 'profesional' ? 200 : 150;
+}
+
+function getTournamentCapacity() {
+    return Number(getActiveTournament()?.cupoParejas) || 32;
+}
+
+function getRegisteredTeamCount() {
+    return AppState.equipos.length;
+}
+
+function getRemainingSlots() {
+    return Math.max(0, getTournamentCapacity() - getRegisteredTeamCount());
+}
+
+function isRegistrationOpen() {
+    const tournament = getActiveTournament();
+    return Boolean(tournament?.inscripcionAbierta) && getRemainingSlots() > 0;
+}
+
+function getTournamentStatusLabel() {
+    const tournament = getActiveTournament();
+    if (!tournament?.inscripcionAbierta) return 'Inscripciones cerradas';
+    if (getRemainingSlots() === 0) return 'Cupo completo';
+    return 'Convocatoria abierta';
+}
+
+function getTournamentStatusBadgeClass() {
+    const tournament = getActiveTournament();
+    if (!tournament?.inscripcionAbierta) return 'neon-badge-pink';
+    if (getRemainingSlots() === 0) return 'neon-badge-yellow';
+    return 'neon-badge-green';
+}
+
+function getUserTeam(user = AppState.sessionUser) {
+    if (!user) return null;
+
+    const normalizedUserName = normalizeName(user.name);
+    return AppState.equipos.find((team) => (
+        team.ownerUserId === user.id ||
+        normalizeName(team.jugador1) === normalizedUserName ||
+        normalizeName(team.jugador2) === normalizedUserName
+    )) || null;
+}
+
+function getNextTeamId() {
+    return AppState.equipos.reduce((maxId, team) => Math.max(maxId, Number(team.id) || 0), 0) + 1;
+}
+
+function findDuplicateRegistration({ teamName, player1, player2 }, ignoreId = null) {
+    const teamLower = normalizeName(teamName);
+    const player1Lower = normalizeName(player1);
+    const player2Lower = normalizeName(player2);
+
+    return AppState.equipos.find((equipo) => {
+        if (ignoreId && equipo.id === ignoreId) return false;
+
+        const jugador1 = normalizeName(equipo.jugador1);
+        const jugador2 = normalizeName(equipo.jugador2);
+
+        return normalizeName(equipo.nombre) === teamLower ||
+            jugador1 === player1Lower ||
+            jugador1 === player2Lower ||
+            jugador2 === player1Lower ||
+            jugador2 === player2Lower;
+    }) || null;
+}
+
+function validateRegistrationPayload({ teamName, player1, player2, level, userId }) {
+    if (!teamName || !player1 || !level) {
+        return 'Por favor llena todos los campos obligatorios.';
+    }
+
+    if (!player2) {
+        return 'Debes registrar el nombre completo de tu pareja para continuar.';
+    }
+
+    if (normalizeName(player1) === normalizeName(player2)) {
+        return 'La pareja debe tener dos jugadores distintos.';
+    }
+
+    if (!['profesional', 'principiante'].includes(level)) {
+        return 'Selecciona un nivel valido para la inscripcion.';
+    }
+
+    if (!isRegistrationOpen()) {
+        return getRemainingSlots() === 0
+            ? 'El torneo ya no tiene cupos disponibles.'
+            : 'La convocatoria del torneo esta cerrada por el momento.';
+    }
+
+    const duplicate = findDuplicateRegistration({ teamName, player1, player2 });
+    if (duplicate) {
+        return 'Ya existe un jugador o nombre de pareja registrado en este torneo.';
+    }
+
+    if (userId && getUserTeam({ id: userId, name: player1 })) {
+        return 'Tu cuenta ya tiene una inscripcion activa en este torneo.';
+    }
+
+    return '';
+}
+
+function ensureClientProfile(user) {
+    if (!user?.email) return null;
+
+    const email = user.email.toLowerCase();
+    let client = AppState.clientes.find((item) => item.email.toLowerCase() === email);
+
+    if (!client) {
+        client = {
+            id: `C${Date.now()}`,
+            nombre: user.name,
+            email: user.email,
+            tel: 'Pendiente',
+            cumple: 'Pendiente',
+            visitasBillar: 0,
+            torneosJugados: 0,
+            compras: '$0 MXN',
+            preferido: 'Boliche',
+            promoUsadas: 0
+        };
+        AppState.clientes.push(client);
+    } else {
+        client.nombre = user.name;
+        client.email = user.email;
+    }
+
+    saveClients();
+    return client;
+}
+
+function registerTournamentParticipation(user) {
+    const client = ensureClientProfile(user);
+    if (!client) return;
+
+    client.preferido = 'Boliche';
+    client.torneosJugados += 1;
+    saveClients();
+}
+
+function invalidateWeeklySchedule() {
+    AppState.siguienteJornadaGenerada = false;
+    AppState.partidasSiguiente = [];
+    saveWeeklyMatchups();
+
+    const generateButton = document.getElementById('btn-generar-roles');
+    if (generateButton) generateButton.removeAttribute('disabled');
+}
+
 function saveSession(user) {
     AppState.sessionUser = user;
     localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
@@ -272,12 +532,14 @@ function updateSessionLabels(user) {
     const clientName = document.getElementById('client-user-name');
     const clientWelcome = document.getElementById('client-welcome-title');
     const clientRole = document.getElementById('client-user-role-label');
+    const clientRegistrationPlayer = document.getElementById('client-player-name');
     const adminName = document.getElementById('admin-user-name');
     const adminEmail = document.getElementById('admin-user-email');
 
     if (clientName) clientName.textContent = safeUser.name;
     if (clientWelcome) clientWelcome.textContent = `Hola, ${safeUser.name}`;
     if (clientRole) clientRole.textContent = roleMeta.label;
+    if (clientRegistrationPlayer) clientRegistrationPlayer.value = safeUser.name;
     if (adminName) adminName.textContent = safeUser.name;
     if (adminEmail) adminEmail.textContent = safeUser.email || 'admin@bolkristal.mx';
 }
@@ -293,11 +555,9 @@ function loadTeams() {
 
     try {
         const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed) || !parsed.length) {
-            AppState.equipos = mergeTeamsWithDefaults(DEFAULT_TEAMS);
-        } else {
-            AppState.equipos = mergeTeamsWithDefaults(parsed);
-        }
+        AppState.equipos = Array.isArray(parsed)
+            ? mergeTeamsWithDefaults(parsed)
+            : mergeTeamsWithDefaults(DEFAULT_TEAMS);
     } catch (error) {
         AppState.equipos = mergeTeamsWithDefaults(DEFAULT_TEAMS);
     }
@@ -310,7 +570,7 @@ function saveTeams() {
 }
 
 function mergeTeamsWithDefaults(teams) {
-    const normalizedTeams = teams.map((team, index) => ({
+    return teams.map((team, index) => ({
         id: Number(team.id) || index + 1,
         nombre: String(team.nombre || '').trim(),
         jugador1: String(team.jugador1 || '').trim(),
@@ -318,23 +578,12 @@ function mergeTeamsWithDefaults(teams) {
         nivel: team.nivel === 'profesional' ? 'profesional' : 'principiante',
         precio: Number(team.precio) || (team.nivel === 'profesional' ? 200 : 150),
         puntos: Number(team.puntos) || 0,
-        jugados: Number(team.jugados) || 0
-    })).filter((team) => team.nombre && team.jugador1 && team.jugador2);
-
-    const mergedTeams = [...normalizedTeams];
-
-    DEFAULT_TEAMS.forEach((defaultTeam) => {
-        const exists = mergedTeams.some((team) => (
-            team.id === defaultTeam.id ||
-            team.nombre.toLowerCase() === defaultTeam.nombre.toLowerCase()
-        ));
-
-        if (!exists) {
-            mergedTeams.push({ ...defaultTeam });
-        }
-    });
-
-    return mergedTeams.sort((teamA, teamB) => teamA.id - teamB.id);
+        jugados: Number(team.jugados) || 0,
+        ownerUserId: team.ownerUserId || null,
+        createdBy: team.createdBy || 'admin',
+        createdAt: team.createdAt || new Date().toISOString()
+    })).filter((team) => team.nombre && team.jugador1 && team.jugador2)
+        .sort((teamA, teamB) => teamA.id - teamB.id);
 }
 
 function getTeamById(teamId) {
@@ -1505,7 +1754,7 @@ function renderTournamentBracket() {
         renderBracketProgress('client-tournament-progress-strip', 'client-bracket-status-badge');
         clientContainer.innerHTML = enoughParticipants ? getMirrorBracketHtml(false) : getBracketWaitingMessage();
         if (clientStatusBadge) {
-            clientStatusBadge.innerHTML = `${clientStatusBadge.innerHTML} <span class="client-bracket-status-copy">Visual oficial</span>`;
+            clientStatusBadge.innerHTML = `<i class="fas fa-eye"></i> ${enoughParticipants ? 'Visual oficial' : 'En espera de parejas'}`;
         }
     }
 
@@ -1995,8 +2244,245 @@ function setActiveView(viewId) {
     }
 }
 
+function getUpcomingMatchForTeam(team) {
+    if (!team || !AppState.siguienteJornadaGenerada) return null;
+
+    return AppState.partidasSiguiente.find((match) => (
+        match.equipoAId === team.id ||
+        match.equipoBId === team.id ||
+        match.equipoA === team.nombre ||
+        match.equipoB === team.nombre
+    )) || null;
+}
+
+function formatRegistrationDate(value) {
+    if (!value) return 'Pendiente';
+
+    try {
+        return new Intl.DateTimeFormat('es-MX', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        }).format(new Date(value));
+    } catch (error) {
+        return 'Pendiente';
+    }
+}
+
+function renderClientRegistrationSection() {
+    const summary = document.getElementById('client-registration-summary');
+    const form = document.getElementById('client-registration-form');
+    const playerInput = document.getElementById('client-player-name');
+    const helper = document.getElementById('client-registration-helper');
+    const submitButton = document.getElementById('client-registration-submit');
+    const teamInput = document.getElementById('client-team-name');
+    const partnerInput = document.getElementById('client-partner-name');
+    const levelSelect = document.getElementById('client-player-experience');
+    const costOutput = document.getElementById('client-registration-cost');
+    if (!summary || !form || !playerInput || !helper || !submitButton || !teamInput || !partnerInput || !levelSelect || !costOutput) return;
+
+    const tournament = getActiveTournament();
+    const user = AppState.sessionUser;
+    const userTeam = getUserTeam(user);
+    const remainingSlots = getRemainingSlots();
+    const open = isRegistrationOpen();
+    const statusLabel = getTournamentStatusLabel();
+    const statusBadgeClass = getTournamentStatusBadgeClass();
+    const activePrice = getRegistrationPrice(levelSelect.value || 'principiante');
+
+    playerInput.value = user?.name || '';
+    costOutput.textContent = `$${activePrice} MXN`;
+
+    if (!userTeam) {
+        teamInput.value = '';
+        partnerInput.value = '';
+        levelSelect.value = 'principiante';
+        costOutput.textContent = '$150 MXN';
+    }
+
+    summary.innerHTML = `
+        <article class="schedule-card">
+            <span class="badge ${statusBadgeClass}">${escapeHtml(statusLabel)}</span>
+            <h3>${escapeHtml(tournament?.nombre || 'Torneo activo')}</h3>
+            <p>Inscribe tu pareja en linea con todos los datos obligatorios y confirma tu lugar sin asistencia presencial.</p>
+            <div class="data-grid">
+                <span class="data-pill"><i class="fas fa-users"></i> ${getRegisteredTeamCount()} / ${getTournamentCapacity()} parejas</span>
+                <span class="data-pill"><i class="fas fa-ticket"></i> ${remainingSlots} cupos disponibles</span>
+                <span class="data-pill"><i class="fas fa-medal"></i> $150 / $200 MXN</span>
+            </div>
+        </article>
+        <article class="schedule-card">
+            <span class="badge ${userTeam ? 'neon-badge-cyan' : 'neon-badge-yellow'}">${userTeam ? 'Tu registro' : 'Pendiente de registro'}</span>
+            <h3>${userTeam ? escapeHtml(userTeam.nombre) : 'Tu cuenta aun no participa'}</h3>
+            <p>${userTeam
+                ? `Pareja registrada por ${escapeHtml(userTeam.jugador1)} y ${escapeHtml(userTeam.jugador2)} en nivel ${formatTeamLevel(userTeam.nivel).toLowerCase()}.`
+                : 'Completa nombre de tu pareja, nivel y nombre del equipo para quedar inscrito en el torneo actual.'}</p>
+            <div class="data-grid">
+                <span class="data-pill"><i class="fas fa-calendar-check"></i> ${userTeam ? `Registrado ${formatRegistrationDate(userTeam.createdAt)}` : 'Registro en linea activo'}</span>
+                <span class="data-pill"><i class="fas fa-circle-play"></i> ${userTeam ? 'Listo para sorteo y jornadas' : 'Esperando tu inscripcion'}</span>
+            </div>
+        </article>
+    `;
+
+    if (userTeam) {
+        teamInput.value = userTeam.nombre;
+        partnerInput.value = userTeam.jugador2;
+        levelSelect.value = userTeam.nivel;
+        costOutput.textContent = `$${userTeam.precio} MXN`;
+        [teamInput, partnerInput, levelSelect, submitButton].forEach((element) => {
+            element.disabled = true;
+        });
+        helper.textContent = 'Tu cuenta ya quedo inscrita. Desde esta misma vista podras revisar rival, pista y horario cuando el administrador genere la jornada.';
+        submitButton.innerHTML = '<i class="fas fa-check"></i> Inscripcion confirmada';
+        return;
+    }
+
+    if (!user) {
+        [teamInput, partnerInput, levelSelect, submitButton].forEach((element) => {
+            element.disabled = true;
+        });
+        helper.textContent = 'Inicia sesion para inscribirte al torneo.';
+        submitButton.innerHTML = '<i class="fas fa-lock"></i> Inicia sesion para inscribirte';
+        return;
+    }
+
+    if (!open) {
+        [teamInput, partnerInput, levelSelect, submitButton].forEach((element) => {
+            element.disabled = true;
+        });
+        helper.textContent = remainingSlots === 0
+            ? 'El torneo ya alcanzo el cupo maximo de parejas.'
+            : 'La convocatoria esta cerrada por el administrador.';
+        submitButton.innerHTML = '<i class="fas fa-ban"></i> Inscripciones no disponibles';
+        return;
+    }
+
+    [teamInput, partnerInput, levelSelect, submitButton].forEach((element) => {
+        element.disabled = false;
+    });
+    helper.textContent = 'Todos los campos son obligatorios. El precio cambia segun el nivel registrado para la pareja.';
+    submitButton.innerHTML = '<i class="fas fa-file-signature"></i> Confirmar inscripcion';
+}
+
+function renderClientTournamentInfo() {
+    const teamCard = document.getElementById('client-team-status-card');
+    const matchCard = document.getElementById('client-next-match-card');
+    const overviewCard = document.getElementById('client-overview-card');
+    const primaryAction = document.getElementById('client-primary-action');
+    if (!teamCard || !matchCard || !overviewCard) return;
+
+    const user = AppState.sessionUser;
+    const userTeam = getUserTeam(user);
+    const nextMatch = getUpcomingMatchForTeam(userTeam);
+    const tournament = getActiveTournament();
+
+    if (primaryAction) {
+        if (userTeam) {
+            primaryAction.dataset.scrollTo = 'cliente-torneo';
+            primaryAction.innerHTML = '<i class="fas fa-trophy"></i> Ver mi torneo';
+        } else {
+            primaryAction.dataset.scrollTo = 'cliente-inscripcion';
+            primaryAction.innerHTML = '<i class="fas fa-user-plus"></i> Inscribirme al torneo';
+        }
+    }
+
+    teamCard.innerHTML = userTeam ? `
+        <span class="badge neon-badge-cyan">Mi pareja</span>
+        <h3>${escapeHtml(userTeam.nombre)}</h3>
+        <p>Tu registro ya quedo validado dentro del torneo actual y se toma en cuenta para el sorteo administrativo.</p>
+        <div class="ranking-list">
+            <div class="ranking-pill"><strong>Jugador</strong> <span>${escapeHtml(userTeam.jugador1)}</span></div>
+            <div class="ranking-pill"><strong>Pareja</strong> <span>${escapeHtml(userTeam.jugador2)}</span></div>
+        </div>
+        <div class="data-grid">
+            <span class="data-pill"><i class="fas fa-star-half-alt"></i> ${formatTeamLevel(userTeam.nivel)}</span>
+            <span class="data-pill"><i class="fas fa-money-bill-wave"></i> $${userTeam.precio} MXN</span>
+        </div>
+    ` : `
+        <span class="badge neon-badge-yellow">Sin inscripcion</span>
+        <h3>Tu pareja aun no esta inscrita</h3>
+        <p>Primero registra tu nombre, el de tu pareja y el nivel de experiencia para entrar al torneo.</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="fas fa-user-plus"></i> Registro 100% en linea</span>
+            <span class="data-pill"><i class="fas fa-shield-check"></i> Validacion obligatoria</span>
+        </div>
+    `;
+
+    matchCard.innerHTML = nextMatch ? `
+        <span class="badge ${nextMatch.estado === 'Completado' ? 'neon-badge-green' : 'neon-badge-pink'}">${nextMatch.estado === 'Completado' ? 'Jugada' : 'Proxima jornada'}</span>
+        <h3>${escapeHtml(nextMatch.equipoA === userTeam?.nombre ? nextMatch.equipoB : nextMatch.equipoA)}</h3>
+        <p>Tu rival ya fue asignado y puedes consultar desde aqui la pista y el horario de la jornada semanal.</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="far fa-clock"></i> ${escapeHtml(nextMatch.horario)} hrs</span>
+            <span class="data-pill"><i class="fas fa-road"></i> Pista ${nextMatch.pista}</span>
+            <span class="data-pill"><i class="fas fa-people-arrows"></i> ${escapeHtml(nextMatch.equipoA)} vs ${escapeHtml(nextMatch.equipoB)}</span>
+        </div>
+    ` : `
+        <span class="badge neon-badge-yellow">Asignacion pendiente</span>
+        <h3>${userTeam ? 'Aun no tienes rival asignado' : 'Primero inscribe a tu pareja'}</h3>
+        <p>${userTeam
+            ? 'Cuando el administrador genere la jornada semanal, aqui aparecera tu rival, el horario y la pista.'
+            : 'Despues de inscribirte, el administrador podra incluirte en jornadas y sorteos del torneo.'}</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="fas fa-random"></i> Sorteo aleatorio de cruces</span>
+            <span class="data-pill"><i class="fas fa-calendar-week"></i> Una partida por semana</span>
+        </div>
+    `;
+
+    overviewCard.innerHTML = `
+        <span class="badge ${getTournamentStatusBadgeClass()}">${escapeHtml(getTournamentStatusLabel())}</span>
+        <h3>${escapeHtml(tournament?.nombre || 'Torneo activo')}</h3>
+        <p>El torneo se juega por parejas, con jornadas semanales, asignacion de pistas y seguimiento desde tu cuenta.</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="fas fa-users"></i> ${getRegisteredTeamCount()} parejas registradas</span>
+            <span class="data-pill"><i class="fas fa-ticket"></i> ${getRemainingSlots()} cupos libres</span>
+            <span class="data-pill"><i class="fas fa-bowling-ball"></i> ${tournament?.pistas || 0} pistas registradas</span>
+        </div>
+    `;
+}
+
+function renderRegistrationAdminStatus() {
+    const summary = document.getElementById('admin-registration-summary');
+    const headerBadge = document.getElementById('registration-status-badge');
+    const openButton = document.getElementById('btn-open-registration');
+    const closeButton = document.getElementById('btn-close-registration');
+    if (!summary || !headerBadge || !openButton || !closeButton) return;
+
+    const tournament = getActiveTournament();
+    const statusLabel = getTournamentStatusLabel();
+    const statusClass = getTournamentStatusBadgeClass();
+    const registered = getRegisteredTeamCount();
+    const remaining = getRemainingSlots();
+
+    headerBadge.className = `badge ${statusClass}`;
+    headerBadge.innerHTML = `<i class="fas fa-clipboard-check"></i> ${escapeHtml(statusLabel)}`;
+
+    openButton.disabled = Boolean(tournament?.inscripcionAbierta) || remaining === 0;
+    closeButton.disabled = !tournament?.inscripcionAbierta;
+
+    summary.innerHTML = `
+        <article class="team-category-card team-category-card-neutral">
+            <span class="team-category-label">Cupo total</span>
+            <strong class="team-category-value">${getTournamentCapacity()}</strong>
+            <span class="team-category-caption">parejas para esta temporada</span>
+        </article>
+        <article class="team-category-card team-category-card-cyan">
+            <span class="team-category-label">Inscritas</span>
+            <strong class="team-category-value">${registered}</strong>
+            <span class="team-category-caption">${registered === 1 ? 'pareja confirmada' : 'parejas confirmadas'}</span>
+        </article>
+        <article class="team-category-card team-category-card-pink">
+            <span class="team-category-label">Disponibles</span>
+            <strong class="team-category-value">${remaining}</strong>
+            <span class="team-category-caption">${remaining === 1 ? 'cupo restante' : 'cupos restantes'}</span>
+        </article>
+    `;
+}
+
 function routeByRole(user, announce = true) {
     updateSessionLabels(user);
+    renderClientRegistrationSection();
+    renderClientTournamentInfo();
 
     if (user.role === 'administrador' || user.role === 'marketing') {
         setActiveView('admin-view');
@@ -2021,6 +2507,8 @@ function routeByRole(user, announce = true) {
 function logoutToPublic(message = 'Sesion cerrada correctamente.') {
     clearSession();
     updateSessionLabels(null);
+    renderClientRegistrationSection();
+    renderClientTournamentInfo();
     setActiveView('public-view');
     showToast(message);
 }
@@ -2185,8 +2673,6 @@ function initAuth() {
     if (registerForm) {
         registerForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            showToast('Crear cuenta esta en desarrollo por el momento.', 'info');
-            return;
 
             const name = document.getElementById('register-name').value.trim();
             const email = document.getElementById('register-email').value.trim().toLowerCase();
@@ -2221,11 +2707,13 @@ function initAuth() {
 
             users.push(newUser);
             saveUsers(users);
+            ensureClientProfile(newUser);
             saveSession(newUser);
             updateSessionLabels(newUser);
             closeAuthModal();
             registerForm.reset();
-            routeByRole(newUser);
+            routeByRole(newUser, false);
+            showToast('Cuenta creada correctamente. Ya puedes inscribirte al torneo.', 'success');
         });
     }
 
@@ -2411,14 +2899,22 @@ function initAtmosphereControls() {
 }
 
 function initRegistrationPricing() {
-    const experienceSelect = document.getElementById('player-experience');
-    const costOutput = document.getElementById('registration-cost');
+    const pricingPairs = [
+        { selectId: 'player-experience', outputId: 'registration-cost' },
+        { selectId: 'client-player-experience', outputId: 'client-registration-cost' }
+    ];
 
-    if (!experienceSelect || !costOutput) return;
+    pricingPairs.forEach(({ selectId, outputId }) => {
+        const experienceSelect = document.getElementById(selectId);
+        const costOutput = document.getElementById(outputId);
+        if (!experienceSelect || !costOutput) return;
 
-    experienceSelect.addEventListener('change', function onExperienceChange() {
-        const cost = this.value === 'profesional' ? 200 : 150;
-        costOutput.textContent = `$${cost} MXN`;
+        const syncPrice = () => {
+            costOutput.textContent = `$${getRegistrationPrice(experienceSelect.value)} MXN`;
+        };
+
+        experienceSelect.addEventListener('change', syncPrice);
+        syncPrice();
     });
 }
 
@@ -2434,55 +2930,112 @@ function initRegistrationForm() {
         const player2 = document.getElementById('player2-name').value.trim();
         const level = document.getElementById('player-experience').value;
 
-        if (!teamName || !player1 || !player2) {
-            showToast('Por favor llena todos los campos obligatorios.', 'error');
+        const validationError = validateRegistrationPayload({
+            teamName,
+            player1,
+            player2,
+            level,
+            userId: null
+        });
+        if (validationError) {
+            showToast(validationError, 'error');
             return;
         }
 
-        const teamLower = teamName.toLowerCase();
-        const player1Lower = player1.toLowerCase();
-        const player2Lower = player2.toLowerCase();
-
-        const isDuplicate = AppState.equipos.some((equipo) => (
-            equipo.nombre.toLowerCase() === teamLower ||
-            equipo.jugador1.toLowerCase() === player1Lower ||
-            equipo.jugador1.toLowerCase() === player2Lower ||
-            equipo.jugador2.toLowerCase() === player1Lower ||
-            equipo.jugador2.toLowerCase() === player2Lower
-        ));
-
-        if (isDuplicate) {
-            showToast('Ya existe un jugador o nombre de pareja registrado.', 'error');
-            return;
-        }
-
-        const cost = level === 'profesional' ? 200 : 150;
-        const nextId = Math.max(...AppState.equipos.map((equipo) => equipo.id), 0) + 1;
-
+        const cost = getRegistrationPrice(level);
         AppState.equipos.push({
-            id: nextId,
+            id: getNextTeamId(),
             nombre: teamName,
             jugador1: player1,
             jugador2: player2,
             nivel: level,
             precio: cost,
             puntos: 0,
-            jugados: 0
+            jugados: 0,
+            ownerUserId: null,
+            createdBy: 'admin',
+            createdAt: new Date().toISOString()
         });
 
         saveTeams();
         syncBracketDraftWithTeams();
+        invalidateWeeklySchedule();
         showToast(`Inscripcion exitosa de "${teamName}". Total pagado: $${cost} MXN.`, 'success');
         form.reset();
         document.getElementById('registration-cost').textContent = '$150 MXN';
         renderLeaderboard();
         renderTeamsTable();
         renderTournamentBracket();
-
-        AppState.siguienteJornadaGenerada = false;
-        const generateButton = document.getElementById('btn-generar-roles');
-        if (generateButton) generateButton.removeAttribute('disabled');
+        renderRegistrationAdminStatus();
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
         renderSiguienteJornada();
+    });
+}
+
+function initClientRegistrationForm() {
+    const form = document.getElementById('client-registration-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const user = AppState.sessionUser;
+        if (!user) {
+            showToast('Inicia sesion para inscribirte al torneo.', 'error');
+            return;
+        }
+
+        const teamName = document.getElementById('client-team-name').value.trim();
+        const player1 = user.name.trim();
+        const player2 = document.getElementById('client-partner-name').value.trim();
+        const level = document.getElementById('client-player-experience').value;
+
+        const validationError = validateRegistrationPayload({
+            teamName,
+            player1,
+            player2,
+            level,
+            userId: user.id
+        });
+        if (validationError) {
+            showToast(validationError, 'error');
+            return;
+        }
+
+        const cost = getRegistrationPrice(level);
+        AppState.equipos.push({
+            id: getNextTeamId(),
+            nombre: teamName,
+            jugador1: player1,
+            jugador2: player2,
+            nivel: level,
+            precio: cost,
+            puntos: 0,
+            jugados: 0,
+            ownerUserId: user.id,
+            createdBy: 'jugador',
+            createdAt: new Date().toISOString()
+        });
+
+        saveTeams();
+        syncBracketDraftWithTeams();
+        registerTournamentParticipation(user);
+        invalidateWeeklySchedule();
+
+        form.reset();
+        document.getElementById('client-player-name').value = user.name;
+        document.getElementById('client-registration-cost').textContent = '$150 MXN';
+
+        renderLeaderboard();
+        renderTeamsTable();
+        renderTournamentBracket();
+        renderRegistrationAdminStatus();
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        renderClientes();
+        renderSiguienteJornada();
+        showToast(`Tu pareja "${teamName}" quedo inscrita correctamente. Total: $${cost} MXN.`, 'success');
     });
 }
 
@@ -2543,7 +3096,7 @@ function renderTeamsTable() {
 
     tbody.innerHTML = '';
     if (!AppState.equipos.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No hay parejas inscritas.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No hay parejas inscritas.</td></tr>';
         return;
     }
 
@@ -2561,7 +3114,7 @@ function renderTeamsTable() {
 
         const titleRow = document.createElement('tr');
         titleRow.className = 'table-section-row';
-        titleRow.innerHTML = `<td colspan="6">${group.label}</td>`;
+        titleRow.innerHTML = `<td colspan="8">${group.label}</td>`;
         tbody.appendChild(titleRow);
 
         teams.forEach((team) => {
@@ -2572,6 +3125,8 @@ function renderTeamsTable() {
                 <td>${team.jugador1} & ${team.jugador2}</td>
                 <td><span class="badge ${team.nivel === 'profesional' ? 'neon-badge-pink' : 'neon-badge-cyan'}">${formatTeamLevel(team.nivel)}</span></td>
                 <td>$${team.precio} MXN</td>
+                <td>${formatRegistrationDate(team.createdAt)}</td>
+                <td><span class="badge ${team.createdBy === 'jugador' ? 'neon-badge-cyan' : 'neon-badge-yellow'}">${team.createdBy === 'jugador' ? 'Jugador' : 'Admin'}</span></td>
                 <td>
                     <button class="jukebox-btn" onclick="eliminarEquipo(${team.id})" style="color: var(--neon-pink)">
                         <i class="fas fa-trash-alt"></i>
@@ -2591,16 +3146,53 @@ window.eliminarEquipo = function eliminarEquipo(id) {
     AppState.equipos.splice(index, 1);
     saveTeams();
     syncBracketDraftWithTeams();
+    invalidateWeeklySchedule();
     showToast(`Pareja "${teamName}" eliminada del torneo.`);
 
     renderLeaderboard();
     renderTeamsTable();
     renderTournamentBracket();
-    AppState.siguienteJornadaGenerada = false;
-    const generateButton = document.getElementById('btn-generar-roles');
-    if (generateButton) generateButton.removeAttribute('disabled');
+    renderRegistrationAdminStatus();
+    renderClientRegistrationSection();
+    renderClientTournamentInfo();
     renderSiguienteJornada();
 };
+
+function initTournamentAdminControls() {
+    const openButton = document.getElementById('btn-open-registration');
+    const closeButton = document.getElementById('btn-close-registration');
+    if (!openButton || !closeButton) return;
+
+    openButton.addEventListener('click', () => {
+        const tournament = getActiveTournament();
+        if (!tournament) return;
+        if (getRemainingSlots() === 0) {
+            showToast('No puedes abrir la convocatoria porque el torneo ya esta lleno.', 'error');
+            return;
+        }
+
+        tournament.inscripcionAbierta = true;
+        tournament.estado = 'Convocatoria abierta';
+        saveTournamentConfig();
+        renderRegistrationAdminStatus();
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        showToast('La convocatoria del torneo quedo abierta nuevamente.', 'success');
+    });
+
+    closeButton.addEventListener('click', () => {
+        const tournament = getActiveTournament();
+        if (!tournament) return;
+
+        tournament.inscripcionAbierta = false;
+        tournament.estado = 'Inscripciones cerradas';
+        saveTournamentConfig();
+        renderRegistrationAdminStatus();
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        showToast('Las nuevas inscripciones quedaron bloqueadas por el administrador.', 'success');
+    });
+}
 
 function initRoleGenerator() {
     const button = document.getElementById('btn-generar-roles');
@@ -2618,7 +3210,9 @@ function initRoleGenerator() {
         setTimeout(() => {
             generateWeeklyMatchups();
             AppState.siguienteJornadaGenerada = true;
+            saveWeeklyMatchups();
             renderSiguienteJornada();
+            renderClientTournamentInfo();
             showToast('Jornada generada con exito.', 'success');
         }, 1000);
     });
@@ -2627,9 +3221,8 @@ function initRoleGenerator() {
 function generateWeeklyMatchups() {
     const shuffledTeams = [...AppState.equipos].sort(() => Math.random() - 0.5);
     const generated = [];
-    let pistaActual = 1;
-    let horarioActualIndex = 0;
-    const horarios = ['19:00', '20:30', '22:00'];
+    const pistasDisponibles = Math.max(1, Number(getActiveTournament()?.pistas) || 1);
+    const horarios = ['18:00', '19:30', '21:00', '22:30', '00:00'];
 
     for (let index = 0; index < shuffledTeams.length; index += 2) {
         if (index + 1 >= shuffledTeams.length) {
@@ -2637,22 +3230,19 @@ function generateWeeklyMatchups() {
             break;
         }
 
+        const matchIndex = generated.length;
         generated.push({
-            id: `N${generated.length + 1}`,
+            id: `N${matchIndex + 1}`,
             equipoA: shuffledTeams[index].nombre,
             equipoB: shuffledTeams[index + 1].nombre,
-            pista: pistaActual,
-            horario: horarios[horarioActualIndex],
+            equipoAId: shuffledTeams[index].id,
+            equipoBId: shuffledTeams[index + 1].id,
+            pista: (matchIndex % pistasDisponibles) + 1,
+            horario: horarios[Math.floor(matchIndex / pistasDisponibles) % horarios.length],
             scoreA: 0,
             scoreB: 0,
             estado: 'Pendiente'
         });
-
-        pistaActual += 1;
-        if (pistaActual > 2) {
-            pistaActual = 1;
-            horarioActualIndex = (horarioActualIndex + 1) % horarios.length;
-        }
     }
 
     AppState.partidasSiguiente = generated;
@@ -2777,9 +3367,12 @@ window.guardarMarcador = function guardarMarcador(matchId, arrayIndex) {
         equipoB.jugados += 1;
     }
 
+    saveTeams();
+    saveWeeklyMatchups();
     showToast(`Marcador registrado: ${match.equipoA} (${scoreValA}) vs ${match.equipoB} (${scoreValB}).`, 'success');
     renderLeaderboard();
     renderSiguienteJornada();
+    renderClientTournamentInfo();
 };
 
 function renderClientes(filterText = '', segment = 'Todos') {
@@ -2986,7 +3579,10 @@ function restoreSession() {
 
 document.addEventListener('DOMContentLoaded', () => {
     getUsers();
+    loadTournamentConfig();
     loadTeams();
+    loadClients();
+    loadWeeklyMatchups();
     loadBracketDraft();
     loadBracketState();
     initEntryNavigation();
@@ -2997,6 +3593,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initBracketControls();
     initRegistrationPricing();
     initRegistrationForm();
+    initClientRegistrationForm();
+    initTournamentAdminControls();
     initRoleGenerator();
     initClientesSearch();
     initPromoForm();
@@ -3004,6 +3602,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTournamentBracket();
     renderLeaderboard();
     renderTeamsTable();
+    renderRegistrationAdminStatus();
+    renderClientRegistrationSection();
+    renderClientTournamentInfo();
     renderSiguienteJornada();
     renderClientes();
     renderPromociones();

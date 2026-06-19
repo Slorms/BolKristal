@@ -1,4 +1,4 @@
-# <div align="center">🎳 BolKristal Lounge & Sports Bar</div>
+# <div align="center">🎳 BolKristal</div>
 
 <div align="center">
 
@@ -26,6 +26,35 @@
 
 **URL publica del proyecto:**  
 `https://slorms.github.io/BolKristal/prototipo/`
+
+---
+
+## Como ejecutar el proyecto
+
+Este proyecto es un prototipo estatico. No necesita backend, base de datos ni `npm install`.
+
+### Requisitos
+
+- navegador web moderno como `Google Chrome`, `Microsoft Edge` o `Firefox`
+- conexion a internet para cargar los iconos de `Font Awesome` y las pistas de audio de ejemplo
+
+### Opcion 1: abrirlo directo
+
+1. Clona o descarga este repositorio.
+2. Entra a la carpeta `prototipo/`.
+3. Abre el archivo `index.html` en tu navegador.
+
+### Opcion 2: usar un servidor local
+
+Si prefieres ejecutarlo como sitio local durante desarrollo, puedes usar cualquiera de estas opciones:
+
+- `VS Code + Live Server`: abre la carpeta y ejecuta `Open with Live Server` sobre `prototipo/index.html`.
+- `Python 3`: desde la raiz del proyecto ejecuta `python -m http.server 5500` y luego abre `http://localhost:5500/prototipo/`.
+
+### Nota sobre los datos
+
+- El proyecto guarda usuarios, sesion, parejas y bracket en `localStorage` del navegador.
+- Si quieres reiniciar la informacion demo, borra el almacenamiento del sitio en tu navegador.
 
 ---
 
@@ -285,14 +314,36 @@ Durante el desarrollo se trabajaron muchos ajustes:
 ## 🗂️ Estructura del proyecto
 
 ```text
-prototipo/
-|- index.html
-|- styles/
-|  |- neon.css
-|- js/
-|  |- app.js
-|- images/
+BolKristal/
+|- README.md
+|- diagramas/
+|  |- Diagrama_ER.mwb
+|  |- Diagrama_ER.png
+|- documentacion/
+|  |- (carpeta disponible para documentacion del proyecto)
+|- minutas/
+|  |- (carpeta disponible para minutas o acuerdos)
+|- prototipo/
+|  |- index.html
+|  |- styles/
+|  |  |- neon.css
+|  |- js/
+|  |  |- app.js
+|  |- images/
+|     |- champion-bowling-crown.png
+|     |- champion-pin-crown.png
+|     |- hero-bowling-party.png
+|     |- neon_banner.png
+|     |- party-package.png
+|     |- tournament-strike.png
 ```
+
+### Distribucion por carpetas
+
+- `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en imagen `Diagrama_ER.png`.
+- `documentacion/`: carpeta reservada para manuales, descripciones tecnicas o documentos de apoyo del proyecto.
+- `minutas/`: carpeta pensada para guardar acuerdos, avances y seguimiento de reuniones.
+- `prototipo/`: contiene el prototipo web funcional en `HTML`, `CSS` y `JavaScript`.
 
 ---
 
@@ -358,4 +409,3 @@ con una persistencia real para que funcione igual en cualquier navegador o dispo
 [![Entrar a BolKristal](https://img.shields.io/badge/🎳%20Entrar%20a%20BolKristal-ff0055?style=for-the-badge&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
 
 </div>
-
