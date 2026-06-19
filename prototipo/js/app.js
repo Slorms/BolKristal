@@ -323,6 +323,8 @@ function loadWeeklyMatchups() {
                 equipoB: String(match?.equipoB || '').trim(),
                 equipoAId: Number(match?.equipoAId) || null,
                 equipoBId: Number(match?.equipoBId) || null,
+                fecha: match?.fecha || null,
+                fase: String(match?.fase || 'Jornada general').trim(),
                 pista: Number(match?.pista) || 1,
                 horario: String(match?.horario || '19:00').trim(),
                 scoreA: Number(match?.scoreA) || 0,
@@ -358,6 +360,59 @@ function getRegistrationPrice(level) {
 
 function getTournamentCapacity() {
     return Number(getActiveTournament()?.cupoParejas) || 32;
+}
+
+function parseTournamentDate(value) {
+    if (!value) return null;
+    const parsed = new Date(`${value}T12:00:00`);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function addDays(date, days) {
+    const next = new Date(date);
+    next.setDate(next.getDate() + days);
+    return next;
+}
+
+function formatTournamentDate(value, options = {}) {
+    if (!value) return 'Pendiente';
+
+    try {
+        return new Intl.DateTimeFormat('es-MX', {
+            weekday: options.includeWeekday ? 'short' : undefined,
+            day: '2-digit',
+            month: 'short',
+            year: options.includeYear === false ? undefined : 'numeric'
+        }).format(new Date(value));
+    } catch (error) {
+        return 'Pendiente';
+    }
+}
+
+function getBracketScheduleBaseDate() {
+    const tournament = getActiveTournament();
+    const tournamentStart = parseTournamentDate(tournament?.fechaInicio);
+    if (!tournamentStart) return new Date('2026-07-08T12:00:00');
+    return addDays(tournamentStart, 7);
+}
+
+function getRoundScheduleMap() {
+    const rounds = AppState.bracket ? getManagedBracketRounds() : BRACKET_ROUNDS;
+    const baseDate = getBracketScheduleBaseDate();
+
+    return rounds.reduce((schedule, round, index) => {
+        schedule[round.key] = addDays(baseDate, index * 7).toISOString();
+        return schedule;
+    }, {});
+}
+
+function getRoundScheduledDate(roundKey) {
+    const schedule = getRoundScheduleMap();
+    return schedule[roundKey] || getBracketScheduleBaseDate().toISOString();
+}
+
+function getDefaultRoundForCurrentTeams() {
+    return getBracketRoundMeta(getAutoStartRound(Math.max(getRegisteredTeamCount(), 2))) || BRACKET_ROUNDS[0];
 }
 
 function getRegisteredTeamCount() {
@@ -1894,7 +1949,10 @@ function renderTournamentBracket() {
                 return `
                     <div class="bracket-stage-item">
                         <span>${round.label}</span>
-                        <strong>${completed}/${round.matchCount}</strong>
+                        <div class="bracket-stage-meta">
+                            <strong>${completed}/${round.matchCount}</strong>
+                            <small>${formatTournamentDate(getRoundScheduledDate(round.key))}</small>
+                        </div>
                     </div>
                 `;
             }).join('')}
@@ -2255,6 +2313,38 @@ function getUpcomingMatchForTeam(team) {
     )) || null;
 }
 
+function getNextBracketMatchForTeam(team) {
+    if (!team || !AppState.bracket?.participants?.length) return null;
+
+    const participant = AppState.bracket.participants.find((item) => item.teamId === team.id);
+    if (!participant) return null;
+
+    for (const round of getManagedBracketRounds()) {
+        const matchIndex = AppState.bracket.rounds[round.key].findIndex((match) => (
+            match.participantAId === participant.id ||
+            match.participantBId === participant.id
+        ));
+
+        if (matchIndex < 0) continue;
+
+        const match = AppState.bracket.rounds[round.key][matchIndex];
+        if (match.winnerId && match.winnerId !== participant.id) {
+            return null;
+        }
+
+        if (!match.winnerId) {
+            return {
+                round,
+                matchIndex,
+                match,
+                participant
+            };
+        }
+    }
+
+    return null;
+}
+
 function formatRegistrationDate(value) {
     if (!value) return 'Pendiente';
 
@@ -2374,7 +2464,17 @@ function renderClientTournamentInfo() {
     const user = AppState.sessionUser;
     const userTeam = getUserTeam(user);
     const nextMatch = getUpcomingMatchForTeam(userTeam);
+    const bracketMatch = getNextBracketMatchForTeam(userTeam);
     const tournament = getActiveTournament();
+    const fallbackRound = bracketMatch?.round || (AppState.bracket ? getActiveBracketRound() : getDefaultRoundForCurrentTeams());
+    const fallbackDate = fallbackRound ? formatTournamentDate(getRoundScheduledDate(fallbackRound.key), { includeWeekday: true }) : 'Pendiente';
+    const pendingOpponent = bracketMatch
+        ? (
+            getBracketParticipantById(bracketMatch.match.participantAId)?.teamId === userTeam?.id
+                ? getBracketParticipantById(bracketMatch.match.participantBId)
+                : getBracketParticipantById(bracketMatch.match.participantAId)
+        )
+        : null;
 
     if (primaryAction) {
         if (userTeam) {
@@ -2411,21 +2511,25 @@ function renderClientTournamentInfo() {
     matchCard.innerHTML = nextMatch ? `
         <span class="badge ${nextMatch.estado === 'Completado' ? 'neon-badge-green' : 'neon-badge-pink'}">${nextMatch.estado === 'Completado' ? 'Jugada' : 'Proxima jornada'}</span>
         <h3>${escapeHtml(nextMatch.equipoA === userTeam?.nombre ? nextMatch.equipoB : nextMatch.equipoA)}</h3>
-        <p>Tu rival ya fue asignado y puedes consultar desde aqui la pista y el horario de la jornada semanal.</p>
+        <p>Tu rival ya fue asignado y puedes consultar desde aqui la fecha, la pista y el horario de la jornada semanal.</p>
         <div class="data-grid">
+            <span class="data-pill"><i class="far fa-calendar"></i> ${formatTournamentDate(nextMatch.fecha, { includeWeekday: true })}</span>
             <span class="data-pill"><i class="far fa-clock"></i> ${escapeHtml(nextMatch.horario)} hrs</span>
             <span class="data-pill"><i class="fas fa-road"></i> Pista ${nextMatch.pista}</span>
+            <span class="data-pill"><i class="fas fa-layer-group"></i> ${escapeHtml(nextMatch.fase || 'Jornada general')}</span>
             <span class="data-pill"><i class="fas fa-people-arrows"></i> ${escapeHtml(nextMatch.equipoA)} vs ${escapeHtml(nextMatch.equipoB)}</span>
         </div>
     ` : `
         <span class="badge neon-badge-yellow">Asignacion pendiente</span>
-        <h3>${userTeam ? 'Aun no tienes rival asignado' : 'Primero inscribe a tu pareja'}</h3>
+        <h3>${userTeam ? 'Aun no tienes rival semanal asignado' : 'Primero inscribe a tu pareja'}</h3>
         <p>${userTeam
-            ? 'Cuando el administrador genere la jornada semanal, aqui aparecera tu rival, el horario y la pista.'
+            ? `Tu siguiente referencia en el cuadro es ${fallbackRound?.label || 'la siguiente fase'} y comparte la misma fecha general con los equipos de esa ronda.`
             : 'Despues de inscribirte, el administrador podra incluirte en jornadas y sorteos del torneo.'}</p>
         <div class="data-grid">
-            <span class="data-pill"><i class="fas fa-random"></i> Sorteo aleatorio de cruces</span>
-            <span class="data-pill"><i class="fas fa-calendar-week"></i> Una partida por semana</span>
+            <span class="data-pill"><i class="far fa-calendar"></i> ${fallbackDate}</span>
+            <span class="data-pill"><i class="fas fa-layer-group"></i> ${fallbackRound?.label || 'Fase por definir'}</span>
+            <span class="data-pill"><i class="fas fa-user-group"></i> ${pendingOpponent ? pendingOpponent.nombre : 'Rival por definir'}</span>
+            <span class="data-pill"><i class="fas fa-calendar-week"></i> Fecha general por ronda</span>
         </div>
     `;
 
@@ -2437,6 +2541,7 @@ function renderClientTournamentInfo() {
             <span class="data-pill"><i class="fas fa-users"></i> ${getRegisteredTeamCount()} parejas registradas</span>
             <span class="data-pill"><i class="fas fa-ticket"></i> ${getRemainingSlots()} cupos libres</span>
             <span class="data-pill"><i class="fas fa-bowling-ball"></i> ${tournament?.pistas || 0} pistas registradas</span>
+            <span class="data-pill"><i class="far fa-calendar-check"></i> ${fallbackRound ? `${fallbackRound.label}: ${fallbackDate}` : 'Calendario pendiente'}</span>
         </div>
     `;
 }
@@ -3223,6 +3328,9 @@ function generateWeeklyMatchups() {
     const generated = [];
     const pistasDisponibles = Math.max(1, Number(getActiveTournament()?.pistas) || 1);
     const horarios = ['18:00', '19:30', '21:00', '22:30', '00:00'];
+    const activeRound = AppState.bracket ? getActiveBracketRound() : getDefaultRoundForCurrentTeams();
+    const scheduledDate = getRoundScheduledDate(activeRound?.key || 'dieciseisavos');
+    const scheduledPhase = activeRound?.label || 'Jornada general';
 
     for (let index = 0; index < shuffledTeams.length; index += 2) {
         if (index + 1 >= shuffledTeams.length) {
@@ -3237,6 +3345,8 @@ function generateWeeklyMatchups() {
             equipoB: shuffledTeams[index + 1].nombre,
             equipoAId: shuffledTeams[index].id,
             equipoBId: shuffledTeams[index + 1].id,
+            fecha: scheduledDate,
+            fase: scheduledPhase,
             pista: (matchIndex % pistasDisponibles) + 1,
             horario: horarios[Math.floor(matchIndex / pistasDisponibles) % horarios.length],
             scoreA: 0,
@@ -3254,15 +3364,17 @@ function renderSiguienteJornada() {
     if (!listContainer || !adminScoreContainer) return;
 
     if (!AppState.siguienteJornadaGenerada) {
+        const generalRound = AppState.bracket ? getActiveBracketRound() : getDefaultRoundForCurrentTeams();
+        const generalDate = formatTournamentDate(getRoundScheduledDate(generalRound.key), { includeWeekday: true });
         listContainer.innerHTML = `
             <div style="text-align: center; padding: 40px 20px; color: var(--text-muted)">
                 <i class="fas fa-dice-six" style="font-size: 3rem; margin-bottom: 16px; color: var(--text-muted)"></i>
                 <p>No se ha generado la proxima jornada.</p>
-                <p style="font-size: 0.85rem">Usa la pagina Jornadas para generar los roles de juego.</p>
+                <p style="font-size: 0.85rem">Fecha general estimada para ${generalRound.label}: ${generalDate}.</p>
             </div>
         `;
         adminScoreContainer.innerHTML = `
-            <p style="color: var(--text-muted)">Genera la jornada primero para poder capturar marcadores.</p>
+            <p style="color: var(--text-muted)">Genera la jornada primero para poder capturar marcadores. La fase ${generalRound.label} esta proyectada para ${generalDate}.</p>
         `;
         return;
     }
@@ -3277,9 +3389,13 @@ function renderSiguienteJornada() {
 
         card.innerHTML = `
             <div class="match-info-top">
+                <span><i class="far fa-calendar"></i> ${formatTournamentDate(match.fecha, { includeWeekday: true })}</span>
                 <span><i class="fas fa-bowling-ball"></i> Pista ${match.pista}</span>
                 <span><i class="far fa-clock"></i> ${match.horario} hrs</span>
                 <span class="badge ${match.estado === 'Completado' ? 'neon-badge-green' : 'neon-badge-yellow'}">${match.estado}</span>
+            </div>
+            <div class="data-grid" style="margin-top: 0; margin-bottom: 14px;">
+                <span class="data-pill"><i class="fas fa-layer-group"></i> ${escapeHtml(match.fase || 'Jornada general')}</span>
             </div>
             <div class="match-team-row">
                 <span class="match-team-name">${match.equipoA}</span>
@@ -3299,6 +3415,8 @@ function renderSiguienteJornada() {
             <table>
                 <thead>
                     <tr>
+                        <th>Fecha</th>
+                        <th>Fase</th>
                         <th>Horario</th>
                         <th>Pista</th>
                         <th>Pareja A</th>
@@ -3320,6 +3438,8 @@ function renderSiguienteJornada() {
         const isCompleted = match.estado === 'Completado';
 
         tr.innerHTML = `
+            <td>${formatTournamentDate(match.fecha)}</td>
+            <td>${escapeHtml(match.fase || 'Jornada general')}</td>
             <td>${match.horario} hrs</td>
             <td>Pista ${match.pista}</td>
             <td><strong>${match.equipoA}</strong></td>

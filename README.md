@@ -53,7 +53,11 @@ Si prefieres ejecutarlo como sitio local durante desarrollo, puedes usar cualqui
 
 ### Nota sobre los datos
 
-- El proyecto guarda usuarios, sesion, parejas y bracket en `localStorage` del navegador.
+- El proyecto guarda usuarios, sesion, parejas, jornadas y estado del torneo en `localStorage` del navegador.
+- **Todo es local al navegador y al dispositivo.**
+- Si creas una cuenta en un dispositivo e intentas iniciar sesion desde otro, ese usuario **no va a aparecer**.
+- Tampoco aparecera si cambias de navegador en el mismo equipo, por ejemplo de `Chrome` a `Edge`.
+- Solo podras volver a ver esa cuenta si entras desde el mismo navegador del mismo dispositivo donde fue creada y mientras no se borren los datos del sitio.
 - Si quieres reiniciar la informacion demo, borra el almacenamiento del sitio en tu navegador.
 
 ---
@@ -166,11 +170,10 @@ Actualmente si funciona:
 
 La pestaña de crear cuenta:
 
-- sigue visible
-- ya no permite crear administradores ni marketing
-- esta cubierta con un diseno tipo construccion
-- muestra cintas cruzadas y letrero de `EN CONSTRUCCION`
-- actualmente no registra usuarios nuevos
+- si permite crear cuentas nuevas de tipo `Jugador`
+- no permite crear administradores ni marketing desde la vista publica
+- guarda la cuenta creada de forma local en el navegador
+- despues del registro, el jugador puede entrar a su cuenta e inscribirse al torneo
 
 ### 💾 Donde se guarda
 
@@ -179,10 +182,13 @@ Por ahora todo se guarda en `localStorage` del navegador:
 - usuarios: `bolkristal-users`
 - sesion: `bolkristal-session`
 - parejas: `bolkristal-teams`
+- clientes: `bolkristal-clientes`
+- torneo activo: `bolkristal-torneo-activo`
+- jornada semanal: `bolkristal-jornada-semanal`
 - bracket: `bolkristal-bracket-demo`
 - configuracion del bracket: `bolkristal-bracket-builder`
 
-> Importante: esto significa que una cuenta creada o datos guardados en un navegador no aparecen automaticamente en otro.
+> Importante: esto significa que una cuenta creada en un dispositivo o navegador no aparece automaticamente en otro. Si un usuario se registra en una laptop, no podra entrar desde otro celular o computadora a menos que exista un backend real con base de datos compartida.
 
 ---
 
@@ -382,6 +388,7 @@ Todavia no incluye:
 - backend real
 - base de datos compartida
 - sincronizacion entre navegadores
+- sincronizacion entre dispositivos
 - analiticas personalizadas por jugador
 - vinculacion real entre usuario y pareja inscrita
 - publicacion real a redes sociales

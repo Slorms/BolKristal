@@ -2733,6 +2733,18 @@ tr:last-child td {
     color: #fff;
 }
 
+.bracket-stage-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.bracket-stage-meta small {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+}
+
 .bracket-preview-card .header-actions,
 .bracket-modal-card .header-actions {
     display: flex;
