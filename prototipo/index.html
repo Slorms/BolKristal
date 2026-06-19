@@ -393,8 +393,8 @@
                 <span class="section-chip">Mi torneo</span>
                 <h2>Estado general de tu equipo dentro del torneo.</h2>
                 <p>
-                    Aqui se separa lo que corresponde al cuadro del torneo y lo que corresponde a tu
-                    jornada semanal, para que no se mezclen rival de ronda y partido programado.
+                    Aqui ves por separado la fase general del torneo y tu proximo partido confirmado,
+                    para que no aparezcan dos rivales distintos al mismo tiempo.
                 </p>
             </div>
             <div class="schedule-grid">
@@ -502,9 +502,6 @@
                         </button>
                         <button class="nav-item nav-torneo" data-target="torneos" id="nav-btn-torneos">
                             <i class="fas fa-trophy"></i> Torneo Boliche
-                        </button>
-                        <button class="nav-item nav-jornadas" data-target="jornadas" id="nav-btn-jornadas">
-                            <i class="fas fa-calendar-week"></i> Jornadas
                         </button>
                         <button class="nav-item nav-inscripciones" data-target="inscripciones" id="nav-btn-inscripciones">
                             <i class="fas fa-user-plus"></i> Inscripciones
@@ -718,82 +715,6 @@
                             <div id="tournament-progress-strip-modal" class="tournament-progress-strip"></div>
                             <div class="bracket-scroll-area modal">
                                 <div id="tournament-bracket-modal" class="tournament-bracket-host modal readonly"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="jornadas" class="page-panel">
-                <div class="header-main">
-                    <div class="header-title">
-                        <h2>Jornadas semanales</h2>
-                        <p>Emparejamientos, horarios, pistas y captura de marcadores de la semana</p>
-                    </div>
-                    <div class="header-actions">
-                        <span class="badge neon-badge-cyan"><i class="fas fa-calendar-check"></i> Operacion semanal</span>
-                    </div>
-                </div>
-
-                <div class="grid-main-columns">
-                    <div class="column-stack">
-                        <div class="card-glass pink-accent">
-                            <div class="card-header-flex">
-                                <div class="card-title-group">
-                                    <h3>Tabla de clasificacion general</h3>
-                                    <p>Clasificacion acumulada por conteo total de pines derribados</p>
-                                </div>
-                                <span class="badge neon-badge-pink"><i class="fas fa-signal"></i> Clasificacion en vivo</span>
-                            </div>
-                            <div class="table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Pos</th>
-                                            <th>Pareja / Integrantes</th>
-                                            <th>Nivel</th>
-                                            <th>Jugados</th>
-                                            <th>Total pines</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="leaderboard-tbody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="card-glass">
-                            <div class="card-header-flex">
-                                <div class="card-title-group">
-                                    <h3>Proxima jornada semanal</h3>
-                                    <p>Enfrentamientos oficiales, asignacion de pistas y horarios</p>
-                                </div>
-                                <span class="badge neon-badge-cyan"><i class="far fa-calendar-alt"></i> Rol de partidas</span>
-                            </div>
-                            <div class="grid-2" id="siguiente-jornada-container"></div>
-                        </div>
-
-                        <div class="card-glass pink-accent">
-                            <div class="card-title-group" style="margin-bottom: 16px;">
-                                <h3>Registro de marcadores</h3>
-                                <p>Captura los pines de la jornada para actualizar el ranking</p>
-                            </div>
-                            <div id="admin-captura-container"></div>
-                        </div>
-                    </div>
-
-                    <div class="column-stack">
-                        <div class="card-glass purple-accent">
-                            <div class="card-title-group" style="margin-bottom: 20px;">
-                                <h3>Consola del administrador</h3>
-                                <p>Control de la jornada semanal, cruces, horarios y uso de pistas</p>
-                            </div>
-                            <div class="column-stack tight">
-                                <button class="btn-neon btn-neon-pink" id="btn-generar-roles" style="width: 100%;">
-                                    <i class="fas fa-random"></i> Generar emparejamientos semanales
-                                </button>
-                                <p class="helper-text">
-                                    Genera la siguiente jornada para organizar cruces, horarios y pistas disponibles.
-                                </p>
                             </div>
                         </div>
                     </div>
