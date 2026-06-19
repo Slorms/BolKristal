@@ -2400,6 +2400,62 @@ function getNextBracketMatchForTeam(team) {
     return null;
 }
 
+function getBracketProgressForTeam(team) {
+    if (!team || !AppState.bracket?.participants?.length) return null;
+
+    const participant = AppState.bracket.participants.find((item) => item.teamId === team.id);
+    if (!participant) return null;
+
+    let lastResolved = null;
+    let lastWon = null;
+    let elimination = null;
+    let pending = null;
+
+    for (const round of getManagedBracketRounds()) {
+        const matchIndex = AppState.bracket.rounds[round.key].findIndex((match) => (
+            match.participantAId === participant.id ||
+            match.participantBId === participant.id
+        ));
+
+        if (matchIndex < 0) continue;
+
+        const match = AppState.bracket.rounds[round.key][matchIndex];
+        const opponentId = match.participantAId === participant.id ? match.participantBId : match.participantAId;
+        const opponent = getBracketParticipantById(opponentId);
+        const info = {
+            round,
+            matchIndex,
+            match,
+            participant,
+            opponent
+        };
+
+        if (!match.winnerId) {
+            pending = info;
+            break;
+        }
+
+        lastResolved = info;
+
+        if (match.winnerId === participant.id) {
+            lastWon = info;
+            continue;
+        }
+
+        elimination = info;
+        break;
+    }
+
+    return {
+        participant,
+        pending,
+        lastResolved,
+        lastWon,
+        elimination,
+        isChampion: AppState.bracket.championId === participant.id
+    };
+}
+
 function formatRegistrationDate(value) {
     if (!value) return 'Pendiente';
 
@@ -2519,12 +2575,17 @@ function renderClientTournamentInfo() {
 
     const user = AppState.sessionUser;
     const userTeam = getUserTeam(user);
-    const bracketMatch = getNextBracketMatchForTeam(userTeam);
+    const bracketProgress = getBracketProgressForTeam(userTeam);
+    const bracketMatch = bracketProgress?.pending || getNextBracketMatchForTeam(userTeam);
     const tournament = getActiveTournament();
     const fallbackRound = bracketMatch?.round || (AppState.bracket ? getActiveBracketRound() : getDefaultRoundForCurrentTeams());
     const fallbackDate = fallbackRound ? formatTournamentDate(getRoundScheduledDate(fallbackRound.key), { includeWeekday: true }) : 'Pendiente';
     const participantA = bracketMatch ? getBracketParticipantById(bracketMatch.match.participantAId) : null;
     const participantB = bracketMatch ? getBracketParticipantById(bracketMatch.match.participantBId) : null;
+    const lastWonMatch = bracketProgress?.lastWon || null;
+    const lastResolvedMatch = bracketProgress?.lastResolved || null;
+    const eliminatedMatch = bracketProgress?.elimination || null;
+    const isChampion = Boolean(bracketProgress?.isChampion);
     const pendingOpponent = bracketMatch
         ? (
             getBracketParticipantById(bracketMatch.match.participantAId)?.teamId === userTeam?.id
@@ -2536,6 +2597,7 @@ function renderClientTournamentInfo() {
     const officialMatchTitle = participantA && participantB
         ? `${participantA.nombre} vs ${participantB.nombre}`
         : null;
+    const hasAdvancedWaitingOpponent = Boolean(userTeam && bracketMatch && !pendingOpponent && lastWonMatch);
 
     if (primaryAction) {
         if (userTeam) {
@@ -2572,13 +2634,19 @@ function renderClientTournamentInfo() {
     bracketCard.innerHTML = userTeam ? `
         <span class="badge neon-badge-yellow">Fase en torneo</span>
         <h3>${fallbackRound?.label || 'Fase por definir'}</h3>
-        <p>${pendingOpponent
-            ? `Tu rival oficial dentro del cuadro es ${escapeHtml(pendingOpponent.nombre)} en la fase actual del torneo.`
-            : 'Tu siguiente referencia dentro del cuadro aun no tiene rival definido o depende de resultados previos.'}</p>
+        <p>${isChampion
+            ? 'Felicidades, tu pareja gano la final y ya aparece como campeona actual del torneo.'
+            : eliminatedMatch
+                ? `Tu recorrido en el torneo se cerro en ${escapeHtml(eliminatedMatch.round.label)}.`
+                : pendingOpponent
+                    ? `Tu rival oficial dentro del cuadro es ${escapeHtml(pendingOpponent.nombre)} en la fase actual del torneo.`
+                : hasAdvancedWaitingOpponent
+                        ? `Ganaste tu ultimo cruce en ${escapeHtml(lastWonMatch.round.label)} y ya avanzaste a ${escapeHtml(bracketMatch.round.label)}.`
+                        : 'Tu siguiente referencia dentro del cuadro aun no tiene rival definido o depende de resultados previos.'}</p>
         <div class="data-grid">
             <span class="data-pill"><i class="far fa-calendar"></i> ${fallbackDate}</span>
             <span class="data-pill"><i class="fas fa-layer-group"></i> ${fallbackRound?.label || 'Fase por definir'}</span>
-            <span class="data-pill"><i class="fas fa-user-group"></i> ${pendingOpponent ? pendingOpponent.nombre : 'Rival por definir'}</span>
+            <span class="data-pill"><i class="fas fa-user-group"></i> ${isChampion ? 'Campeones actuales' : (pendingOpponent ? pendingOpponent.nombre : 'Rival por definir')}</span>
             <span class="data-pill"><i class="fas fa-diagram-project"></i> Cuadro general del torneo</span>
         </div>
     ` : `
@@ -2591,7 +2659,22 @@ function renderClientTournamentInfo() {
         </div>
     `;
 
-    weeklyCard.innerHTML = userTeam && bracketMatch && pendingOpponent && officialSchedule ? `
+    weeklyCard.innerHTML = isChampion ? `
+        <div class="card-header-flex">
+            <div class="card-title-group">
+                <h3>Mi proximo partido</h3>
+                <p>Tu equipo ya completo todo el recorrido del torneo.</p>
+            </div>
+            <span class="badge neon-badge-green">Campeones</span>
+        </div>
+        <h3>${escapeHtml(userTeam.nombre)}</h3>
+        <p>Felicidades, ganaste el torneo. Tu pareja vencio en la final del cuadro oficial y ahora aparece como campeona del torneo.</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="fas fa-crown"></i> Torneo ganado</span>
+            <span class="data-pill"><i class="fas fa-layer-group"></i> Campeones actuales</span>
+            <span class="data-pill"><i class="fas fa-user-check"></i> Resultado final registrado</span>
+        </div>
+    ` : userTeam && bracketMatch && pendingOpponent && officialSchedule ? `
         <div class="card-header-flex">
             <div class="card-title-group">
                 <h3>Mi proximo partido</h3>
@@ -2609,6 +2692,37 @@ function renderClientTournamentInfo() {
             <span class="data-pill"><i class="fas fa-hourglass-half"></i> ${officialSchedule.duracionMinutos} min</span>
             <span class="data-pill"><i class="fas fa-user-check"></i> Rival confirmado: ${escapeHtml(pendingOpponent.nombre)}</span>
         </div>
+    ` : hasAdvancedWaitingOpponent ? `
+        <div class="card-header-flex">
+            <div class="card-title-group">
+                <h3>Mi proximo partido</h3>
+                <p>Tu siguiente rival todavia no se define, pero tu avance ya quedo registrado en el cuadro.</p>
+            </div>
+            <span class="badge neon-badge-green">Avanzaste</span>
+        </div>
+        <h3>${escapeHtml(userTeam.nombre)}</h3>
+        <p>Ganaste tu ultimo partido${lastWonMatch?.opponent ? ` contra ${escapeHtml(lastWonMatch.opponent.nombre)}` : ''} y avanzaste a ${escapeHtml(bracketMatch.round.label)}. En cuanto el otro cruce se resuelva, aqui aparecera tu siguiente rival.</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="far fa-calendar"></i> ${officialSchedule ? formatTournamentDate(officialSchedule.fecha, { includeWeekday: true }) : fallbackDate}</span>
+            <span class="data-pill"><i class="fas fa-layer-group"></i> ${escapeHtml(bracketMatch.round.label)}</span>
+            <span class="data-pill"><i class="fas fa-circle-check"></i> Victoria registrada</span>
+            <span class="data-pill"><i class="fas fa-user-clock"></i> Rival por definir</span>
+        </div>
+    ` : userTeam && eliminatedMatch ? `
+        <div class="card-header-flex">
+            <div class="card-title-group">
+                <h3>Mi proximo partido</h3>
+                <p>Tu participacion actual ya quedo cerrada dentro del cuadro oficial.</p>
+            </div>
+            <span class="badge neon-badge-pink">Cerrado</span>
+        </div>
+        <h3>${escapeHtml(userTeam.nombre)}</h3>
+        <p>Tu ultimo resultado registrado fue en ${escapeHtml(eliminatedMatch.round.label)}${eliminatedMatch.opponent ? ` frente a ${escapeHtml(eliminatedMatch.opponent.nombre)}` : ''}.</p>
+        <div class="data-grid">
+            <span class="data-pill"><i class="fas fa-layer-group"></i> ${escapeHtml(eliminatedMatch.round.label)}</span>
+            <span class="data-pill"><i class="fas fa-flag-checkered"></i> Resultado final capturado</span>
+            <span class="data-pill"><i class="fas fa-user-check"></i> Sin cruce pendiente</span>
+        </div>
     ` : `
         <div class="card-header-flex">
             <div class="card-title-group">
@@ -2619,7 +2733,9 @@ function renderClientTournamentInfo() {
         </div>
         <h3>${userTeam ? 'Aun no tienes partido asignado' : 'Primero inscribe a tu pareja'}</h3>
         <p>${userTeam
-            ? 'Tu equipo ya puede existir dentro del cuadro general, pero el rival oficial todavia no queda definido en la eliminatoria.'
+            ? (lastResolvedMatch?.match?.winnerId === bracketProgress?.participant?.id
+                ? 'Tu ultima victoria ya se registro, pero tu siguiente rival todavia no queda definido en la eliminatoria.'
+                : 'Tu equipo ya puede existir dentro del cuadro general, pero el rival oficial todavia no queda definido en la eliminatoria.')
             : 'Despues de inscribirte, aqui aparecera tu siguiente partido con fecha, horario y pista.'}</p>
         <div class="data-grid">
             <span class="data-pill"><i class="far fa-calendar"></i> ${userTeam ? fallbackDate : 'Pendiente'}</span>
