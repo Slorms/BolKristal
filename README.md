@@ -2,7 +2,7 @@
 
 <div align="center">
 
-### ✨ Prototipo web para torneo, jornadas, inscripciones, promociones y experiencia de jugador
+### ✨ Prototipo web para torneo, inscripciones, promociones y experiencia de jugador
 
 [![Abrir pagina](https://img.shields.io/badge/🌐%20Abrir%20pagina-BolKristal-ff0055?style=for-the-badge&logo=google-chrome&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
 [![Estado](https://img.shields.io/badge/Estado-Prototipo%20activo-00c2ff?style=for-the-badge)](https://slorms.github.io/BolKristal/prototipo/)
@@ -53,7 +53,7 @@ Si prefieres ejecutarlo como sitio local durante desarrollo, puedes usar cualqui
 
 ### Nota sobre los datos
 
-- El proyecto guarda usuarios, sesion, parejas, jornadas y estado del torneo en `localStorage` del navegador.
+- El proyecto guarda usuarios, sesion, parejas y estado del torneo en `localStorage` del navegador.
 - **Todo es local al navegador y al dispositivo.**
 - Si creas una cuenta en un dispositivo e intentas iniciar sesion desde otro, ese usuario **no va a aparecer**.
 - Tampoco aparecera si cambias de navegador en el mismo equipo, por ejemplo de `Chrome` a `Edge`.
@@ -70,7 +70,6 @@ BolKristal es un prototipo visual pensado para mostrar la operacion digital de u
 - 👤 vista de jugador
 - 🛠️ panel administrativo responsivo
 - 🏆 torneo con bracket eliminatorio
-- 📅 jornadas semanales
 - 📝 inscripciones de parejas
 - 👥 directorio de clientes
 - 📣 promociones
@@ -115,13 +114,15 @@ La portada principal ya incluye:
 Cuando entra un jugador, puede ver:
 
 - bienvenida personalizada
-- resumen del torneo
+- resumen de su pareja inscrita
+- estado de su avance dentro del torneo
+- proximo cruce oficial segun el cuadro
 - bracket oficial en solo lectura
 - promociones del mes
 - bloque de beneficios
 - menu hamburguesa en movil
 
-> Nota: hoy esta vista es informativa. Todavia no muestra estadisticas reales personalizadas por jugador o pareja.
+> Nota: esta vista ya refleja el estado del jugador dentro del torneo, pero sigue siendo local al navegador y no se sincroniza con otros dispositivos.
 
 ### 🛠️ Vista administrativa
 
@@ -129,7 +130,6 @@ El panel admin ya tiene:
 
 - `Resumen`
 - `Torneo Boliche`
-- `Jornadas`
 - `Inscripciones`
 - `Clientes Bar`
 - `Promociones`
@@ -184,7 +184,6 @@ Por ahora todo se guarda en `localStorage` del navegador:
 - parejas: `bolkristal-teams`
 - clientes: `bolkristal-clientes`
 - torneo activo: `bolkristal-torneo-activo`
-- jornada semanal: `bolkristal-jornada-semanal`
 - bracket: `bolkristal-bracket-demo`
 - configuracion del bracket: `bolkristal-bracket-builder`
 
@@ -205,6 +204,8 @@ Es una de las partes mas completas del proyecto.
 - sorteo de posiciones
 - validacion de cupo minimo exacto segun la fase elegida
 - avance de rondas
+- mensaje al jugador cuando gana y avanza
+- mensaje especial cuando gana la final del torneo
 - campeon visual con pino y corona
 - guardado local del estado del torneo
 
@@ -213,7 +214,8 @@ Es una de las partes mas completas del proyecto.
 - el bracket compacto ya no se edita con clic
 - el bracket grande ya no funciona como editor manual
 - el jugador lo ve en solo lectura
-- el admin sigue controlando el avance desde el bloque del enfrentamiento actual
+- el admin controla el avance desde el bloque del enfrentamiento actual dentro del mismo modulo `Torneo Boliche`
+- ya no existe un modulo aparte de `Jornadas` con rivales distintos al cuadro oficial
 
 ---
 
@@ -237,21 +239,6 @@ Dentro del torneo existe un bloque de captura para el duelo activo.
 - ya no brinca automaticamente al siguiente campo al escribir
 - se pueden capturar valores como `10` sin problema
 - se quitaron las flechas de los inputs numericos
-
----
-
-## 📅 Jornadas semanales
-
-Se separo la logica de jornadas del modulo principal de torneo.
-
-Actualmente permite:
-
-- generar la proxima jornada
-- ver cruces
-- ver horarios
-- ver pistas asignadas
-- revisar estado de partidas
-- capturar marcadores semanales
 
 ---
 
@@ -376,7 +363,7 @@ Hoy el prototipo ya sirve para:
 - administrar parejas inscritas
 - generar y seguir un bracket
 - capturar scores del enfrentamiento actual
-- revisar jornadas
+- mostrar al jugador si avanzo o si gano el torneo
 - mostrar clientes y promociones
 
 ---
@@ -401,7 +388,6 @@ Si este prototipo sigue creciendo, el paso mas importante seria conectar:
 
 - usuarios
 - parejas inscritas
-- jornadas
 - resultados
 - estadisticas
 
