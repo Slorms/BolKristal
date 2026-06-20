@@ -338,7 +338,7 @@ BolKristal/
 
 ### Distribucion por carpetas
 
-- `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en pdf `Diagrama_ER.pdf`, diagramas de actividad `Diagrama_AS-IS.pdf` y `Diagrama_TO-BE.pdf`.
+- `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en pdf `Diagrama_ER.pdf`, diagramas de proceso de negocio `Diagrama_AS-IS.pdf` y `Diagrama_TO-BE.pdf`.
 - `documentacion/`: carpeta reservada para manuales, descripciones tecnicas o documentos de apoyo del proyecto, incluye `Especificacion_Final_Proyecto.docx`, `Matriz_Requerimientos.xlsx`, `Matriz_Trazabilidad.xlsx`.
 - `minutas/`: carpeta pensada para guardar acuerdos, avances y seguimiento de reuniones, incluye `Minutas_Entrevistas.pdf`, `Minuta_Validacion_Prototipo.docx`.
 - `prototipo/`: contiene el prototipo web funcional en `HTML`, `CSS` y `JavaScript`.
