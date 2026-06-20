@@ -311,7 +311,9 @@ BolKristal/
 |- README.md
 |- diagramas/
 |  |- Diagrama_ER.mwb
-|  |- Diagrama_ER.png
+|  |- Diagrama_ER.pdf
+|  |- Diagrama_AS-IS.pdf
+|  |- Diagrama_TO-BE.pdf
 |- documentacion/
 |  |- (carpeta disponible para documentacion del proyecto)
 |- minutas/
@@ -333,7 +335,7 @@ BolKristal/
 
 ### Distribucion por carpetas
 
-- `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en imagen `Diagrama_ER.png`.
+- `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en pdf `Diagrama_ER.pdf`, diagramas de actividad `Diagrama_AS-IS.pdf` y `Diagrama_TO-BE.pdf`.
 - `documentacion/`: carpeta reservada para manuales, descripciones tecnicas o documentos de apoyo del proyecto.
 - `minutas/`: carpeta pensada para guardar acuerdos, avances y seguimiento de reuniones.
 - `prototipo/`: contiene el prototipo web funcional en `HTML`, `CSS` y `JavaScript`.
