@@ -53,7 +53,7 @@ Si prefieres ejecutarlo como sitio local durante desarrollo, puedes usar cualqui
 
 ### Nota sobre los datos
 
-- El proyecto guarda usuarios, sesion, parejas y estado del torneo en `localStorage` del navegador.
+- El proyecto guarda usuarios, sesion, inscripciones de parejas y estado del torneo en `localStorage` del navegador.
 - **Todo es local al navegador y al dispositivo.**
 - Si creas una cuenta en un dispositivo e intentas iniciar sesion desde otro, ese usuario **no va a aparecer**.
 - Tampoco aparecera si cambias de navegador en el mismo equipo, por ejemplo de `Chrome` a `Edge`.
@@ -67,6 +67,7 @@ Si prefieres ejecutarlo como sitio local durante desarrollo, puedes usar cualqui
 BolKristal es un prototipo visual pensado para mostrar la operacion digital de un negocio de boliche con ambiente de fiesta. La pagina ya integra:
 
 - 🎉 portada publica con imagenes, promociones y acceso
+- 🔐 creacion de cuenta de jugador e inicio de sesion
 - 👤 vista de jugador
 - 🛠️ panel administrativo responsivo
 - 🏆 torneo con bracket eliminatorio
@@ -117,6 +118,8 @@ Cuando entra un jugador, puede ver:
 - resumen de su pareja inscrita
 - estado de su avance dentro del torneo
 - proximo cruce oficial segun el cuadro
+- fecha, hora estimada y pista del cruce oficial
+- mensaje cuando gana una ronda y cuando gana el torneo
 - bracket oficial en solo lectura
 - promociones del mes
 - bloque de beneficios
@@ -134,6 +137,21 @@ El panel admin ya tiene:
 - `Clientes Bar`
 - `Promociones`
 - `Reportes`
+
+Dentro de `Torneo Boliche`, el admin puede:
+
+- armar el cuadro con parejas inscritas
+- sortear posiciones
+- ver la etapa activa
+- capturar el enfrentamiento actual por frames
+- avanzar automaticamente al ganador dentro del mismo bracket
+
+Dentro de `Inscripciones`, el admin puede:
+
+- ver todas las parejas registradas
+- abrir convocatoria
+- cerrar convocatoria
+- revisar el origen del registro
 
 En movil:
 
@@ -173,7 +191,7 @@ La pestaña de crear cuenta:
 - si permite crear cuentas nuevas de tipo `Jugador`
 - no permite crear administradores ni marketing desde la vista publica
 - guarda la cuenta creada de forma local en el navegador
-- despues del registro, el jugador puede entrar a su cuenta e inscribirse al torneo
+- despues del registro, el jugador puede entrar a su cuenta e inscribirse al torneo desde su propia vista
 
 ### 💾 Donde se guarda
 
@@ -188,6 +206,7 @@ Por ahora todo se guarda en `localStorage` del navegador:
 - configuracion del bracket: `bolkristal-bracket-builder`
 
 > Importante: esto significa que una cuenta creada en un dispositivo o navegador no aparece automaticamente en otro. Si un usuario se registra en una laptop, no podra entrar desde otro celular o computadora a menos que exista un backend real con base de datos compartida.
+> Tambien aplica para las parejas demo: si el navegador ya tiene inscripciones guardadas, esas reemplazan a los datos iniciales del prototipo.
 
 ---
 
@@ -204,8 +223,9 @@ Es una de las partes mas completas del proyecto.
 - sorteo de posiciones
 - validacion de cupo minimo exacto segun la fase elegida
 - avance de rondas
+- asignacion estimada de fecha, hora y pista para el cruce oficial
 - mensaje al jugador cuando gana y avanza
-- mensaje especial cuando gana la final del torneo
+- mensaje especial de felicitacion cuando gana la final del torneo
 - campeon visual con pino y corona
 - guardado local del estado del torneo
 
@@ -216,6 +236,7 @@ Es una de las partes mas completas del proyecto.
 - el jugador lo ve en solo lectura
 - el admin controla el avance desde el bloque del enfrentamiento actual dentro del mismo modulo `Torneo Boliche`
 - ya no existe un modulo aparte de `Jornadas` con rivales distintos al cuadro oficial
+- el rival que ve el jugador sale del mismo cuadro oficial que administra el panel
 
 ---
 
@@ -244,12 +265,18 @@ Dentro del torneo existe un bloque de captura para el duelo activo.
 
 ## 📝 Inscripciones
 
-La seccion de inscripciones ya esta organizada en una sola columna para que sea mas clara.
+La inscripcion del torneo ya funciona tanto para jugador como para administrador.
 
 Incluye:
 
 - formulario de alta de parejas
+- inscripcion en linea desde la cuenta del jugador
+- validacion de campos obligatorios
+- validacion de pareja obligatoria
+- validacion para evitar jugadores o equipos repetidos
 - costo segun categoria
+- bloqueo automatico si la convocatoria esta cerrada
+- bloqueo automatico cuando ya no hay cupos
 - tabla de directorio
 - conteo por categoria
 - total de parejas registradas
@@ -310,17 +337,20 @@ Durante el desarrollo se trabajaron muchos ajustes:
 BolKristal/
 |- README.md
 |- diagramas/
+|  |- Diagrama_AS-IS.pdf
 |  |- Diagrama_ER.mwb
 |  |- Diagrama_ER.pdf
-|  |- Diagrama_AS-IS.pdf
 |  |- Diagrama_TO-BE.pdf
 |- documentacion/
-|  |- Especificacion_Final_Proyecto.docx
-|  |- Matriz_Requerimientos.xlsx
-|  |- Matriz_Trazabilidad.xlsx
+|  |- 02-Matriz_Requerimientos_Validada.xlsx
+|  |- Caso_Estudio_BolKristal.docx
+|  |- Entrevista_BolKristal.docx
+|  |- Guia_Entrevistas_Matriz_BolKristal.docx
+|  |- Matriz_Trazabilidad_BolKristal.xlsx
 |- minutas/
-|  |- Minutas_Entrevistas.pdf
-|  |- Minuta_Validacion_Prototipo.docx
+|  |- MInuta Primera Reunion.pdf
+|  |- Minuta Segunda Reunion.pdf
+|  |- Minuta Validación Prototipo.pdf
 |- prototipo/
 |  |- index.html
 |  |- styles/
@@ -339,8 +369,8 @@ BolKristal/
 ### Distribucion por carpetas
 
 - `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en pdf `Diagrama_ER.pdf`, diagramas de proceso de negocio `Diagrama_AS-IS.pdf` y `Diagrama_TO-BE.pdf`.
-- `documentacion/`: carpeta reservada para manuales, descripciones tecnicas o documentos de apoyo del proyecto, incluye `Especificacion_Final_Proyecto.docx`, `Matriz_Requerimientos.xlsx`, `Matriz_Trazabilidad.xlsx`.
-- `minutas/`: carpeta pensada para guardar acuerdos, avances y seguimiento de reuniones, incluye `Minutas_Entrevistas.pdf`, `Minuta_Validacion_Prototipo.docx`.
+- `documentacion/`: reune los documentos base del proyecto, como `Caso_Estudio_BolKristal.docx`, `Entrevista_BolKristal.docx`, `Guia_Entrevistas_Matriz_BolKristal.docx`, `02-Matriz_Requerimientos_Validada.xlsx` y `Matriz_Trazabilidad_BolKristal.xlsx`.
+- `minutas/`: guarda evidencia de reuniones y validaciones del proyecto, incluyendo `MInuta Primera Reunion.pdf`, `Minuta Segunda Reunion.pdf` y `Minuta Validación Prototipo.pdf`.
 - `prototipo/`: contiene el prototipo web funcional en `HTML`, `CSS` y `JavaScript`.
 
 ---
@@ -363,8 +393,10 @@ BolKristal/
 Hoy el prototipo ya sirve para:
 
 - presentar visualmente la marca
+- crear cuentas de jugador
 - iniciar sesion con usuarios demo
 - navegar entre vista publica, jugador y admin
+- inscribir parejas desde la cuenta del jugador
 - administrar parejas inscritas
 - generar y seguir un bracket
 - capturar scores del enfrentamiento actual
@@ -382,7 +414,7 @@ Todavia no incluye:
 - sincronizacion entre navegadores
 - sincronizacion entre dispositivos
 - analiticas personalizadas por jugador
-- vinculacion real entre usuario y pareja inscrita
+- persistencia compartida entre cuentas y torneos fuera del navegador actual
 - publicacion real a redes sociales
 
 ---
@@ -393,6 +425,7 @@ Si este prototipo sigue creciendo, el paso mas importante seria conectar:
 
 - usuarios
 - parejas inscritas
+- enfrentamientos
 - resultados
 - estadisticas
 
