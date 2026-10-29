@@ -5,12 +5,21 @@ const pool = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const session = require('express-session');
 const PgSession = require('connect-pg-simple')(session);
+const cors = require('cors');
 
 // Creamos nuestra aplicación
 const app = express();
 
 // Definimos el puerto
 const PORT = process.env.PORT || 3000;
+
+app.use(cors({
+    origin: [
+        'http://127.0.0.1:5500',
+        'http://localhost:5500'
+    ],
+    credentials: true
+}));
 
 // Permitimos recibir información en formato JSON
 app.use(express.json());

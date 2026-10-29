@@ -1,4 +1,25 @@
-const USERS_STORAGE_KEY = 'bolkristal-users';
+// Dirección del backend de BolKristal
+const API_BASE_URL = 'http://127.0.0.1:3000/api';
+// Realiza solicitudes al backend de BolKristal
+async function apiRequest(endpoint, options = {}) {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.mensaje || 'Ocurrió un error en la solicitud');
+    }
+
+    return data;
+}
+
 const SESSION_STORAGE_KEY = 'bolkristal-session';
 const TEAMS_STORAGE_KEY = 'bolkristal-teams';
 const BRACKET_STORAGE_KEY = 'bolkristal-bracket-demo';
@@ -55,35 +76,11 @@ const DEFAULT_CLIENTS = [
     { id: 'C005', nombre: 'Carlos Ramos', email: 'marketing@bolkristal.mx', tel: '449-765-4321', cumple: '10 de Noviembre', visitasBillar: 4, torneosJugados: 0, compras: '$890 MXN', preferido: 'Bar / Consumo', promoUsadas: 0 }
 ];
 
-const DEFAULT_USERS = [
-    {
-        id: 'U-ADMIN-1',
-        name: 'Laura Martinez',
-        email: 'admin@bolkristal.mx',
-        password: 'Admin123!',
-        role: 'administrador'
-    },
-    {
-        id: 'U-MKT-1',
-        name: 'Carlos Ramos',
-        email: 'marketing@bolkristal.mx',
-        password: 'Marketing123!',
-        role: 'marketing'
-    },
-    {
-        id: 'U-JUGADOR-1',
-        name: 'Ana Torres',
-        email: 'ana@gmail.com',
-        password: 'Jugador123!',
-        role: 'jugador'
-    }
-];
-
 const AppState = {
     sessionUser: null,
     currentView: 'public-view',
     barAudio: null,
-    updateJukeboxUI: () => {},
+    updateJukeboxUI: () => { },
     torneos: [
         {
             id: 'T1',
@@ -157,32 +154,6 @@ function normalizeRole(role) {
     return role || 'jugador';
 }
 
-function normalizeUserRecord(user) {
-    return {
-        ...user,
-        role: normalizeRole(user.role)
-    };
-}
-
-function mergeUsersWithDefaults(users) {
-    const normalizedUsers = Array.isArray(users)
-        ? users.map(normalizeUserRecord)
-        : [];
-
-    const userMap = new Map();
-
-    normalizedUsers.forEach((user) => {
-        if (!user || !user.email) return;
-        userMap.set(user.email.toLowerCase(), user);
-    });
-
-    DEFAULT_USERS.forEach((defaultUser) => {
-        userMap.set(defaultUser.email.toLowerCase(), { ...defaultUser });
-    });
-
-    return Array.from(userMap.values());
-}
-
 function cloneData(data) {
     return JSON.parse(JSON.stringify(data));
 }
@@ -219,32 +190,6 @@ function showToast(message, type = 'info') {
         toast.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
         setTimeout(() => toast.remove(), 250);
     }, 3400);
-}
-
-function getUsers() {
-    const raw = localStorage.getItem(USERS_STORAGE_KEY);
-
-    if (!raw) {
-        const defaults = cloneData(DEFAULT_USERS);
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaults));
-        return defaults;
-    }
-
-    try {
-        const parsed = JSON.parse(raw);
-        const merged = mergeUsersWithDefaults(parsed);
-
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(merged));
-        return merged;
-    } catch (error) {
-        const defaults = cloneData(DEFAULT_USERS);
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaults));
-        return defaults;
-    }
-}
-
-function saveUsers(users) {
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
 }
 
 function getActiveTournament() {
@@ -606,26 +551,9 @@ function invalidateWeeklySchedule() {
     if (generateButton) generateButton.removeAttribute('disabled');
 }
 
-function saveSession(user) {
-    AppState.sessionUser = user;
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
-}
-
 function clearSession() {
     AppState.sessionUser = null;
     localStorage.removeItem(SESSION_STORAGE_KEY);
-}
-
-function getStoredSession() {
-    const raw = localStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) return null;
-
-    try {
-        return normalizeUserRecord(JSON.parse(raw));
-    } catch (error) {
-        localStorage.removeItem(SESSION_STORAGE_KEY);
-        return null;
-    }
 }
 
 function updateSessionLabels(user) {
@@ -1650,10 +1578,10 @@ function getMirrorBracketHtml(isCompact = false) {
                             </div>
                         ` : ''}
                         ${column.matches.map((matchIndex) => renderBracketSlot(
-                            column.roundKey,
-                            matchIndex,
-                            { showMembers: false, compact: isCompact }
-                        )).join('')}
+        column.roundKey,
+        matchIndex,
+        { showMembers: false, compact: isCompact }
+    )).join('')}
                     </div>
                 </section>
             `).join('')}
@@ -1940,8 +1868,8 @@ function renderTournamentBracket() {
                     </div>
                     <div class="bracket-builder-list">
                         ${availableTeams.length
-                            ? availableTeams.map((team) => buildBracketTeamListItem(team, 'add')).join('')
-                            : '<div class="bracket-builder-empty">No hay parejas disponibles con ese filtro.</div>'}
+            ? availableTeams.map((team) => buildBracketTeamListItem(team, 'add')).join('')
+            : '<div class="bracket-builder-empty">No hay parejas disponibles con ese filtro.</div>'}
                     </div>
                 </div>
                 <div class="bracket-builder-column">
@@ -1951,8 +1879,8 @@ function renderTournamentBracket() {
                     </div>
                     <div class="bracket-builder-list selected">
                         ${selectedTeams.length
-                            ? selectedTeams.map((team) => buildBracketTeamListItem(team, 'remove')).join('')
-                            : '<div class="bracket-builder-empty">Todavia no hay parejas agregadas al cuadro.</div>'}
+            ? selectedTeams.map((team) => buildBracketTeamListItem(team, 'remove')).join('')
+            : '<div class="bracket-builder-empty">Todavia no hay parejas agregadas al cuadro.</div>'}
                     </div>
                 </div>
             </div>
@@ -1983,16 +1911,16 @@ function renderTournamentBracket() {
                     ? `${getBracketParticipantById(nextPending.match.participantAId).nombre} vs ${getBracketParticipantById(nextPending.match.participantBId).nombre}`
                     : !enoughParticipants
                         ? 'No hay suficientes jugadores'
-                    : selectedTeams.length
-                        ? 'Cuadro listo para editar'
-                        : 'Configura participantes'
+                        : selectedTeams.length
+                            ? 'Cuadro listo para editar'
+                            : 'Configura participantes'
             )}</h4>
             <p>${champion
-                ? `${escapeHtml(champion.integrantes)} | ${formatTeamLevel(champion.nivel)}`
-                : nextPending
-                    ? `${nextPending.round.label} listo para capturar ganador.`
-                    : !enoughParticipants
-                        ? `No hay suficientes jugadores para empezar el torneo. Faltan ${getMissingParticipantsCount()} parejas para ${getBracketRoundMeta(AppState.bracket.config.startRound)?.label || 'la fase elegida'}.`
+            ? `${escapeHtml(champion.integrantes)} | ${formatTeamLevel(champion.nivel)}`
+            : nextPending
+                ? `${nextPending.round.label} listo para capturar ganador.`
+                : !enoughParticipants
+                    ? `No hay suficientes jugadores para empezar el torneo. Faltan ${getMissingParticipantsCount()} parejas para ${getBracketRoundMeta(AppState.bracket.config.startRound)?.label || 'la fase elegida'}.`
                     : selectedTeams.length
                         ? 'Cuadro generado y listo para seguimiento desde la consola del enfrentamiento actual.'
                         : 'Selecciona parejas inscritas, define la fase inicial y genera el bracket.'}
@@ -2000,8 +1928,8 @@ function renderTournamentBracket() {
         </div>
         <div class="bracket-stage-list">
             ${managedRounds.map((round) => {
-                const completed = AppState.bracket.rounds[round.key].filter((match) => match.winnerId).length;
-                return `
+                            const completed = AppState.bracket.rounds[round.key].filter((match) => match.winnerId).length;
+                            return `
                     <div class="bracket-stage-item">
                         <span>${round.label}</span>
                         <div class="bracket-stage-meta">
@@ -2010,7 +1938,7 @@ function renderTournamentBracket() {
                         </div>
                     </div>
                 `;
-            }).join('')}
+                        }).join('')}
         </div>
         ${getCurrentMatchCardHtml(nextPending)}
     `;
@@ -2516,8 +2444,8 @@ function renderClientRegistrationSection() {
             <span class="badge ${userTeam ? 'neon-badge-cyan' : 'neon-badge-yellow'}">${userTeam ? 'Tu registro' : 'Pendiente de registro'}</span>
             <h3>${userTeam ? escapeHtml(userTeam.nombre) : 'Tu cuenta aun no participa'}</h3>
             <p>${userTeam
-                ? `Pareja registrada por ${escapeHtml(userTeam.jugador1)} y ${escapeHtml(userTeam.jugador2)} en nivel ${formatTeamLevel(userTeam.nivel).toLowerCase()}.`
-                : 'Completa nombre de tu pareja, nivel y nombre del equipo para quedar inscrito en el torneo actual.'}</p>
+            ? `Pareja registrada por ${escapeHtml(userTeam.jugador1)} y ${escapeHtml(userTeam.jugador2)} en nivel ${formatTeamLevel(userTeam.nivel).toLowerCase()}.`
+            : 'Completa nombre de tu pareja, nivel y nombre del equipo para quedar inscrito en el torneo actual.'}</p>
             <div class="data-grid">
                 <span class="data-pill"><i class="fas fa-calendar-check"></i> ${userTeam ? `Registrado ${formatRegistrationDate(userTeam.createdAt)}` : 'Registro en linea activo'}</span>
                 <span class="data-pill"><i class="fas fa-circle-play"></i> ${userTeam ? 'Listo para sorteo y partidos del torneo' : 'Esperando tu inscripcion'}</span>
@@ -2640,7 +2568,7 @@ function renderClientTournamentInfo() {
                 ? `Tu recorrido en el torneo se cerro en ${escapeHtml(eliminatedMatch.round.label)}.`
                 : pendingOpponent
                     ? `Tu rival oficial dentro del cuadro es ${escapeHtml(pendingOpponent.nombre)} en la fase actual del torneo.`
-                : hasAdvancedWaitingOpponent
+                    : hasAdvancedWaitingOpponent
                         ? `Ganaste tu ultimo cruce en ${escapeHtml(lastWonMatch.round.label)} y ya avanzaste a ${escapeHtml(bracketMatch.round.label)}.`
                         : 'Tu siguiente referencia dentro del cuadro aun no tiene rival definido o depende de resultados previos.'}</p>
         <div class="data-grid">
@@ -2733,10 +2661,10 @@ function renderClientTournamentInfo() {
         </div>
         <h3>${userTeam ? 'Aun no tienes partido asignado' : 'Primero inscribe a tu pareja'}</h3>
         <p>${userTeam
-            ? (lastResolvedMatch?.match?.winnerId === bracketProgress?.participant?.id
-                ? 'Tu ultima victoria ya se registro, pero tu siguiente rival todavia no queda definido en la eliminatoria.'
-                : 'Tu equipo ya puede existir dentro del cuadro general, pero el rival oficial todavia no queda definido en la eliminatoria.')
-            : 'Despues de inscribirte, aqui aparecera tu siguiente partido con fecha, horario y pista.'}</p>
+        ? (lastResolvedMatch?.match?.winnerId === bracketProgress?.participant?.id
+            ? 'Tu ultima victoria ya se registro, pero tu siguiente rival todavia no queda definido en la eliminatoria.'
+            : 'Tu equipo ya puede existir dentro del cuadro general, pero el rival oficial todavia no queda definido en la eliminatoria.')
+        : 'Despues de inscribirte, aqui aparecera tu siguiente partido con fecha, horario y pista.'}</p>
         <div class="data-grid">
             <span class="data-pill"><i class="far fa-calendar"></i> ${userTeam ? fallbackDate : 'Pendiente'}</span>
             <span class="data-pill"><i class="fas fa-calendar-week"></i> Esperando definicion del cruce</span>
@@ -2820,13 +2748,25 @@ function routeByRole(user, announce = true) {
     }
 }
 
-function logoutToPublic(message = 'Sesion cerrada correctamente.') {
-    clearSession();
-    updateSessionLabels(null);
-    renderClientRegistrationSection();
-    renderClientTournamentInfo();
-    setActiveView('public-view');
-    showToast(message);
+async function logoutToPublic(message = 'Sesion cerrada correctamente.') {
+    try {
+        await apiRequest('/auth/logout', {
+            method: 'POST'
+        });
+
+        clearSession();
+        AppState.sessionUser = null;
+
+        updateSessionLabels(null);
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        setActiveView('public-view');
+
+        showToast(message, 'success');
+
+    } catch (error) {
+        showToast('No se pudo cerrar la sesión. Inténtalo nuevamente.', 'error');
+    }
 }
 
 function scrollToSection(sectionId) {
@@ -2965,71 +2905,80 @@ function initAuth() {
     });
 
     if (loginForm) {
-        loginForm.addEventListener('submit', (event) => {
+        loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const email = document.getElementById('login-email').value.trim().toLowerCase();
-            const password = document.getElementById('login-password').value.trim();          
-            const users = getUsers();
-            const user = users.find((item) => item.email.toLowerCase() === email && item.password === password);
+            const password = document.getElementById('login-password').value;
 
-            if (!user) {
-                showToast('Correo o contrasena incorrectos.', 'error');
-                return;
+            try {
+                const resultado = await apiRequest('/auth/login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                const usuario = {
+                    id: resultado.usuario.id_usuario,
+                    name: resultado.usuario.nombre_completo,
+                    email: resultado.usuario.email,
+                    role: resultado.usuario.rol
+                };
+
+                AppState.sessionUser = usuario;
+
+                updateSessionLabels(usuario);
+                closeAuthModal();
+                loginForm.reset();
+                routeByRole(usuario);
+
+            } catch (error) {
+                showToast(error.message, 'error');
             }
-
-            saveSession(user);
-            updateSessionLabels(user);
-            closeAuthModal();
-            loginForm.reset();
-            routeByRole(user);
         });
     }
 
     if (registerForm) {
-        registerForm.addEventListener('submit', (event) => {
+        registerForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const name = document.getElementById('register-name').value.trim();
             const email = document.getElementById('register-email').value.trim().toLowerCase();
             const password = document.getElementById('register-password').value;
-            const role = 'jugador';
 
             if (!name || !email || !password) {
                 showToast('Completa todos los campos del registro.', 'error');
                 return;
             }
 
-            if (password.length < 6) {
-                showToast('La contrasena debe tener al menos 6 caracteres.', 'error');
+            if (password.length < 8) {
+                showToast('La contraseña debe tener al menos 8 caracteres.', 'error');
                 return;
             }
 
-            const users = getUsers();
-            const exists = users.some((user) => user.email.toLowerCase() === email);
+            try {
+                await apiRequest('/auth/register', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre_completo: name,
+                        email,
+                        password
+                    })
+                });
 
-            if (exists) {
-                showToast('Ese correo ya tiene una cuenta registrada.', 'error');
-                return;
+                closeAuthModal();
+                registerForm.reset();
+
+                showToast(
+                    'Cuenta creada correctamente. Ahora puedes iniciar sesión.',
+                    'success'
+                );
+
+            } catch (error) {
+                showToast(error.message, 'error');
             }
-
-            const newUser = {
-                id: `U-${Date.now()}`,
-                name,
-                email,
-                password,
-                role
-            };
-
-            users.push(newUser);
-            saveUsers(users);
-            ensureClientProfile(newUser);
-            saveSession(newUser);
-            updateSessionLabels(newUser);
-            closeAuthModal();
-            registerForm.reset();
-            routeByRole(newUser, false);
-            showToast('Cuenta creada correctamente. Ya puedes inscribirte al torneo.', 'success');
         });
     }
 
@@ -3201,7 +3150,7 @@ function initAtmosphereControls() {
 
             if (AppState.jukebox.playing) {
                 barAudio.src = AppState.jukebox.tracks[AppState.jukebox.currentTrackIndex].url;
-                barAudio.play().catch(() => {});
+                barAudio.play().catch(() => { });
             }
 
             updateJukeboxUI();
@@ -3667,9 +3616,9 @@ function renderSiguienteJornada() {
             <td><strong>${match.equipoB}</strong></td>
             <td>
                 ${isCompleted
-                    ? '<span class="badge neon-badge-green"><i class="fas fa-check"></i> Guardado</span>'
-                    : `<button class="btn-neon btn-neon-pink" onclick="guardarMarcador('${match.id}', ${index})" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 8px"><i class="fas fa-save"></i> Registrar</button>`
-                }
+                ? '<span class="badge neon-badge-green"><i class="fas fa-check"></i> Guardado</span>'
+                : `<button class="btn-neon btn-neon-pink" onclick="guardarMarcador('${match.id}', ${index})" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 8px"><i class="fas fa-save"></i> Registrar</button>`
+            }
             </td>
         `;
         tbody.appendChild(tr);
@@ -3894,29 +3843,29 @@ function animateCharts() {
     }, 80);
 }
 
-function restoreSession() {
-    const session = getStoredSession();
-    if (!session) {
+async function restoreSession() {
+    try {
+        const resultado = await apiRequest('/auth/me');
+
+        const usuario = {
+            id: resultado.usuario.id_usuario,
+            name: resultado.usuario.nombre_completo,
+            email: resultado.usuario.email,
+            role: resultado.usuario.rol
+        };
+
+        AppState.sessionUser = usuario;
+
+        routeByRole(usuario, false);
+
+    } catch (error) {
+        AppState.sessionUser = null;
         updateSessionLabels(null);
         setActiveView('public-view');
-        return;
     }
-
-    const users = getUsers();
-    const existingUser = users.find((user) => user.email === session.email);
-    if (!existingUser) {
-        clearSession();
-        updateSessionLabels(null);
-        setActiveView('public-view');
-        return;
-    }
-
-    saveSession(existingUser);
-    routeByRole(existingUser, false);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    getUsers();
     loadTournamentConfig();
     loadTeams();
     loadClients();
