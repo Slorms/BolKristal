@@ -1,6 +1,10 @@
+require('dotenv').config();
+
 const express = require('express');
 const pool = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
+const session = require('express-session');
+const PgSession = require('connect-pg-simple')(session);
 
 // Creamos nuestra aplicación
 const app = express();
@@ -10,6 +14,28 @@ const PORT = process.env.PORT || 3000;
 
 // Permitimos recibir información en formato JSON
 app.use(express.json());
+// Configuración de sesiones
+app.use(session({
+    store: new PgSession({
+        pool: pool,
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
+
+    name: 'bolkristal.sid',
+
+    secret: process.env.SESSION_SECRET,
+
+    resave: false,
+    saveUninitialized: false,
+
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}));
 app.use('/api/auth', authRoutes);
 
 // Ruta principal de la API

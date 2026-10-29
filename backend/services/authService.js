@@ -19,6 +19,43 @@ const crearUsuario = async (nombre_completo, email, password) => {
     return resultado.rows[0];
 };
 
+// Buscar un usuario por su correo electrónico
+const buscarUsuarioPorEmail = async (email) => {
+    const resultado = await pool.query(
+        `SELECT
+            id_usuario,
+            nombre_completo,
+            email,
+            password_hash,
+            rol,
+            activo
+         FROM usuario
+         WHERE LOWER(email) = $1`,
+        [email]
+    );
+
+    return resultado.rows[0] || null;
+};
+
+// Buscar un usuario por su identificador
+const buscarUsuarioPorId = async (id_usuario) => {
+    const resultado = await pool.query(
+        `SELECT
+            id_usuario,
+            nombre_completo,
+            email,
+            rol,
+            activo
+         FROM usuario
+         WHERE id_usuario = $1`,
+        [id_usuario]
+    );
+
+    return resultado.rows[0] || null;
+};
+
 module.exports = {
-    crearUsuario
+    crearUsuario,
+    buscarUsuarioPorEmail,
+    buscarUsuarioPorId
 };

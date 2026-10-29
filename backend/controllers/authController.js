@@ -1,4 +1,9 @@
-const { crearUsuario } = require('../services/authService');
+const {
+    crearUsuario,
+    buscarUsuarioPorEmail,
+    buscarUsuarioPorId
+} = require('../services/authService');
+const argon2 = require('argon2');
 
 const registrarUsuario = async (req, res) => {
     try {
@@ -69,6 +74,168 @@ const registrarUsuario = async (req, res) => {
     }
 };
 
+// Verificar las credenciales de un usuario
+const iniciarSesion = async (req, res) => {
+    try {
+        const { email, password } = req.body || {};
+
+        // Validar los datos recibidos
+        if (
+            typeof email !== 'string' ||
+            typeof password !== 'string' ||
+            !email.trim() ||
+            !password
+        ) {
+            return res.status(400).json({
+                mensaje: 'Correo y contraseña son obligatorios'
+            });
+        }
+
+        // Buscar usuario en PostgreSQL
+        const usuario = await buscarUsuarioPorEmail(
+            email.trim().toLowerCase()
+        );
+
+        // No revelar si el correo existe o la contraseña es incorrecta
+        if (!usuario) {
+            return res.status(401).json({
+                mensaje: 'Correo o contraseña incorrectos'
+            });
+        }
+
+        // Verificar la contraseña con Argon2
+        const passwordCorrecta = await argon2.verify(
+            usuario.password_hash,
+            password
+        );
+
+        if (!passwordCorrecta) {
+            return res.status(401).json({
+                mensaje: 'Correo o contraseña incorrectos'
+            });
+        }
+
+        // Verificar que la cuenta esté activa
+        if (usuario.activo !== 1) {
+            return res.status(403).json({
+                mensaje: 'La cuenta está desactivada'
+            });
+        }
+
+        // Regenerar la sesión para evitar reutilizar un identificador anterior
+        req.session.regenerate((error) => {
+            if (error) {
+                console.error('Error al crear la sesión:', error);
+
+                return res.status(500).json({
+                    mensaje: 'No se pudo iniciar sesión'
+                });
+            }
+
+            // Guardar los datos necesarios del usuario en la sesión
+            req.session.usuario = {
+                id_usuario: usuario.id_usuario,
+                rol: usuario.rol
+            };
+
+            // Guardar la sesión antes de responder
+            req.session.save((error) => {
+                if (error) {
+                    console.error('Error al guardar la sesión:', error);
+
+                    return res.status(500).json({
+                        mensaje: 'No se pudo iniciar sesión'
+                    });
+                }
+
+                return res.status(200).json({
+                    mensaje: 'Inicio de sesión exitoso',
+                    usuario: {
+                        id_usuario: usuario.id_usuario,
+                        nombre_completo: usuario.nombre_completo,
+                        email: usuario.email,
+                        rol: usuario.rol
+                    }
+                });
+            });
+        });
+
+    } catch (error) {
+        console.error('Error al verificar credenciales:', error);
+
+        return res.status(500).json({
+            mensaje: 'Error interno al verificar credenciales'
+        });
+    }
+};
+
+// Obtener los datos del usuario que tiene una sesión activa
+const obtenerSesion = async (req, res) => {
+    try {
+        // Comprobar si existe una sesión autenticada
+        if (!req.session.usuario) {
+            return res.status(401).json({
+                mensaje: 'No hay una sesión activa'
+            });
+        }
+
+        // Buscar los datos actuales del usuario
+        const resultado = await buscarUsuarioPorId(
+            req.session.usuario.id_usuario
+        );
+
+        if (!resultado || resultado.activo !== 1) {
+            return res.status(401).json({
+                mensaje: 'La sesión ya no es válida'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: 'Sesión activa',
+            usuario: {
+                id_usuario: resultado.id_usuario,
+                nombre_completo: resultado.nombre_completo,
+                email: resultado.email,
+                rol: resultado.rol
+            }
+        });
+
+    } catch (error) {
+        console.error('Error al consultar la sesión:', error);
+
+        return res.status(500).json({
+            mensaje: 'Error interno al consultar la sesión'
+        });
+    }
+};
+
+// Cerrar la sesión del usuario
+const cerrarSesion = (req, res) => {
+
+    // Destruir la sesión almacenada en PostgreSQL
+    req.session.destroy((error) => {
+        if (error) {
+            console.error('Error al cerrar sesión:', error);
+
+            return res.status(500).json({
+                mensaje: 'No se pudo cerrar la sesión'
+            });
+        }
+
+        // Eliminar la cookie del navegador
+        res.clearCookie('bolkristal.sid', {
+            path: '/'
+        });
+
+        return res.status(200).json({
+            mensaje: 'Sesión cerrada correctamente'
+        });
+    });
+};
+
 module.exports = {
-    registrarUsuario
+    registrarUsuario,
+    iniciarSesion,
+    obtenerSesion,
+    cerrarSesion
 };
