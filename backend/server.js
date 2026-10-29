@@ -1,5 +1,6 @@
 const express = require('express');
 const pool = require('./config/database');
+const authRoutes = require('./routes/authRoutes');
 
 // Creamos nuestra aplicación
 const app = express();
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 // Permitimos recibir información en formato JSON
 app.use(express.json());
+app.use('/api/auth', authRoutes);
 
 // Ruta principal de la API
 app.get('/api', (req, res) => {
