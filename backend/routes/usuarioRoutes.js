@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
 const {
     listarUsuarios,
-    actualizarEstadoUsuario
+    actualizarEstadoUsuario,
+    editarUsuario
 } = require('../controllers/usuarioController');
-
 const {
     verificarAutenticacion,
     verificarRol
@@ -25,6 +24,14 @@ router.patch(
     verificarAutenticacion,
     verificarRol('administrador'),
     actualizarEstadoUsuario
+);
+
+// Editar nombre y correo de un usuario
+router.patch(
+    '/:id',
+    verificarAutenticacion,
+    verificarRol('administrador'),
+    editarUsuario
 );
 
 module.exports = router;

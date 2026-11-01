@@ -77,8 +77,85 @@ async function actualizarEstadoUsuario(req, res) {
         });
     }
 }
+// Editar nombre y correo de un usuario
+async function editarUsuario(req, res) {
+    try {
+        const idUsuario = Number(req.params.id);
+        const { nombre_completo, email } = req.body || {};
+
+        // Validar el ID
+        if (!Number.isSafeInteger(idUsuario) || idUsuario <= 0) {
+            return res.status(400).json({
+                mensaje: 'El ID del usuario no es válido.'
+            });
+        }
+
+        // Validar que los datos sean cadenas de texto
+        if (
+            typeof nombre_completo !== 'string' ||
+            typeof email !== 'string'
+        ) {
+            return res.status(400).json({
+                mensaje: 'El nombre y correo son obligatorios.'
+            });
+        }
+
+        const nombre = nombre_completo.trim();
+        const correo = email.trim().toLowerCase();
+
+        // Validar nombre
+        if (nombre.length < 2 || nombre.length > 150) {
+            return res.status(400).json({
+                mensaje: 'El nombre debe tener entre 2 y 150 caracteres.'
+            });
+        }
+
+        // Validar correo
+        if (
+            correo.length > 150 ||
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
+        ) {
+            return res.status(400).json({
+                mensaje: 'El correo electrónico no es válido.'
+            });
+        }
+
+        // Actualizar usuario
+        const usuario = await usuarioService.actualizarUsuario(
+            idUsuario,
+            nombre,
+            correo
+        );
+
+        if (!usuario) {
+            return res.status(404).json({
+                mensaje: 'El usuario no existe.'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: 'Usuario actualizado correctamente.',
+            usuario
+        });
+
+    } catch (error) {
+        console.error('Error al editar usuario:', error);
+
+        // PostgreSQL: correo duplicado
+        if (error.code === '23505') {
+            return res.status(409).json({
+                mensaje: 'El correo electrónico ya está registrado.'
+            });
+        }
+
+        return res.status(500).json({
+            mensaje: 'No se pudo actualizar el usuario.'
+        });
+    }
+}
 
 module.exports = {
     listarUsuarios,
-    actualizarEstadoUsuario
+    actualizarEstadoUsuario,
+    editarUsuario
 };

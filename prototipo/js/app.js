@@ -49,6 +49,13 @@ async function cargarUsuariosAdmin() {
                 </td>
                 <td>
                     <button
+                        class="btn btn-sm btn-primary"
+                        data-editar-usuario="${usuario.id_usuario}"
+                    >
+                        <i class="fas fa-edit"></i>
+                        Editar
+                    </button>
+                    <button
                         class="btn btn-sm ${usuario.activo === 1 ? 'btn-danger' : 'btn-success'}"
                         data-usuario-id="${usuario.id_usuario}"
                         data-nuevo-estado="${usuario.activo === 1 ? 0 : 1}"
@@ -80,6 +87,45 @@ async function cargarUsuariosAdmin() {
             });
 
         });
+        // Asignamos los eventos a los botones de editar
+        tbody.querySelectorAll('button[data-editar-usuario]').forEach(boton => {
+
+            boton.addEventListener('click', () => {
+
+                const idUsuario = Number(boton.dataset.editarUsuario);
+
+                // Buscamos al usuario seleccionado
+                const usuario = data.usuarios.find(
+                    u => u.id_usuario === idUsuario
+                );
+
+                if (!usuario) {
+                    showToast('No se encontró el usuario.', 'error');
+                    return;
+                }
+
+                // Colocamos sus datos en el formulario
+                document.getElementById('editar-usuario-id').value = usuario.id_usuario;
+
+                document.getElementById('editar-usuario-nombre').value =
+                    usuario.nombre_completo;
+
+                document.getElementById('editar-usuario-email').value =
+                    usuario.email;
+
+                // Mostramos el formulario
+                const formulario = document.getElementById('form-editar-usuario');
+
+                formulario.style.display = 'block';
+
+                // Nos desplazamos hasta el formulario
+                formulario.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+
+        });
     } catch (error) {
         console.error('Error al cargar usuarios:', error);
 
@@ -88,6 +134,91 @@ async function cargarUsuariosAdmin() {
         showToast(error.message, 'error');
     }
 }
+
+// Configurar el formulario para editar usuarios
+function inicializarEdicionUsuarios() {
+
+    const form = document.getElementById('editar-usuario-form');
+    const contenedor = document.getElementById('form-editar-usuario');
+    const botonCancelar = document.getElementById('cancelar-edicion-usuario');
+
+    if (!form || !contenedor || !botonCancelar) return;
+
+    // Evitar registrar los eventos más de una vez
+    if (form.dataset.inicializado === 'true') return;
+
+    form.dataset.inicializado = 'true';
+
+    // Cancelar la edición
+    botonCancelar.addEventListener('click', () => {
+        form.reset();
+        contenedor.style.display = 'none';
+    });
+
+    // Guardar los cambios
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const idUsuario = Number(
+            document.getElementById('editar-usuario-id').value
+        );
+
+        const nombreCompleto = document.getElementById(
+            'editar-usuario-nombre'
+        ).value.trim();
+
+        const email = document.getElementById(
+            'editar-usuario-email'
+        ).value.trim();
+
+        const botonGuardar = form.querySelector('button[type="submit"]');
+
+        if (!Number.isSafeInteger(idUsuario) || idUsuario <= 0) {
+            showToast('Selecciona un usuario válido.', 'error');
+            return;
+        }
+
+        if (nombreCompleto.length < 2) {
+            showToast('El nombre debe tener al menos 2 caracteres.', 'error');
+            return;
+        }
+
+        botonGuardar.disabled = true;
+
+        try {
+            const data = await apiRequest(`/usuarios/${idUsuario}`, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    nombre_completo: nombreCompleto,
+                    email: email
+                })
+            });
+
+            showToast(data.mensaje, 'success');
+
+            // Actualizar los datos de la sesión si editamos nuestra cuenta
+            if (AppState.sessionUser?.id === idUsuario) {
+                AppState.sessionUser.name = data.usuario.nombre_completo;
+                AppState.sessionUser.email = data.usuario.email;
+            }
+
+            // Cerrar el formulario
+            form.reset();
+            contenedor.style.display = 'none';
+
+            // Recargar la tabla con los datos actualizados
+            await cargarUsuariosAdmin();
+
+        } catch (error) {
+            console.error('Error al editar usuario:', error);
+            showToast(error.message, 'error');
+
+        } finally {
+            botonGuardar.disabled = false;
+        }
+    });
+}
+
 // Activar o desactivar usuarios desde el panel
 async function cambiarEstadoUsuarioAdmin(idUsuario, nuevoEstado) {
 
@@ -3993,6 +4124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRoleGenerator();
     initClientesSearch();
     initPromoForm();
+    inicializarEdicionUsuarios();
 
     renderTournamentBracket();
     renderLeaderboard();

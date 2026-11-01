@@ -96,7 +96,22 @@ async function cambiarEstadoUsuario(idUsuario, activo) {
     }
 }
 
+// Actualizar los datos de un usuario
+async function actualizarUsuario(idUsuario, nombreCompleto, email) {
+    const resultado = await pool.query(
+        `UPDATE usuario
+         SET nombre_completo = $1,
+             email = $2
+         WHERE id_usuario = $3
+         RETURNING id_usuario, nombre_completo, email, rol, activo`,
+        [nombreCompleto, email, idUsuario]
+    );
+
+    return resultado.rows[0];
+}
+
 module.exports = {
     obtenerUsuarios,
-    cambiarEstadoUsuario
+    cambiarEstadoUsuario,
+    actualizarUsuario
 };
