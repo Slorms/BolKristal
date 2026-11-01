@@ -20,6 +20,45 @@ async function apiRequest(endpoint, options = {}) {
     return data;
 }
 
+// Cargar los usuarios registrados desde PostgreSQL
+async function cargarUsuariosAdmin() {
+    const tbody = document.getElementById('admin-usuarios-tbody');
+
+    if (!tbody) return;
+
+    tbody.innerHTML = '<tr><td colspan="6">Cargando usuarios...</td></tr>';
+
+    try {
+        const data = await apiRequest('/usuarios');
+
+        tbody.innerHTML = data.usuarios.map(usuario => `
+            <tr>
+                <td>${usuario.id_usuario}</td>
+                <td>${escapeHtml(usuario.nombre_completo)}</td>
+                <td>${escapeHtml(usuario.email)}</td>
+                <td>${escapeHtml(usuario.rol)}</td>
+                <td>
+                    <span class="badge ${usuario.activo === 1 ? 'neon-badge-green' : 'neon-badge-pink'}">
+                        ${usuario.activo === 1 ? 'Activo' : 'Inactivo'}
+                    </span>
+                </td>
+                <td>
+                    ${usuario.fecha_registro
+                        ? new Date(usuario.fecha_registro).toLocaleDateString('es-MX')
+                        : 'Sin fecha'}
+                </td>
+            </tr>
+        `).join('') || '<tr><td colspan="6">No hay usuarios registrados.</td></tr>';
+
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+
+        tbody.innerHTML = '<tr><td colspan="6">No se pudieron cargar los usuarios.</td></tr>';
+
+        showToast(error.message, 'error');
+    }
+}
+
 const SESSION_STORAGE_KEY = 'bolkristal-session';
 const TEAMS_STORAGE_KEY = 'bolkristal-teams';
 const BRACKET_STORAGE_KEY = 'bolkristal-bracket-demo';
@@ -3012,6 +3051,11 @@ function activateAdminPanel(targetId) {
 
     if (targetId === 'reportes') {
         animateCharts();
+    }
+
+    // Cargar usuarios registrados desde PostgreSQL
+    if (targetId === 'usuarios') {
+        cargarUsuariosAdmin();
     }
 }
 
