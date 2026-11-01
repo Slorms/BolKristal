@@ -11,6 +11,7 @@ const {
     verificarRol
 } = require('./middleware/authMiddleware');
 const usuarioRoutes = require('./routes/usuarioRoutes');
+const equipoRoutes = require('./routes/equipoRoutes');
 
 // Creamos nuestra aplicación
 const app = express();
@@ -52,6 +53,7 @@ app.use(session({
 }));
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/equipos', equipoRoutes);
 
 app.get(
     '/api/admin/test',

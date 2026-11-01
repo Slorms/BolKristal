@@ -826,25 +826,32 @@ function updateSessionLabels(user) {
     if (adminEmail) adminEmail.textContent = safeUser.email || 'admin@bolkristal.mx';
 }
 
-function loadTeams() {
-    const raw = localStorage.getItem(TEAMS_STORAGE_KEY);
-
-    if (!raw) {
-        AppState.equipos = mergeTeamsWithDefaults(DEFAULT_TEAMS);
-        localStorage.setItem(TEAMS_STORAGE_KEY, JSON.stringify(AppState.equipos));
-        return;
-    }
-
+async function loadTeams() {
     try {
-        const parsed = JSON.parse(raw);
-        AppState.equipos = Array.isArray(parsed)
-            ? mergeTeamsWithDefaults(parsed)
-            : mergeTeamsWithDefaults(DEFAULT_TEAMS);
-    } catch (error) {
-        AppState.equipos = mergeTeamsWithDefaults(DEFAULT_TEAMS);
-    }
+        // Obtener los equipos desde PostgreSQL
+        const data = await apiRequest('/equipos');
 
-    localStorage.setItem(TEAMS_STORAGE_KEY, JSON.stringify(AppState.equipos));
+        // Convertir los datos al formato del frontend
+        AppState.equipos = mergeTeamsWithDefaults(
+            data.equipos.map(equipo => ({
+                id: equipo.id_equipo,
+                nombre: equipo.nombre,
+                jugador1: equipo.jugador1,
+                jugador2: equipo.jugador2,
+                nivel: equipo.nivel,
+                precio: Number(equipo.precio),
+                puntos: equipo.puntos,
+                jugados: equipo.jugados,
+                ownerUserId: equipo.id_usuario,
+                createdBy: equipo.creado_por,
+                createdAt: equipo.fecha_creacion
+            }))
+        );
+
+    } catch (error) {
+        console.error('Error al cargar equipos:', error);
+        showToast('No se pudieron cargar los equipos.', 'error');
+    }
 }
 
 function saveTeams() {
@@ -3498,7 +3505,7 @@ function initClientRegistrationForm() {
     const form = document.getElementById('client-registration-form');
     if (!form) return;
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const user = AppState.sessionUser;
@@ -3525,21 +3532,41 @@ function initClientRegistrationForm() {
         }
 
         const cost = getRegistrationPrice(level);
-        AppState.equipos.push({
-            id: getNextTeamId(),
-            nombre: teamName,
-            jugador1: player1,
-            jugador2: player2,
-            nivel: level,
-            precio: cost,
-            puntos: 0,
-            jugados: 0,
-            ownerUserId: user.id,
-            createdBy: 'jugador',
-            createdAt: new Date().toISOString()
-        });
 
-        saveTeams();
+        try {
+            // Registrar el equipo en PostgreSQL
+            const data = await apiRequest('/equipos', {
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: teamName,
+                    jugador1: player1,
+                    jugador2: player2,
+                    nivel: level
+                })
+            });
+
+            const equipo = data.equipo;
+
+            // Agregar el equipo devuelto por PostgreSQL al estado del frontend
+            AppState.equipos.push({
+                id: equipo.id_equipo,
+                nombre: equipo.nombre,
+                jugador1: equipo.jugador1,
+                jugador2: equipo.jugador2,
+                nivel: equipo.nivel,
+                precio: Number(equipo.precio),
+                puntos: equipo.puntos,
+                jugados: equipo.jugados,
+                ownerUserId: equipo.id_usuario,
+                createdBy: equipo.creado_por,
+                createdAt: equipo.fecha_creacion
+            });
+
+        } catch (error) {
+            console.error('Error al registrar equipo:', error);
+            showToast(error.message, 'error');
+            return;
+        }
         syncBracketDraftWithTeams();
         registerTournamentParticipation(user);
         invalidateWeeklySchedule();
@@ -4121,9 +4148,9 @@ async function restoreSession() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     loadTournamentConfig();
-    loadTeams();
+    await loadTeams();
     loadClients();
     loadWeeklyMatchups();
     loadBracketDraft();
