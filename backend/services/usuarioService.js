@@ -20,6 +20,20 @@ async function obtenerUsuarios() {
     return resultado.rows;
 }
 
+// Cambia el estado de un usuario
+async function cambiarEstadoUsuario(idUsuario, activo) {
+    const resultado = await pool.query(
+        `UPDATE usuario
+         SET activo = $1
+         WHERE id_usuario = $2
+         RETURNING id_usuario, nombre_completo, email, rol, activo`,
+        [activo, idUsuario]
+    );
+
+    return resultado.rows[0];
+}
+
 module.exports = {
-    obtenerUsuarios
+    obtenerUsuarios,
+    cambiarEstadoUsuario
 };

@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { listarUsuarios } = require('../controllers/usuarioController');
+const {
+    listarUsuarios,
+    actualizarEstadoUsuario
+} = require('../controllers/usuarioController');
 
 const {
     verificarAutenticacion,
@@ -14,6 +17,14 @@ router.get(
     verificarAutenticacion,
     verificarRol('administrador'),
     listarUsuarios
+);
+
+// Activar o desactivar un usuario
+router.patch(
+    '/:id/estado',
+    verificarAutenticacion,
+    verificarRol('administrador'),
+    actualizarEstadoUsuario
 );
 
 module.exports = router;

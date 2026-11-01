@@ -26,7 +26,7 @@ async function cargarUsuariosAdmin() {
 
     if (!tbody) return;
 
-    tbody.innerHTML = '<tr><td colspan="6">Cargando usuarios...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7">Cargando usuarios...</td></tr>';
 
     try {
         const data = await apiRequest('/usuarios');
@@ -44,17 +44,81 @@ async function cargarUsuariosAdmin() {
                 </td>
                 <td>
                     ${usuario.fecha_registro
-                        ? new Date(usuario.fecha_registro).toLocaleDateString('es-MX')
-                        : 'Sin fecha'}
+                ? new Date(usuario.fecha_registro).toLocaleDateString('es-MX')
+                : 'Sin fecha'}
+                </td>
+                <td>
+                    <button
+                        class="btn btn-sm ${usuario.activo === 1 ? 'btn-danger' : 'btn-success'}"
+                        data-usuario-id="${usuario.id_usuario}"
+                        data-nuevo-estado="${usuario.activo === 1 ? 0 : 1}"
+                        ${usuario.id_usuario === AppState.sessionUser?.id ? 'disabled' : ''}
+                    >
+                    <i class="fas ${usuario.activo === 1 ? 'fa-user-slash' : 'fa-user-check'}"></i>
+                     ${usuario.activo === 1 ? 'Desactivar' : 'Activar'}
+                    </button>
                 </td>
             </tr>
-        `).join('') || '<tr><td colspan="6">No hay usuarios registrados.</td></tr>';
+        `).join('') || '<tr><td colspan="7">No hay usuarios registrados.</td></tr>';
+        // Asignamos los eventos a los botones de activar y desactivar
+        tbody.querySelectorAll('button[data-usuario-id]').forEach(boton => {
 
+            boton.addEventListener('click', async () => {
+
+                const idUsuario = Number(boton.dataset.usuarioId);
+                const nuevoEstado = Number(boton.dataset.nuevoEstado);
+
+                boton.disabled = true;
+
+                try {
+                    await cambiarEstadoUsuarioAdmin(idUsuario, nuevoEstado);
+                } finally {
+                    if (boton.isConnected) {
+                        boton.disabled = false;
+                    }
+                }
+            });
+
+        });
     } catch (error) {
         console.error('Error al cargar usuarios:', error);
 
-        tbody.innerHTML = '<tr><td colspan="6">No se pudieron cargar los usuarios.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7">No se pudieron cargar los usuarios.</td></tr>';
 
+        showToast(error.message, 'error');
+    }
+}
+// Activar o desactivar usuarios desde el panel
+async function cambiarEstadoUsuarioAdmin(idUsuario, nuevoEstado) {
+
+    const accion = nuevoEstado === 1 ? 'activar' : 'desactivar';
+
+    const confirmar = confirm(
+        `¿Estás seguro de que deseas ${accion} este usuario?`
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+        const data = await apiRequest(
+            `/usuarios/${idUsuario}/estado`,
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    activo: nuevoEstado
+                })
+            }
+        );
+
+        showToast(data.mensaje, 'success');
+
+        // Actualizamos la tabla
+        await cargarUsuariosAdmin();
+
+    } catch (error) {
+        console.error('Error al cambiar estado:', error);
         showToast(error.message, 'error');
     }
 }
