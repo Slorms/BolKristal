@@ -440,3 +440,5 @@ con una persistencia real para que funcione igual en cualquier navegador o dispo
 [![Entrar a BolKristal](https://img.shields.io/badge/🎳%20Entrar%20a%20BolKristal-ff0055?style=for-the-badge&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
 
 </div>
+
+<!-- Despliegue automatico Vercel -->
