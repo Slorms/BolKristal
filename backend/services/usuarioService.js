@@ -109,6 +109,91 @@ async function actualizarUsuario(idUsuario, nombreCompleto, email) {
 
     return resultado.rows[0];
 }
+async function actualizarUsuarioCompleto(idUsuario, nombreCompleto, email, rol, idAdministrador) {
+    const client = await pool.connect();
+
+
+    try {
+        await client.query('BEGIN');
+
+        // Bloqueamos las operaciones administrativas concurrentes
+        await client.query(
+            'SELECT pg_advisory_xact_lock($1)',
+            [20261031]
+        );
+
+        // Consultamos y bloqueamos el usuario
+        const resultadoUsuario = await client.query(
+            `SELECT id_usuario, rol, activo
+             FROM usuario
+             WHERE id_usuario = $1
+             FOR UPDATE`,
+            [idUsuario]
+        );
+
+        const usuarioActual = resultadoUsuario.rows[0];
+
+        if (!usuarioActual) {
+            const error = new Error('Usuario no encontrado.');
+            error.status = 404;
+            throw error;
+        }
+
+        // Evitamos que el administrador cambie su propio rol
+        if (
+            idUsuario === idAdministrador &&
+            usuarioActual.rol !== rol
+        ) {
+            const error = new Error('No puedes cambiar tu propio rol.');
+            error.status = 403;
+            throw error;
+        }
+
+        // Protegemos al último administrador activo
+        if (
+            usuarioActual.rol === 'administrador' &&
+            usuarioActual.activo === 1 &&
+            rol !== 'administrador'
+        ) {
+            const resultadoAdmins = await client.query(
+                `SELECT COUNT(*)::int AS total
+                 FROM usuario
+                 WHERE rol = 'administrador'
+                 AND activo = 1`
+            );
+
+            if (resultadoAdmins.rows[0].total <= 1) {
+                const error = new Error(
+                    'No puedes cambiar el rol del último administrador activo.'
+                );
+                error.status = 409;
+                throw error;
+            }
+        }
+
+        // Actualizamos todos los campos en una sola sentencia
+        const resultado = await client.query(
+            `UPDATE usuario
+             SET nombre_completo = $1,
+                 email = $2,
+                 rol = $3
+             WHERE id_usuario = $4
+             RETURNING id_usuario, nombre_completo, email, rol, activo`,
+            [nombreCompleto, email, rol, idUsuario]
+        );
+
+        await client.query('COMMIT');
+
+        return resultado.rows[0];
+
+    } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+
+    } finally {
+        client.release();
+    }
+}
 
 // Cambiar el rol de un usuario
 async function cambiarRolUsuario(idUsuario, nuevoRol) {
@@ -188,5 +273,6 @@ module.exports = {
     obtenerUsuarios,
     cambiarEstadoUsuario,
     actualizarUsuario,
-    cambiarRolUsuario
+    cambiarRolUsuario,
+    actualizarUsuarioCompleto
 };

@@ -5,7 +5,8 @@ const {
     listarUsuarios,
     actualizarEstadoUsuario,
     editarUsuario,
-    actualizarRolUsuario
+    actualizarRolUsuario,
+    editarUsuarioCompleto
 } = require('../controllers/usuarioController');
 
 const {
@@ -43,6 +44,14 @@ router.patch(
     verificarAutenticacion,
     verificarRol('administrador'),
     actualizarRolUsuario
+);
+
+// Actualizar nombre, correo y rol en una sola operación
+router.patch(
+    '/:id/completo',
+    verificarAutenticacion,
+    verificarRol('administrador'),
+    editarUsuarioCompleto
 );
 
 module.exports = router;

@@ -119,6 +119,9 @@ async function cargarUsuariosAdmin() {
 
                 // Impedimos que el administrador cambie su propio rol
                 selectorRol.disabled = usuario.id_usuario === AppState.sessionUser?.id;
+
+                // Guardamos el rol original para detectar cambios
+                selectorRol.dataset.rolOriginal = usuario.rol;
                 // Mostramos el formulario
                 const formulario = document.getElementById('form-editar-usuario');
 
@@ -196,24 +199,15 @@ function inicializarEdicionUsuarios() {
             const selectorRol = document.getElementById('editar-usuario-rol');
             const nuevoRol = selectorRol.value;
 
-            // Actualizamos el nombre y correo
-            const data = await apiRequest(`/usuarios/${idUsuario}`, {
+            // Actualizamos nombre, correo y rol en una sola petición
+            const data = await apiRequest(`/usuarios/${idUsuario}/completo`, {
                 method: 'PATCH',
                 body: JSON.stringify({
                     nombre_completo: nombreCompleto,
-                    email: email
+                    email: email,
+                    rol: nuevoRol
                 })
             });
-
-            // Actualizamos el rol si el selector está habilitado
-            if (!selectorRol.disabled) {
-                await apiRequest(`/usuarios/${idUsuario}/rol`, {
-                    method: 'PATCH',
-                    body: JSON.stringify({
-                        rol: nuevoRol
-                    })
-                });
-            }
 
             // Actualizamos los datos de sesión si editamos nuestra cuenta
             if (AppState.sessionUser?.id === idUsuario) {
@@ -221,7 +215,7 @@ function inicializarEdicionUsuarios() {
                 AppState.sessionUser.email = data.usuario.email;
             }
 
-            showToast('Usuario actualizado correctamente.', 'success');
+            showToast(data.mensaje, 'success');
 
             // Cerramos el formulario
             form.reset();
@@ -229,6 +223,8 @@ function inicializarEdicionUsuarios() {
 
             // Actualizamos la tabla
             await cargarUsuariosAdmin();
+
+
 
         } catch (error) {
             console.error('Error al editar usuario:', error);

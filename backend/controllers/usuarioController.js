@@ -219,10 +219,109 @@ async function actualizarRolUsuario(req, res) {
         });
     }
 }
+async function editarUsuarioCompleto(req, res) {
+    try {
+        const idUsuario = Number(req.params.id);
+        const { nombre_completo, email, rol } = req.body;
+
+        // Validar ID
+        if (!Number.isSafeInteger(idUsuario) || idUsuario <= 0) {
+            return res.status(400).json({
+                mensaje: 'ID de usuario inválido.'
+            });
+        }
+
+        // Validar nombre
+        if (
+            typeof nombre_completo !== 'string' ||
+            nombre_completo.trim().length < 2 ||
+            nombre_completo.trim().length > 150
+        ) {
+            return res.status(400).json({
+                mensaje: 'El nombre debe tener entre 2 y 150 caracteres.'
+            });
+        }
+
+        // Validar correo
+        if (
+            typeof email !== 'string' ||
+            email.length > 150 ||
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+        ) {
+            return res.status(400).json({
+                mensaje: 'Correo electrónico inválido.'
+            });
+        }
+
+        // Validar rol
+        const rolesPermitidos = ['jugador', 'marketing', 'administrador'];
+
+        if (!rolesPermitidos.includes(rol)) {
+            return res.status(400).json({
+                mensaje: 'Rol de usuario inválido.'
+            });
+        }
+
+        // Evitar que el administrador cambie su propio rol
+        if (idUsuario === req.usuario.id_usuario) {
+            const usuarioActual = await usuarioService.obtenerUsuarios();
+            const usuario = usuarioActual.find(
+                u => u.id_usuario === idUsuario
+            );
+
+            if (!usuario) {
+                return res.status(404).json({
+                    mensaje: 'Usuario no encontrado.'
+                });
+            }
+
+            if (usuario.rol !== rol) {
+                return res.status(403).json({
+                    mensaje: 'No puedes cambiar tu propio rol.'
+                });
+            }
+        }
+
+        // Actualizar usuario
+        const usuarioActualizado =
+            await usuarioService.actualizarUsuarioCompleto(
+                idUsuario,
+                nombre_completo.trim(),
+                email.trim().toLowerCase(),
+                rol,
+                req.usuario.id_usuario
+            );
+
+        return res.json({
+            mensaje: 'Usuario actualizado correctamente.',
+            usuario: usuarioActualizado
+        });
+
+    } catch (error) {
+        console.error('Error al actualizar usuario:', error);
+
+        if (error.status) {
+            return res.status(error.status).json({
+                mensaje: error.message
+            });
+        }
+
+        if (error.code === '23505') {
+            return res.status(409).json({
+                mensaje: 'El correo electrónico ya está registrado.'
+            });
+        }
+
+        return res.status(500).json({
+            mensaje: 'No se pudo actualizar el usuario.'
+        });
+    }
+}
 
 module.exports = {
     listarUsuarios,
     actualizarEstadoUsuario,
     editarUsuario,
-    actualizarRolUsuario
+    actualizarRolUsuario,
+    editarUsuarioCompleto
 };
