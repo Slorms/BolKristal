@@ -3,7 +3,8 @@ const router = express.Router();
 
 const {
     listarEquipos,
-    registrarEquipo
+    registrarEquipo,
+    eliminarEquipo
 } = require('../controllers/equipoController');
 
 const {
@@ -20,6 +21,14 @@ router.post(
     verificarAutenticacion,
     verificarRol('jugador'),
     registrarEquipo
+);
+
+// Eliminar equipo (solo administradores)
+router.delete(
+    '/:id',
+    verificarAutenticacion,
+    verificarRol('administrador'),
+    eliminarEquipo
 );
 
 module.exports = router;

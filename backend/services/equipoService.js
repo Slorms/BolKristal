@@ -59,7 +59,20 @@ async function crearEquipo(equipo) {
     return resultado.rows[0];
 }
 
+// Eliminar un equipo de PostgreSQL
+async function eliminarEquipo(idEquipo) {
+    const resultado = await pool.query(
+        `DELETE FROM equipo
+         WHERE id_equipo = $1
+         RETURNING id_equipo, nombre`,
+        [idEquipo]
+    );
+
+    return resultado.rows[0] || null;
+}
+
 module.exports = {
     obtenerEquipos,
-    crearEquipo
+    crearEquipo,
+    eliminarEquipo
 };

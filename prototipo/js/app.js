@@ -854,6 +854,7 @@ async function loadTeams() {
     } catch (error) {
         console.error('Error al cargar equipos:', error);
         showToast('No se pudieron cargar los equipos.', 'error');
+        throw error;
     }
 }
 
@@ -3689,24 +3690,50 @@ function renderTeamsTable() {
     });
 }
 
-window.eliminarEquipo = function eliminarEquipo(id) {
-    const index = AppState.equipos.findIndex((equipo) => equipo.id === id);
-    if (index === -1) return;
+window.eliminarEquipo = async function eliminarEquipo(id) {
+    const equipo = AppState.equipos.find((equipo) => equipo.id === id);
+    if (!equipo) return;
 
-    const teamName = AppState.equipos[index].nombre;
-    AppState.equipos.splice(index, 1);
-    saveTeams();
-    syncBracketDraftWithTeams();
-    invalidateWeeklySchedule();
-    showToast(`Pareja "${teamName}" eliminada del torneo.`);
+    const confirmar = confirm(
+        `¿Estás seguro de eliminar la pareja "${equipo.nombre}"?`
+    );
 
-    renderLeaderboard();
-    renderTeamsTable();
-    renderTournamentBracket();
-    renderRegistrationAdminStatus();
-    renderClientRegistrationSection();
-    renderClientTournamentInfo();
-    renderSiguienteJornada();
+    if (!confirmar) return;
+
+    try {
+        // Solicitar eliminación al backend
+        await apiRequest(`/equipos/${id}`, {
+            method: 'DELETE'
+        });
+
+        // Actualizar equipos desde PostgreSQL
+        await loadTeams();
+
+        // Actualizar información del torneo
+        syncBracketDraftWithTeams();
+        invalidateWeeklySchedule();
+
+        showToast(
+            `Pareja "${equipo.nombre}" eliminada correctamente.`,
+            'success'
+        );
+
+        renderLeaderboard();
+        renderTeamsTable();
+        renderTournamentBracket();
+        renderRegistrationAdminStatus();
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        renderSiguienteJornada();
+
+    } catch (error) {
+        console.error('Error al eliminar equipo:', error);
+
+        showToast(
+            error.message || 'No se pudo eliminar el equipo.',
+            'error'
+        );
+    }
 };
 
 function initTournamentAdminControls() {
@@ -4150,10 +4177,15 @@ async function restoreSession() {
         setActiveView('public-view');
     }
 }
-
 document.addEventListener('DOMContentLoaded', async () => {
     loadTournamentConfig();
-    await loadTeams();
+
+    try {
+        await loadTeams();
+    } catch (error) {
+        console.error('No se pudieron cargar los equipos iniciales:', error);
+    }
+
     loadClients();
     loadWeeklyMatchups();
     loadBracketDraft();

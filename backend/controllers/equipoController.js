@@ -77,7 +77,43 @@ async function registrarEquipo(req, res) {
     }
 }
 
+// Eliminar un equipo
+async function eliminarEquipo(req, res) {
+    try {
+        const idEquipo = Number(req.params.id);
+
+        // Validar el identificador
+        if (!Number.isSafeInteger(idEquipo) || idEquipo <= 0) {
+            return res.status(400).json({
+                mensaje: 'El identificador del equipo no es válido.'
+            });
+        }
+
+        // Eliminar equipo de PostgreSQL
+        const equipo = await equipoService.eliminarEquipo(idEquipo);
+
+        if (!equipo) {
+            return res.status(404).json({
+                mensaje: 'El equipo no existe.'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: 'Equipo eliminado correctamente.',
+            equipo
+        });
+
+    } catch (error) {
+        console.error('Error al eliminar equipo:', error);
+
+        return res.status(500).json({
+            mensaje: 'No se pudo eliminar el equipo.'
+        });
+    }
+}
+
 module.exports = {
     listarEquipos,
-    registrarEquipo
+    registrarEquipo,
+    eliminarEquipo
 };
