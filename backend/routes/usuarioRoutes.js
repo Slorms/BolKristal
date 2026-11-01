@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
 const {
     listarUsuarios,
     actualizarEstadoUsuario,
-    editarUsuario
+    editarUsuario,
+    actualizarRolUsuario
 } = require('../controllers/usuarioController');
+
 const {
     verificarAutenticacion,
     verificarRol
@@ -32,6 +35,14 @@ router.patch(
     verificarAutenticacion,
     verificarRol('administrador'),
     editarUsuario
+);
+
+// Cambiar el rol de un usuario
+router.patch(
+    '/:id/rol',
+    verificarAutenticacion,
+    verificarRol('administrador'),
+    actualizarRolUsuario
 );
 
 module.exports = router;

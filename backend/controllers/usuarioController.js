@@ -154,8 +154,75 @@ async function editarUsuario(req, res) {
     }
 }
 
+// Cambiar el rol de un usuario
+async function actualizarRolUsuario(req, res) {
+    try {
+        const idUsuario = Number(req.params.id);
+        const { rol } = req.body || {};
+
+        // Validar el ID del usuario
+        if (!Number.isSafeInteger(idUsuario) || idUsuario <= 0) {
+            return res.status(400).json({
+                mensaje: 'El ID del usuario no es válido.'
+            });
+        }
+
+        // Validar que el rol sea permitido
+        const rolesPermitidos = [
+            'administrador',
+            'marketing',
+            'jugador'
+        ];
+
+        if (!rolesPermitidos.includes(rol)) {
+            return res.status(400).json({
+                mensaje: 'El rol seleccionado no es válido.'
+            });
+        }
+
+        // Impedir que el administrador cambie su propio rol
+        if (idUsuario === req.usuario.id_usuario) {
+            return res.status(403).json({
+                mensaje: 'No puedes modificar tu propio rol.'
+            });
+        }
+
+        // Actualizar el rol en PostgreSQL
+        const usuario = await usuarioService.cambiarRolUsuario(
+            idUsuario,
+            rol
+        );
+
+        if (!usuario) {
+            return res.status(404).json({
+                mensaje: 'El usuario no existe.'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: 'Rol actualizado correctamente.',
+            usuario
+        });
+
+    } catch (error) {
+        console.error('Error al cambiar rol:', error);
+
+        // Protección del último administrador
+        if (error.status === 409) {
+            return res.status(409).json({
+                mensaje: error.message
+            });
+        }
+
+        return res.status(500).json({
+            mensaje: 'No se pudo actualizar el rol del usuario.'
+        });
+    }
+}
+
 module.exports = {
     listarUsuarios,
     actualizarEstadoUsuario,
-    editarUsuario
+    editarUsuario,
+    actualizarRolUsuario
 };

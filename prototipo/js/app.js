@@ -112,7 +112,13 @@ async function cargarUsuariosAdmin() {
 
                 document.getElementById('editar-usuario-email').value =
                     usuario.email;
+                // Mostramos el rol actual del usuario
+                const selectorRol = document.getElementById('editar-usuario-rol');
 
+                selectorRol.value = usuario.rol;
+
+                // Impedimos que el administrador cambie su propio rol
+                selectorRol.disabled = usuario.id_usuario === AppState.sessionUser?.id;
                 // Mostramos el formulario
                 const formulario = document.getElementById('form-editar-usuario');
 
@@ -186,6 +192,11 @@ function inicializarEdicionUsuarios() {
         botonGuardar.disabled = true;
 
         try {
+            // Obtenemos el rol seleccionado
+            const selectorRol = document.getElementById('editar-usuario-rol');
+            const nuevoRol = selectorRol.value;
+
+            // Actualizamos el nombre y correo
             const data = await apiRequest(`/usuarios/${idUsuario}`, {
                 method: 'PATCH',
                 body: JSON.stringify({
@@ -194,19 +205,29 @@ function inicializarEdicionUsuarios() {
                 })
             });
 
-            showToast(data.mensaje, 'success');
+            // Actualizamos el rol si el selector está habilitado
+            if (!selectorRol.disabled) {
+                await apiRequest(`/usuarios/${idUsuario}/rol`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        rol: nuevoRol
+                    })
+                });
+            }
 
-            // Actualizar los datos de la sesión si editamos nuestra cuenta
+            // Actualizamos los datos de sesión si editamos nuestra cuenta
             if (AppState.sessionUser?.id === idUsuario) {
                 AppState.sessionUser.name = data.usuario.nombre_completo;
                 AppState.sessionUser.email = data.usuario.email;
             }
 
-            // Cerrar el formulario
+            showToast('Usuario actualizado correctamente.', 'success');
+
+            // Cerramos el formulario
             form.reset();
             contenedor.style.display = 'none';
 
-            // Recargar la tabla con los datos actualizados
+            // Actualizamos la tabla
             await cargarUsuariosAdmin();
 
         } catch (error) {
