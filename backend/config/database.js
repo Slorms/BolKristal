@@ -1,5 +1,10 @@
 const { Pool } = require('pg');
-require('dotenv').config();
+const path = require('path');
+
+require('dotenv').config({
+    path: path.join(__dirname, '..', '.env'),
+    quiet: true
+});
 
 // Creamos un grupo de conexiones a PostgreSQL
 const pool = new Pool({

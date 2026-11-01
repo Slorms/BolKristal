@@ -1,4 +1,9 @@
-require('dotenv').config();
+const path = require('path');
+
+require('dotenv').config({
+    path: path.join(__dirname, '.env'),
+    quiet: true
+});
 
 const express = require('express');
 const pool = require('./config/database');
@@ -15,6 +20,8 @@ const equipoRoutes = require('./routes/equipoRoutes');
 
 // Creamos nuestra aplicación
 const app = express();
+// Confiar en el proxy de Vercel
+app.set('trust proxy', 1);
 
 // Definimos el puerto
 const PORT = process.env.PORT || 3000;
@@ -99,7 +106,12 @@ app.get('/api/database', async (req, res) => {
     }
 });
 
-// Iniciamos el servidor local
-app.listen(PORT, '127.0.0.1', () => {
-    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
-});
+// Exportamos Express para utilizarlo en Vercel
+module.exports = app;
+
+// Iniciamos el servidor únicamente cuando se ejecuta localmente
+if (require.main === module) {
+    app.listen(PORT, '127.0.0.1', () => {
+        console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+    });
+}

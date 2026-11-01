@@ -1,5 +1,8 @@
 // Dirección del backend de BolKristal
-const API_BASE_URL = 'http://127.0.0.1:3000/api';
+const API_BASE_URL =
+    ['localhost', '127.0.0.1'].includes(window.location.hostname)
+        ? 'http://127.0.0.1:3000/api'
+        : '/api';
 // Realiza solicitudes al backend de BolKristal
 async function apiRequest(endpoint, options = {}) {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
