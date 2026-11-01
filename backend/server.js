@@ -6,6 +6,10 @@ const authRoutes = require('./routes/authRoutes');
 const session = require('express-session');
 const PgSession = require('connect-pg-simple')(session);
 const cors = require('cors');
+const {
+    verificarAutenticacion,
+    verificarRol
+} = require('./middleware/authMiddleware');
 
 // Creamos nuestra aplicación
 const app = express();
@@ -46,6 +50,17 @@ app.use(session({
     }
 }));
 app.use('/api/auth', authRoutes);
+
+app.get(
+    '/api/admin/test',
+    verificarAutenticacion,
+    verificarRol('administrador'),
+    (req, res) => {
+        res.json({
+            mensaje: 'Acceso autorizado al administrador'
+        });
+    }
+);
 
 // Ruta principal de la API
 app.get('/api', (req, res) => {
