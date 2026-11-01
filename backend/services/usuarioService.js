@@ -22,15 +22,78 @@ async function obtenerUsuarios() {
 
 // Cambia el estado de un usuario
 async function cambiarEstadoUsuario(idUsuario, activo) {
-    const resultado = await pool.query(
-        `UPDATE usuario
-         SET activo = $1
-         WHERE id_usuario = $2
-         RETURNING id_usuario, nombre_completo, email, rol, activo`,
-        [activo, idUsuario]
-    );
+    const cliente = await pool.connect();
 
-    return resultado.rows[0];
+    try {
+        await cliente.query('BEGIN');
+
+        // Evitamos que dos solicitudes administrativas
+        // modifiquen estados al mismo tiempo.
+        await cliente.query(
+            'SELECT pg_advisory_xact_lock($1)',
+            [20261031]
+        );
+
+        // Consultamos el usuario que se quiere modificar
+        const consulta = await cliente.query(
+            `SELECT id_usuario, rol, activo
+             FROM usuario
+             WHERE id_usuario = $1
+             FOR UPDATE`,
+            [idUsuario]
+        );
+
+        const usuario = consulta.rows[0];
+
+        if (!usuario) {
+            await cliente.query('ROLLBACK');
+            return null;
+        }
+
+        // Si se quiere desactivar un administrador,
+        // comprobamos cuántos administradores activos quedan.
+        if (
+            usuario.rol === 'administrador' &&
+            usuario.activo === 1 &&
+            activo === 0
+        ) {
+            const resultado = await cliente.query(
+                `SELECT COUNT(*)::integer AS total
+                 FROM usuario
+                 WHERE rol = 'administrador'
+                 AND activo = 1`
+            );
+
+            if (resultado.rows[0].total <= 1) {
+                const error = new Error(
+                    'No puedes desactivar al último administrador activo.'
+                );
+
+                error.status = 409;
+                throw error;
+            }
+        }
+
+        // Actualizamos el estado del usuario
+        const resultado = await cliente.query(
+            `UPDATE usuario
+             SET activo = $1
+             WHERE id_usuario = $2
+             RETURNING id_usuario, nombre_completo, email, rol, activo`,
+            [activo, idUsuario]
+        );
+
+        await cliente.query('COMMIT');
+
+        return resultado.rows[0];
+
+    } catch (error) {
+        await cliente.query('ROLLBACK');
+        throw error;
+
+    } finally {
+        cliente.release();
+    }
 }
 
 module.exports = {

@@ -66,6 +66,12 @@ async function actualizarEstadoUsuario(req, res) {
     } catch (error) {
         console.error('Error al actualizar estado:', error);
 
+        if (error.status === 409) {
+            return res.status(409).json({
+                mensaje: error.message
+            });
+        }
+
         res.status(500).json({
             mensaje: 'No se pudo actualizar el estado del usuario.'
         });
