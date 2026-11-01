@@ -1,0 +1,30 @@
+
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/styles/:path*",
+      "destination": "/prototipo/styles/:path*"
+    },
+    {
+      "source": "/js/:path*",
+      "destination": "/prototipo/js/:path*"
+    },
+    {
+      "source": "/images/:path*",
+      "destination": "/prototipo/images/:path*"
+    },
+    {
+      "source": "/",
+      "destination": "/prototipo/index.html"
+    }
+  ]
+}

@@ -1,4 +1,279 @@
-const USERS_STORAGE_KEY = 'bolkristal-users';
+// Dirección del backend de BolKristal
+const API_BASE_URL =
+    ['localhost', '127.0.0.1'].includes(window.location.hostname)
+        ? 'http://127.0.0.1:3000/api'
+        : '/api';
+// Realiza solicitudes al backend de BolKristal
+async function apiRequest(endpoint, options = {}) {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.mensaje || 'Ocurrió un error en la solicitud');
+    }
+
+    return data;
+}
+
+// Cargar los usuarios registrados desde PostgreSQL
+async function cargarUsuariosAdmin() {
+    const tbody = document.getElementById('admin-usuarios-tbody');
+
+    if (!tbody) return;
+
+    tbody.innerHTML = '<tr><td colspan="7">Cargando usuarios...</td></tr>';
+
+    try {
+        const data = await apiRequest('/usuarios');
+
+        tbody.innerHTML = data.usuarios.map(usuario => `
+            <tr>
+                <td>${usuario.id_usuario}</td>
+                <td>${escapeHtml(usuario.nombre_completo)}</td>
+                <td>${escapeHtml(usuario.email)}</td>
+                <td>${escapeHtml(usuario.rol)}</td>
+                <td>
+                    <span class="badge ${usuario.activo === 1 ? 'neon-badge-green' : 'neon-badge-pink'}">
+                        ${usuario.activo === 1 ? 'Activo' : 'Inactivo'}
+                    </span>
+                </td>
+                <td>
+                    ${usuario.fecha_registro
+                ? new Date(usuario.fecha_registro).toLocaleDateString('es-MX')
+                : 'Sin fecha'}
+                </td>
+                <td>
+                    <button
+                        class="btn btn-sm btn-primary"
+                        data-editar-usuario="${usuario.id_usuario}"
+                    >
+                        <i class="fas fa-edit"></i>
+                        Editar
+                    </button>
+                    <button
+                        class="btn btn-sm ${usuario.activo === 1 ? 'btn-danger' : 'btn-success'}"
+                        data-usuario-id="${usuario.id_usuario}"
+                        data-nuevo-estado="${usuario.activo === 1 ? 0 : 1}"
+                        ${usuario.id_usuario === AppState.sessionUser?.id ? 'disabled' : ''}
+                    >
+                    <i class="fas ${usuario.activo === 1 ? 'fa-user-slash' : 'fa-user-check'}"></i>
+                     ${usuario.activo === 1 ? 'Desactivar' : 'Activar'}
+                    </button>
+                </td>
+            </tr>
+        `).join('') || '<tr><td colspan="7">No hay usuarios registrados.</td></tr>';
+        // Asignamos los eventos a los botones de activar y desactivar
+        tbody.querySelectorAll('button[data-usuario-id]').forEach(boton => {
+
+            boton.addEventListener('click', async () => {
+
+                const idUsuario = Number(boton.dataset.usuarioId);
+                const nuevoEstado = Number(boton.dataset.nuevoEstado);
+
+                boton.disabled = true;
+
+                try {
+                    await cambiarEstadoUsuarioAdmin(idUsuario, nuevoEstado);
+                } finally {
+                    if (boton.isConnected) {
+                        boton.disabled = false;
+                    }
+                }
+            });
+
+        });
+        // Asignamos los eventos a los botones de editar
+        tbody.querySelectorAll('button[data-editar-usuario]').forEach(boton => {
+
+            boton.addEventListener('click', () => {
+
+                const idUsuario = Number(boton.dataset.editarUsuario);
+
+                // Buscamos al usuario seleccionado
+                const usuario = data.usuarios.find(
+                    u => u.id_usuario === idUsuario
+                );
+
+                if (!usuario) {
+                    showToast('No se encontró el usuario.', 'error');
+                    return;
+                }
+
+                // Colocamos sus datos en el formulario
+                document.getElementById('editar-usuario-id').value = usuario.id_usuario;
+
+                document.getElementById('editar-usuario-nombre').value =
+                    usuario.nombre_completo;
+
+                document.getElementById('editar-usuario-email').value =
+                    usuario.email;
+                // Mostramos el rol actual del usuario
+                const selectorRol = document.getElementById('editar-usuario-rol');
+
+                selectorRol.value = usuario.rol;
+
+                // Impedimos que el administrador cambie su propio rol
+                selectorRol.disabled = usuario.id_usuario === AppState.sessionUser?.id;
+
+                // Guardamos el rol original para detectar cambios
+                selectorRol.dataset.rolOriginal = usuario.rol;
+                // Mostramos el formulario
+                const formulario = document.getElementById('form-editar-usuario');
+
+                formulario.style.display = 'block';
+
+                // Nos desplazamos hasta el formulario
+                formulario.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+
+        });
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+
+        tbody.innerHTML = '<tr><td colspan="7">No se pudieron cargar los usuarios.</td></tr>';
+
+        showToast(error.message, 'error');
+    }
+}
+
+// Configurar el formulario para editar usuarios
+function inicializarEdicionUsuarios() {
+
+    const form = document.getElementById('editar-usuario-form');
+    const contenedor = document.getElementById('form-editar-usuario');
+    const botonCancelar = document.getElementById('cancelar-edicion-usuario');
+
+    if (!form || !contenedor || !botonCancelar) return;
+
+    // Evitar registrar los eventos más de una vez
+    if (form.dataset.inicializado === 'true') return;
+
+    form.dataset.inicializado = 'true';
+
+    // Cancelar la edición
+    botonCancelar.addEventListener('click', () => {
+        form.reset();
+        contenedor.style.display = 'none';
+    });
+
+    // Guardar los cambios
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const idUsuario = Number(
+            document.getElementById('editar-usuario-id').value
+        );
+
+        const nombreCompleto = document.getElementById(
+            'editar-usuario-nombre'
+        ).value.trim();
+
+        const email = document.getElementById(
+            'editar-usuario-email'
+        ).value.trim();
+
+        const botonGuardar = form.querySelector('button[type="submit"]');
+
+        if (!Number.isSafeInteger(idUsuario) || idUsuario <= 0) {
+            showToast('Selecciona un usuario válido.', 'error');
+            return;
+        }
+
+        if (nombreCompleto.length < 2) {
+            showToast('El nombre debe tener al menos 2 caracteres.', 'error');
+            return;
+        }
+
+        botonGuardar.disabled = true;
+
+        try {
+            // Obtenemos el rol seleccionado
+            const selectorRol = document.getElementById('editar-usuario-rol');
+            const nuevoRol = selectorRol.value;
+
+            // Actualizamos nombre, correo y rol en una sola petición
+            const data = await apiRequest(`/usuarios/${idUsuario}/completo`, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    nombre_completo: nombreCompleto,
+                    email: email,
+                    rol: nuevoRol
+                })
+            });
+
+            // Actualizamos los datos de sesión si editamos nuestra cuenta
+            if (AppState.sessionUser?.id === idUsuario) {
+                AppState.sessionUser.name = data.usuario.nombre_completo;
+                AppState.sessionUser.email = data.usuario.email;
+            }
+
+            showToast(data.mensaje, 'success');
+
+            // Cerramos el formulario
+            form.reset();
+            contenedor.style.display = 'none';
+
+            // Actualizamos la tabla
+            await cargarUsuariosAdmin();
+
+
+
+        } catch (error) {
+            console.error('Error al editar usuario:', error);
+            showToast(error.message, 'error');
+
+        } finally {
+            botonGuardar.disabled = false;
+        }
+    });
+}
+
+// Activar o desactivar usuarios desde el panel
+async function cambiarEstadoUsuarioAdmin(idUsuario, nuevoEstado) {
+
+    const accion = nuevoEstado === 1 ? 'activar' : 'desactivar';
+
+    const confirmar = confirm(
+        `¿Estás seguro de que deseas ${accion} este usuario?`
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+        const data = await apiRequest(
+            `/usuarios/${idUsuario}/estado`,
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    activo: nuevoEstado
+                })
+            }
+        );
+
+        showToast(data.mensaje, 'success');
+
+        // Actualizamos la tabla
+        await cargarUsuariosAdmin();
+
+    } catch (error) {
+        console.error('Error al cambiar estado:', error);
+        showToast(error.message, 'error');
+    }
+}
+
 const SESSION_STORAGE_KEY = 'bolkristal-session';
 const TEAMS_STORAGE_KEY = 'bolkristal-teams';
 const BRACKET_STORAGE_KEY = 'bolkristal-bracket-demo';
@@ -55,35 +330,11 @@ const DEFAULT_CLIENTS = [
     { id: 'C005', nombre: 'Carlos Ramos', email: 'marketing@bolkristal.mx', tel: '449-765-4321', cumple: '10 de Noviembre', visitasBillar: 4, torneosJugados: 0, compras: '$890 MXN', preferido: 'Bar / Consumo', promoUsadas: 0 }
 ];
 
-const DEFAULT_USERS = [
-    {
-        id: 'U-ADMIN-1',
-        name: 'Laura Martinez',
-        email: 'admin@bolkristal.mx',
-        password: 'Admin123!',
-        role: 'administrador'
-    },
-    {
-        id: 'U-MKT-1',
-        name: 'Carlos Ramos',
-        email: 'marketing@bolkristal.mx',
-        password: 'Marketing123!',
-        role: 'marketing'
-    },
-    {
-        id: 'U-JUGADOR-1',
-        name: 'Ana Torres',
-        email: 'ana@gmail.com',
-        password: 'Jugador123!',
-        role: 'jugador'
-    }
-];
-
 const AppState = {
     sessionUser: null,
     currentView: 'public-view',
     barAudio: null,
-    updateJukeboxUI: () => {},
+    updateJukeboxUI: () => { },
     torneos: [
         {
             id: 'T1',
@@ -157,32 +408,6 @@ function normalizeRole(role) {
     return role || 'jugador';
 }
 
-function normalizeUserRecord(user) {
-    return {
-        ...user,
-        role: normalizeRole(user.role)
-    };
-}
-
-function mergeUsersWithDefaults(users) {
-    const normalizedUsers = Array.isArray(users)
-        ? users.map(normalizeUserRecord)
-        : [];
-
-    const userMap = new Map();
-
-    normalizedUsers.forEach((user) => {
-        if (!user || !user.email) return;
-        userMap.set(user.email.toLowerCase(), user);
-    });
-
-    DEFAULT_USERS.forEach((defaultUser) => {
-        userMap.set(defaultUser.email.toLowerCase(), { ...defaultUser });
-    });
-
-    return Array.from(userMap.values());
-}
-
 function cloneData(data) {
     return JSON.parse(JSON.stringify(data));
 }
@@ -219,32 +444,6 @@ function showToast(message, type = 'info') {
         toast.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
         setTimeout(() => toast.remove(), 250);
     }, 3400);
-}
-
-function getUsers() {
-    const raw = localStorage.getItem(USERS_STORAGE_KEY);
-
-    if (!raw) {
-        const defaults = cloneData(DEFAULT_USERS);
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaults));
-        return defaults;
-    }
-
-    try {
-        const parsed = JSON.parse(raw);
-        const merged = mergeUsersWithDefaults(parsed);
-
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(merged));
-        return merged;
-    } catch (error) {
-        const defaults = cloneData(DEFAULT_USERS);
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaults));
-        return defaults;
-    }
-}
-
-function saveUsers(users) {
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
 }
 
 function getActiveTournament() {
@@ -606,26 +805,9 @@ function invalidateWeeklySchedule() {
     if (generateButton) generateButton.removeAttribute('disabled');
 }
 
-function saveSession(user) {
-    AppState.sessionUser = user;
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
-}
-
 function clearSession() {
     AppState.sessionUser = null;
     localStorage.removeItem(SESSION_STORAGE_KEY);
-}
-
-function getStoredSession() {
-    const raw = localStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) return null;
-
-    try {
-        return normalizeUserRecord(JSON.parse(raw));
-    } catch (error) {
-        localStorage.removeItem(SESSION_STORAGE_KEY);
-        return null;
-    }
 }
 
 function updateSessionLabels(user) {
@@ -647,25 +829,33 @@ function updateSessionLabels(user) {
     if (adminEmail) adminEmail.textContent = safeUser.email || 'admin@bolkristal.mx';
 }
 
-function loadTeams() {
-    const raw = localStorage.getItem(TEAMS_STORAGE_KEY);
-
-    if (!raw) {
-        AppState.equipos = mergeTeamsWithDefaults(DEFAULT_TEAMS);
-        localStorage.setItem(TEAMS_STORAGE_KEY, JSON.stringify(AppState.equipos));
-        return;
-    }
-
+async function loadTeams() {
     try {
-        const parsed = JSON.parse(raw);
-        AppState.equipos = Array.isArray(parsed)
-            ? mergeTeamsWithDefaults(parsed)
-            : mergeTeamsWithDefaults(DEFAULT_TEAMS);
-    } catch (error) {
-        AppState.equipos = mergeTeamsWithDefaults(DEFAULT_TEAMS);
-    }
+        // Obtener los equipos desde PostgreSQL
+        const data = await apiRequest('/equipos');
 
-    localStorage.setItem(TEAMS_STORAGE_KEY, JSON.stringify(AppState.equipos));
+        // Convertir los datos al formato del frontend
+        AppState.equipos = mergeTeamsWithDefaults(
+            data.equipos.map(equipo => ({
+                id: equipo.id_equipo,
+                nombre: equipo.nombre,
+                jugador1: equipo.jugador1,
+                jugador2: equipo.jugador2,
+                nivel: equipo.nivel,
+                precio: Number(equipo.precio),
+                puntos: equipo.puntos,
+                jugados: equipo.jugados,
+                ownerUserId: equipo.id_usuario,
+                createdBy: equipo.creado_por,
+                createdAt: equipo.fecha_creacion
+            }))
+        );
+
+    } catch (error) {
+        console.error('Error al cargar equipos:', error);
+        showToast('No se pudieron cargar los equipos.', 'error');
+        throw error;
+    }
 }
 
 function saveTeams() {
@@ -1650,10 +1840,10 @@ function getMirrorBracketHtml(isCompact = false) {
                             </div>
                         ` : ''}
                         ${column.matches.map((matchIndex) => renderBracketSlot(
-                            column.roundKey,
-                            matchIndex,
-                            { showMembers: false, compact: isCompact }
-                        )).join('')}
+        column.roundKey,
+        matchIndex,
+        { showMembers: false, compact: isCompact }
+    )).join('')}
                     </div>
                 </section>
             `).join('')}
@@ -1940,8 +2130,8 @@ function renderTournamentBracket() {
                     </div>
                     <div class="bracket-builder-list">
                         ${availableTeams.length
-                            ? availableTeams.map((team) => buildBracketTeamListItem(team, 'add')).join('')
-                            : '<div class="bracket-builder-empty">No hay parejas disponibles con ese filtro.</div>'}
+            ? availableTeams.map((team) => buildBracketTeamListItem(team, 'add')).join('')
+            : '<div class="bracket-builder-empty">No hay parejas disponibles con ese filtro.</div>'}
                     </div>
                 </div>
                 <div class="bracket-builder-column">
@@ -1951,8 +2141,8 @@ function renderTournamentBracket() {
                     </div>
                     <div class="bracket-builder-list selected">
                         ${selectedTeams.length
-                            ? selectedTeams.map((team) => buildBracketTeamListItem(team, 'remove')).join('')
-                            : '<div class="bracket-builder-empty">Todavia no hay parejas agregadas al cuadro.</div>'}
+            ? selectedTeams.map((team) => buildBracketTeamListItem(team, 'remove')).join('')
+            : '<div class="bracket-builder-empty">Todavia no hay parejas agregadas al cuadro.</div>'}
                     </div>
                 </div>
             </div>
@@ -1983,16 +2173,16 @@ function renderTournamentBracket() {
                     ? `${getBracketParticipantById(nextPending.match.participantAId).nombre} vs ${getBracketParticipantById(nextPending.match.participantBId).nombre}`
                     : !enoughParticipants
                         ? 'No hay suficientes jugadores'
-                    : selectedTeams.length
-                        ? 'Cuadro listo para editar'
-                        : 'Configura participantes'
+                        : selectedTeams.length
+                            ? 'Cuadro listo para editar'
+                            : 'Configura participantes'
             )}</h4>
             <p>${champion
-                ? `${escapeHtml(champion.integrantes)} | ${formatTeamLevel(champion.nivel)}`
-                : nextPending
-                    ? `${nextPending.round.label} listo para capturar ganador.`
-                    : !enoughParticipants
-                        ? `No hay suficientes jugadores para empezar el torneo. Faltan ${getMissingParticipantsCount()} parejas para ${getBracketRoundMeta(AppState.bracket.config.startRound)?.label || 'la fase elegida'}.`
+            ? `${escapeHtml(champion.integrantes)} | ${formatTeamLevel(champion.nivel)}`
+            : nextPending
+                ? `${nextPending.round.label} listo para capturar ganador.`
+                : !enoughParticipants
+                    ? `No hay suficientes jugadores para empezar el torneo. Faltan ${getMissingParticipantsCount()} parejas para ${getBracketRoundMeta(AppState.bracket.config.startRound)?.label || 'la fase elegida'}.`
                     : selectedTeams.length
                         ? 'Cuadro generado y listo para seguimiento desde la consola del enfrentamiento actual.'
                         : 'Selecciona parejas inscritas, define la fase inicial y genera el bracket.'}
@@ -2000,8 +2190,8 @@ function renderTournamentBracket() {
         </div>
         <div class="bracket-stage-list">
             ${managedRounds.map((round) => {
-                const completed = AppState.bracket.rounds[round.key].filter((match) => match.winnerId).length;
-                return `
+                            const completed = AppState.bracket.rounds[round.key].filter((match) => match.winnerId).length;
+                            return `
                     <div class="bracket-stage-item">
                         <span>${round.label}</span>
                         <div class="bracket-stage-meta">
@@ -2010,7 +2200,7 @@ function renderTournamentBracket() {
                         </div>
                     </div>
                 `;
-            }).join('')}
+                        }).join('')}
         </div>
         ${getCurrentMatchCardHtml(nextPending)}
     `;
@@ -2516,8 +2706,8 @@ function renderClientRegistrationSection() {
             <span class="badge ${userTeam ? 'neon-badge-cyan' : 'neon-badge-yellow'}">${userTeam ? 'Tu registro' : 'Pendiente de registro'}</span>
             <h3>${userTeam ? escapeHtml(userTeam.nombre) : 'Tu cuenta aun no participa'}</h3>
             <p>${userTeam
-                ? `Pareja registrada por ${escapeHtml(userTeam.jugador1)} y ${escapeHtml(userTeam.jugador2)} en nivel ${formatTeamLevel(userTeam.nivel).toLowerCase()}.`
-                : 'Completa nombre de tu pareja, nivel y nombre del equipo para quedar inscrito en el torneo actual.'}</p>
+            ? `Pareja registrada por ${escapeHtml(userTeam.jugador1)} y ${escapeHtml(userTeam.jugador2)} en nivel ${formatTeamLevel(userTeam.nivel).toLowerCase()}.`
+            : 'Completa nombre de tu pareja, nivel y nombre del equipo para quedar inscrito en el torneo actual.'}</p>
             <div class="data-grid">
                 <span class="data-pill"><i class="fas fa-calendar-check"></i> ${userTeam ? `Registrado ${formatRegistrationDate(userTeam.createdAt)}` : 'Registro en linea activo'}</span>
                 <span class="data-pill"><i class="fas fa-circle-play"></i> ${userTeam ? 'Listo para sorteo y partidos del torneo' : 'Esperando tu inscripcion'}</span>
@@ -2640,7 +2830,7 @@ function renderClientTournamentInfo() {
                 ? `Tu recorrido en el torneo se cerro en ${escapeHtml(eliminatedMatch.round.label)}.`
                 : pendingOpponent
                     ? `Tu rival oficial dentro del cuadro es ${escapeHtml(pendingOpponent.nombre)} en la fase actual del torneo.`
-                : hasAdvancedWaitingOpponent
+                    : hasAdvancedWaitingOpponent
                         ? `Ganaste tu ultimo cruce en ${escapeHtml(lastWonMatch.round.label)} y ya avanzaste a ${escapeHtml(bracketMatch.round.label)}.`
                         : 'Tu siguiente referencia dentro del cuadro aun no tiene rival definido o depende de resultados previos.'}</p>
         <div class="data-grid">
@@ -2733,10 +2923,10 @@ function renderClientTournamentInfo() {
         </div>
         <h3>${userTeam ? 'Aun no tienes partido asignado' : 'Primero inscribe a tu pareja'}</h3>
         <p>${userTeam
-            ? (lastResolvedMatch?.match?.winnerId === bracketProgress?.participant?.id
-                ? 'Tu ultima victoria ya se registro, pero tu siguiente rival todavia no queda definido en la eliminatoria.'
-                : 'Tu equipo ya puede existir dentro del cuadro general, pero el rival oficial todavia no queda definido en la eliminatoria.')
-            : 'Despues de inscribirte, aqui aparecera tu siguiente partido con fecha, horario y pista.'}</p>
+        ? (lastResolvedMatch?.match?.winnerId === bracketProgress?.participant?.id
+            ? 'Tu ultima victoria ya se registro, pero tu siguiente rival todavia no queda definido en la eliminatoria.'
+            : 'Tu equipo ya puede existir dentro del cuadro general, pero el rival oficial todavia no queda definido en la eliminatoria.')
+        : 'Despues de inscribirte, aqui aparecera tu siguiente partido con fecha, horario y pista.'}</p>
         <div class="data-grid">
             <span class="data-pill"><i class="far fa-calendar"></i> ${userTeam ? fallbackDate : 'Pendiente'}</span>
             <span class="data-pill"><i class="fas fa-calendar-week"></i> Esperando definicion del cruce</span>
@@ -2820,13 +3010,25 @@ function routeByRole(user, announce = true) {
     }
 }
 
-function logoutToPublic(message = 'Sesion cerrada correctamente.') {
-    clearSession();
-    updateSessionLabels(null);
-    renderClientRegistrationSection();
-    renderClientTournamentInfo();
-    setActiveView('public-view');
-    showToast(message);
+async function logoutToPublic(message = 'Sesion cerrada correctamente.') {
+    try {
+        await apiRequest('/auth/logout', {
+            method: 'POST'
+        });
+
+        clearSession();
+        AppState.sessionUser = null;
+
+        updateSessionLabels(null);
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        setActiveView('public-view');
+
+        showToast(message, 'success');
+
+    } catch (error) {
+        showToast('No se pudo cerrar la sesión. Inténtalo nuevamente.', 'error');
+    }
 }
 
 function scrollToSection(sectionId) {
@@ -2965,71 +3167,80 @@ function initAuth() {
     });
 
     if (loginForm) {
-        loginForm.addEventListener('submit', (event) => {
+        loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const email = document.getElementById('login-email').value.trim().toLowerCase();
-            const password = document.getElementById('login-password').value.trim();          
-            const users = getUsers();
-            const user = users.find((item) => item.email.toLowerCase() === email && item.password === password);
+            const password = document.getElementById('login-password').value;
 
-            if (!user) {
-                showToast('Correo o contrasena incorrectos.', 'error');
-                return;
+            try {
+                const resultado = await apiRequest('/auth/login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                const usuario = {
+                    id: resultado.usuario.id_usuario,
+                    name: resultado.usuario.nombre_completo,
+                    email: resultado.usuario.email,
+                    role: resultado.usuario.rol
+                };
+
+                AppState.sessionUser = usuario;
+
+                updateSessionLabels(usuario);
+                closeAuthModal();
+                loginForm.reset();
+                routeByRole(usuario);
+
+            } catch (error) {
+                showToast(error.message, 'error');
             }
-
-            saveSession(user);
-            updateSessionLabels(user);
-            closeAuthModal();
-            loginForm.reset();
-            routeByRole(user);
         });
     }
 
     if (registerForm) {
-        registerForm.addEventListener('submit', (event) => {
+        registerForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const name = document.getElementById('register-name').value.trim();
             const email = document.getElementById('register-email').value.trim().toLowerCase();
             const password = document.getElementById('register-password').value;
-            const role = 'jugador';
 
             if (!name || !email || !password) {
                 showToast('Completa todos los campos del registro.', 'error');
                 return;
             }
 
-            if (password.length < 6) {
-                showToast('La contrasena debe tener al menos 6 caracteres.', 'error');
+            if (password.length < 8) {
+                showToast('La contraseña debe tener al menos 8 caracteres.', 'error');
                 return;
             }
 
-            const users = getUsers();
-            const exists = users.some((user) => user.email.toLowerCase() === email);
+            try {
+                await apiRequest('/auth/register', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre_completo: name,
+                        email,
+                        password
+                    })
+                });
 
-            if (exists) {
-                showToast('Ese correo ya tiene una cuenta registrada.', 'error');
-                return;
+                closeAuthModal();
+                registerForm.reset();
+
+                showToast(
+                    'Cuenta creada correctamente. Ahora puedes iniciar sesión.',
+                    'success'
+                );
+
+            } catch (error) {
+                showToast(error.message, 'error');
             }
-
-            const newUser = {
-                id: `U-${Date.now()}`,
-                name,
-                email,
-                password,
-                role
-            };
-
-            users.push(newUser);
-            saveUsers(users);
-            ensureClientProfile(newUser);
-            saveSession(newUser);
-            updateSessionLabels(newUser);
-            closeAuthModal();
-            registerForm.reset();
-            routeByRole(newUser, false);
-            showToast('Cuenta creada correctamente. Ya puedes inscribirte al torneo.', 'success');
         });
     }
 
@@ -3063,6 +3274,11 @@ function activateAdminPanel(targetId) {
 
     if (targetId === 'reportes') {
         animateCharts();
+    }
+
+    // Cargar usuarios registrados desde PostgreSQL
+    if (targetId === 'usuarios') {
+        cargarUsuariosAdmin();
     }
 }
 
@@ -3201,7 +3417,7 @@ function initAtmosphereControls() {
 
             if (AppState.jukebox.playing) {
                 barAudio.src = AppState.jukebox.tracks[AppState.jukebox.currentTrackIndex].url;
-                barAudio.play().catch(() => {});
+                barAudio.play().catch(() => { });
             }
 
             updateJukeboxUI();
@@ -3293,7 +3509,7 @@ function initClientRegistrationForm() {
     const form = document.getElementById('client-registration-form');
     if (!form) return;
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const user = AppState.sessionUser;
@@ -3320,21 +3536,41 @@ function initClientRegistrationForm() {
         }
 
         const cost = getRegistrationPrice(level);
-        AppState.equipos.push({
-            id: getNextTeamId(),
-            nombre: teamName,
-            jugador1: player1,
-            jugador2: player2,
-            nivel: level,
-            precio: cost,
-            puntos: 0,
-            jugados: 0,
-            ownerUserId: user.id,
-            createdBy: 'jugador',
-            createdAt: new Date().toISOString()
-        });
 
-        saveTeams();
+        try {
+            // Registrar el equipo en PostgreSQL
+            const data = await apiRequest('/equipos', {
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: teamName,
+                    jugador1: player1,
+                    jugador2: player2,
+                    nivel: level
+                })
+            });
+
+            const equipo = data.equipo;
+
+            // Agregar el equipo devuelto por PostgreSQL al estado del frontend
+            AppState.equipos.push({
+                id: equipo.id_equipo,
+                nombre: equipo.nombre,
+                jugador1: equipo.jugador1,
+                jugador2: equipo.jugador2,
+                nivel: equipo.nivel,
+                precio: Number(equipo.precio),
+                puntos: equipo.puntos,
+                jugados: equipo.jugados,
+                ownerUserId: equipo.id_usuario,
+                createdBy: equipo.creado_por,
+                createdAt: equipo.fecha_creacion
+            });
+
+        } catch (error) {
+            console.error('Error al registrar equipo:', error);
+            showToast(error.message, 'error');
+            return;
+        }
         syncBracketDraftWithTeams();
         registerTournamentParticipation(user);
         invalidateWeeklySchedule();
@@ -3454,24 +3690,50 @@ function renderTeamsTable() {
     });
 }
 
-window.eliminarEquipo = function eliminarEquipo(id) {
-    const index = AppState.equipos.findIndex((equipo) => equipo.id === id);
-    if (index === -1) return;
+window.eliminarEquipo = async function eliminarEquipo(id) {
+    const equipo = AppState.equipos.find((equipo) => equipo.id === id);
+    if (!equipo) return;
 
-    const teamName = AppState.equipos[index].nombre;
-    AppState.equipos.splice(index, 1);
-    saveTeams();
-    syncBracketDraftWithTeams();
-    invalidateWeeklySchedule();
-    showToast(`Pareja "${teamName}" eliminada del torneo.`);
+    const confirmar = confirm(
+        `¿Estás seguro de eliminar la pareja "${equipo.nombre}"?`
+    );
 
-    renderLeaderboard();
-    renderTeamsTable();
-    renderTournamentBracket();
-    renderRegistrationAdminStatus();
-    renderClientRegistrationSection();
-    renderClientTournamentInfo();
-    renderSiguienteJornada();
+    if (!confirmar) return;
+
+    try {
+        // Solicitar eliminación al backend
+        await apiRequest(`/equipos/${id}`, {
+            method: 'DELETE'
+        });
+
+        // Actualizar equipos desde PostgreSQL
+        await loadTeams();
+
+        // Actualizar información del torneo
+        syncBracketDraftWithTeams();
+        invalidateWeeklySchedule();
+
+        showToast(
+            `Pareja "${equipo.nombre}" eliminada correctamente.`,
+            'success'
+        );
+
+        renderLeaderboard();
+        renderTeamsTable();
+        renderTournamentBracket();
+        renderRegistrationAdminStatus();
+        renderClientRegistrationSection();
+        renderClientTournamentInfo();
+        renderSiguienteJornada();
+
+    } catch (error) {
+        console.error('Error al eliminar equipo:', error);
+
+        showToast(
+            error.message || 'No se pudo eliminar el equipo.',
+            'error'
+        );
+    }
 };
 
 function initTournamentAdminControls() {
@@ -3667,9 +3929,9 @@ function renderSiguienteJornada() {
             <td><strong>${match.equipoB}</strong></td>
             <td>
                 ${isCompleted
-                    ? '<span class="badge neon-badge-green"><i class="fas fa-check"></i> Guardado</span>'
-                    : `<button class="btn-neon btn-neon-pink" onclick="guardarMarcador('${match.id}', ${index})" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 8px"><i class="fas fa-save"></i> Registrar</button>`
-                }
+                ? '<span class="badge neon-badge-green"><i class="fas fa-check"></i> Guardado</span>'
+                : `<button class="btn-neon btn-neon-pink" onclick="guardarMarcador('${match.id}', ${index})" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 8px"><i class="fas fa-save"></i> Registrar</button>`
+            }
             </td>
         `;
         tbody.appendChild(tr);
@@ -3894,31 +4156,36 @@ function animateCharts() {
     }, 80);
 }
 
-function restoreSession() {
-    const session = getStoredSession();
-    if (!session) {
+async function restoreSession() {
+    try {
+        const resultado = await apiRequest('/auth/me');
+
+        const usuario = {
+            id: resultado.usuario.id_usuario,
+            name: resultado.usuario.nombre_completo,
+            email: resultado.usuario.email,
+            role: resultado.usuario.rol
+        };
+
+        AppState.sessionUser = usuario;
+
+        routeByRole(usuario, false);
+
+    } catch (error) {
+        AppState.sessionUser = null;
         updateSessionLabels(null);
         setActiveView('public-view');
-        return;
     }
-
-    const users = getUsers();
-    const existingUser = users.find((user) => user.email === session.email);
-    if (!existingUser) {
-        clearSession();
-        updateSessionLabels(null);
-        setActiveView('public-view');
-        return;
-    }
-
-    saveSession(existingUser);
-    routeByRole(existingUser, false);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    getUsers();
+document.addEventListener('DOMContentLoaded', async () => {
     loadTournamentConfig();
-    loadTeams();
+
+    try {
+        await loadTeams();
+    } catch (error) {
+        console.error('No se pudieron cargar los equipos iniciales:', error);
+    }
+
     loadClients();
     loadWeeklyMatchups();
     loadBracketDraft();
@@ -3936,6 +4203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRoleGenerator();
     initClientesSearch();
     initPromoForm();
+    inicializarEdicionUsuarios();
 
     renderTournamentBracket();
     renderLeaderboard();

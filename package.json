@@ -1,0 +1,20 @@
+
+{
+  "name": "bolkristal",
+  "version": "1.0.0",
+  "description": "Sistema web BolKristal",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "argon2": "^0.45.1",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-session": "^1.19.0",
+    "pg": "^8.23.1"
+  }
+}
