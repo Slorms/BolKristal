@@ -4070,8 +4070,8 @@ function renderPromociones() {
         if (index === 2) colorClass = 'neon-green';
 
         card.innerHTML = `
-            <div class="promo-chalk-title ${colorClass}">${promo.titulo}</div>
-            <p class="promo-chalk-desc">${promo.desc}</p>
+            <div class="promo-chalk-title ${colorClass}">${escapeHtml(promo.titulo)}</div>
+            <p class="promo-chalk-desc">${escapeHtml(promo.desc)}</p>
             <div class="promo-metrics-row">
                 <div class="promo-metric-item">
                     <div class="promo-metric-label">Vistas web/redes</div>
