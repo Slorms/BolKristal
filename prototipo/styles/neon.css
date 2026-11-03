@@ -3842,3 +3842,15 @@ body.lights-off .logo-text p {
         font-size: 1.2rem;
     }
 }
+
+/* Dar una pequeña respuesta visual al presionar botones */
+button:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+/* Mejorar la visibilidad de los campos seleccionados */
+.form-input:focus-visible,
+.score-input-box:focus-visible {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 12px var(--neon-cyan-glow);
+}
