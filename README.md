@@ -2,11 +2,17 @@
 
 <div align="center">
 
-### ✨ Prototipo web para torneo, inscripciones, promociones y experiencia de jugador
+### ✨ Sistema web para la gestión de torneos, inscripciones, promociones y experiencia de jugador
 
-[![Abrir pagina](https://img.shields.io/badge/🌐%20Abrir%20pagina-BolKristal-ff0055?style=for-the-badge&logo=google-chrome&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
-[![Estado](https://img.shields.io/badge/Estado-Prototipo%20activo-00c2ff?style=for-the-badge)](https://slorms.github.io/BolKristal/prototipo/)
-[![Frontend](https://img.shields.io/badge/Stack-HTML%20%7C%20CSS%20%7C%20JS-ffb703?style=for-the-badge)](https://slorms.github.io/BolKristal/prototipo/)
+[![Abrir página](https://img.shields.io/badge/🌐%20Abrir%20pagina-BolKristal-ff0055?style=for-the-badge&logo=google-chrome&logoColor=white)](https://bol-kristal.vercel.app/)
+
+[![Estado](https://img.shields.io/badge/Estado-Desplegado%20en%20Vercel-00c2ff?style=for-the-badge)](https://bol-kristal.vercel.app/)
+
+[![Frontend](https://img.shields.io/badge/Frontend-HTML%20%7C%20CSS%20%7C%20JS-ffb703?style=for-the-badge&logo=javascript&logoColor=white)](https://bol-kristal.vercel.app/)
+
+[![Backend](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-43853d?style=for-the-badge&logo=node.js&logoColor=white)](https://bol-kristal.vercel.app/)
+
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://bol-kristal.vercel.app/)
 
 <br>
 
@@ -20,61 +26,48 @@
 
 <div align="center">
 
-## [👉 Entrar a la pagina](https://slorms.github.io/BolKristal/prototipo/)
+## [👉 Entrar a la página](https://bol-kristal.vercel.app/)
 
 </div>
 
-**URL publica del proyecto:**  
-`https://slorms.github.io/BolKristal/prototipo/`
+**URL pública del proyecto:**  
+
+https://bol-kristal.vercel.app/
 
 ---
 
-## Como ejecutar el proyecto
+## ⚙️ Tecnologías del proyecto
 
-Este proyecto es un prototipo estatico. No necesita backend, base de datos ni `npm install`.
+BolKristal utiliza tecnologías web para desarrollar su interfaz, gestionar las operaciones del sistema y almacenar la información.
 
-### Requisitos
-
-- navegador web moderno como `Google Chrome`, `Microsoft Edge` o `Firefox`
-- conexion a internet para cargar los iconos de `Font Awesome` y las pistas de audio de ejemplo
-
-### Opcion 1: abrirlo directo
-
-1. Clona o descarga este repositorio.
-2. Entra a la carpeta `prototipo/`.
-3. Abre el archivo `index.html` en tu navegador.
-
-### Opcion 2: usar un servidor local
-
-Si prefieres ejecutarlo como sitio local durante desarrollo, puedes usar cualquiera de estas opciones:
-
-- `VS Code + Live Server`: abre la carpeta y ejecuta `Open with Live Server` sobre `prototipo/index.html`.
-- `Python 3`: desde la raiz del proyecto ejecuta `python -m http.server 5500` y luego abre `http://localhost:5500/prototipo/`.
-
-### Nota sobre los datos
-
-- El proyecto guarda usuarios, sesion, inscripciones de parejas y estado del torneo en `localStorage` del navegador.
-- **Todo es local al navegador y al dispositivo.**
-- Si creas una cuenta en un dispositivo e intentas iniciar sesion desde otro, ese usuario **no va a aparecer**.
-- Tampoco aparecera si cambias de navegador en el mismo equipo, por ejemplo de `Chrome` a `Edge`.
-- Solo podras volver a ver esa cuenta si entras desde el mismo navegador del mismo dispositivo donde fue creada y mientras no se borren los datos del sitio.
-- Si quieres reiniciar la informacion demo, borra el almacenamiento del sitio en tu navegador.
+| Tecnología | Función |
+|---|---|
+| HTML5 | Estructura de las páginas |
+| CSS3 | Diseño y estilos de la interfaz |
+| JavaScript | Funcionalidades e interactividad |
+| Node.js | Entorno de ejecución del backend |
+| Express | Gestión de rutas y solicitudes HTTP |
+| PostgreSQL | Base de datos relacional |
+| Vercel | Despliegue de la aplicación |
+| Git y GitHub | Control de versiones y colaboración |
 
 ---
 
-## 🧭 Que es este proyecto
+## 🧭 ¿Qué es este proyecto?
 
-BolKristal es un prototipo visual pensado para mostrar la operacion digital de un negocio de boliche con ambiente de fiesta. La pagina ya integra:
+BolKristal es un sistema web desarrollado para facilitar la operación digital de un negocio de boliche. Su objetivo es centralizar la administración de torneos, jugadores, inscripciones, clientes y promociones mediante una plataforma accesible desde diferentes dispositivos.
 
-- 🎉 portada publica con imagenes, promociones y acceso
-- 🔐 creacion de cuenta de jugador e inicio de sesion
-- 👤 vista de jugador
-- 🛠️ panel administrativo responsivo
-- 🏆 torneo con bracket eliminatorio
-- 📝 inscripciones de parejas
-- 👥 directorio de clientes
-- 📣 promociones
-- 🎵 jukebox visual dentro del panel admin
+La aplicación integra:
+
+- 🎉 Página pública con información del negocio y promociones.
+- 🔐 Creación de cuentas e inicio de sesión.
+- 👤 Vista de jugador.
+- 🛠️ Panel administrativo responsivo.
+- 🏆 Administración de torneos con bracket eliminatorio.
+- 📝 Inscripciones de parejas.
+- 👥 Directorio de clientes.
+- 📣 Administración de promociones.
+- 🎵 Jukebox visual dentro del panel administrativo.
 
 ---
 
@@ -85,10 +78,10 @@ BolKristal es un prototipo visual pensado para mostrar la operacion digital de u
     <td align="center" width="50%">
       <img src="/prototipo/images/tournament-strike.png" alt="Torneo" width="100%">
       <br>
-      <strong>Modulo de torneo</strong>
+      <strong>Módulo de torneo</strong>
     </td>
     <td align="center" width="50%">
-      <img src="/prototipo/images/party-package.png" alt="Promos y fiestas" width="100%">
+      <img src="/prototipo/images/party-package.png" alt="Promociones y fiestas" width="100%">
       <br>
       <strong>Promociones y experiencia del negocio</strong>
     </td>
@@ -99,37 +92,34 @@ BolKristal es un prototipo visual pensado para mostrar la operacion digital de u
 
 ## 🧩 Vistas disponibles
 
-### 🌐 Vista publica
+### 🌐 Vista pública
 
-La portada principal ya incluye:
+La página principal incluye:
 
-- hero visual de boliche y fiesta
-- experiencia BolKristal
-- torneo activo
-- promociones
-- acceso a login
-- menu hamburguesa en movil
+- Imagen y presentación del negocio.
+- Información sobre la experiencia BolKristal.
+- Torneo activo.
+- Promociones.
+- Acceso al inicio de sesión y registro.
+- Menú hamburguesa para dispositivos móviles.
 
 ### 👤 Vista de jugador
 
-Cuando entra un jugador, puede ver:
+Cuando inicia sesión, el jugador puede consultar:
 
-- bienvenida personalizada
-- resumen de su pareja inscrita
-- estado de su avance dentro del torneo
-- proximo cruce oficial segun el cuadro
-- fecha, hora estimada y pista del cruce oficial
-- mensaje cuando gana una ronda y cuando gana el torneo
-- bracket oficial en solo lectura
-- promociones del mes
-- bloque de beneficios
-- menu hamburguesa en movil
-
-> Nota: esta vista ya refleja el estado del jugador dentro del torneo, pero sigue siendo local al navegador y no se sincroniza con otros dispositivos.
+- Bienvenida personalizada.
+- Resumen de su pareja inscrita.
+- Estado de su avance dentro del torneo.
+- Próximo enfrentamiento según el cuadro oficial.
+- Fecha, hora estimada y pista del enfrentamiento.
+- Notificaciones cuando gana una ronda o el torneo.
+- Bracket oficial en modo de solo lectura.
+- Promociones del mes.
+- Bloque de beneficios.
 
 ### 🛠️ Vista administrativa
 
-El panel admin ya tiene:
+El panel administrativo cuenta con los siguientes módulos:
 
 - `Resumen`
 - `Torneo Boliche`
@@ -138,150 +128,151 @@ El panel admin ya tiene:
 - `Promociones`
 - `Reportes`
 
-Dentro de `Torneo Boliche`, el admin puede:
+Dentro de `Torneo Boliche`, el administrador puede:
 
-- armar el cuadro con parejas inscritas
-- sortear posiciones
-- ver la etapa activa
-- capturar el enfrentamiento actual por frames
-- avanzar automaticamente al ganador dentro del mismo bracket
+- Armar el cuadro con parejas inscritas.
+- Sortear posiciones.
+- Consultar la etapa activa.
+- Capturar los resultados del enfrentamiento actual por frames.
+- Avanzar automáticamente al ganador dentro del bracket.
 
-Dentro de `Inscripciones`, el admin puede:
+Dentro de `Inscripciones`, el administrador puede:
 
-- ver todas las parejas registradas
-- abrir convocatoria
-- cerrar convocatoria
-- revisar el origen del registro
+- Consultar las parejas registradas.
+- Abrir convocatorias.
+- Cerrar convocatorias.
+- Revisar el origen del registro.
 
-En movil:
+En dispositivos móviles:
 
-- la barra lateral pasa a menu hamburguesa
-- el panel se mantiene fijo
-- la navegacion se despliega sin tapar toda la experiencia
+- La barra lateral se convierte en un menú hamburguesa.
+- El panel se adapta al tamaño de pantalla.
+- La navegación permite acceder a las diferentes secciones.
 
 ---
 
 ## 🔐 Acceso y cuentas
 
-El modal de acceso tiene dos pestañas:
+El sistema cuenta con un módulo de autenticación que permite acceder mediante dos opciones:
 
-- `Iniciar sesion`
+- `Iniciar sesión`
 - `Crear cuenta`
 
-### ✅ Login activo
+### ✅ Inicio de sesión
 
-Actualmente si funciona:
+El sistema contempla:
 
-- inicio de sesion con usuarios demo
-- enrutamiento segun rol
-- persistencia de sesion local
+- Autenticación de usuarios.
+- Validación de credenciales.
+- Acceso según el rol del usuario.
+- Gestión de sesiones.
 
-### 🧪 Cuentas demo
+### 👥 Tipos de usuario
 
-| Rol | Correo | Contrasena |
-|---|---|---|
-| Administrador | `admin@bolkristal.mx` | `Admin123!` |
-| Marketing | `marketing@bolkristal.mx` | `Marketing123!` |
-| Jugador | `ana@gmail.com` | `Jugador123!` |
+Los roles contemplados en el sistema son:
 
-### 🚧 Crear cuenta
+| Rol | Descripción |
+|---|---|
+| Administrador | Gestiona las operaciones del negocio y los torneos. |
+| Marketing | Administra las promociones y actividades relacionadas. |
+| Jugador | Consulta su información y participa en los torneos. |
 
-La pestaña de crear cuenta:
+### 📝 Registro de usuarios
 
-- si permite crear cuentas nuevas de tipo `Jugador`
-- no permite crear administradores ni marketing desde la vista publica
-- guarda la cuenta creada de forma local en el navegador
-- despues del registro, el jugador puede entrar a su cuenta e inscribirse al torneo desde su propia vista
-
-### 💾 Donde se guarda
-
-Por ahora todo se guarda en `localStorage` del navegador:
-
-- usuarios: `bolkristal-users`
-- sesion: `bolkristal-session`
-- parejas: `bolkristal-teams`
-- clientes: `bolkristal-clientes`
-- torneo activo: `bolkristal-torneo-activo`
-- bracket: `bolkristal-bracket-demo`
-- configuracion del bracket: `bolkristal-bracket-builder`
-
-> Importante: esto significa que una cuenta creada en un dispositivo o navegador no aparece automaticamente en otro. Si un usuario se registra en una laptop, no podra entrar desde otro celular o computadora a menos que exista un backend real con base de datos compartida.
-> Tambien aplica para las parejas demo: si el navegador ya tiene inscripciones guardadas, esas reemplazan a los datos iniciales del prototipo.
+El registro permite crear cuentas de jugadores desde la vista pública, de acuerdo con las validaciones y permisos establecidos en el sistema.
 
 ---
 
-## 🏆 Modulo de torneo
+## 🗄️ Gestión de información y base de datos
 
-Es una de las partes mas completas del proyecto.
+BolKristal utiliza PostgreSQL como sistema de gestión de bases de datos para almacenar la información de la aplicación.
 
-### Lo que ya hace
+El backend se encarga de gestionar las operaciones relacionadas con los usuarios, equipos y demás recursos del sistema mediante servicios y rutas.
 
-- bracket eliminatorio desde `16avos` hasta `Final`
-- inicio configurable en:
-  `16avos`, `8avos`, `Cuartos`, `Semifinal` o `Final`
-- seleccion de parejas inscritas
-- sorteo de posiciones
-- validacion de cupo minimo exacto segun la fase elegida
-- avance de rondas
-- asignacion estimada de fecha, hora y pista para el cruce oficial
-- mensaje al jugador cuando gana y avanza
-- mensaje especial de felicitacion cuando gana la final del torneo
-- campeon visual con pino y corona
-- guardado local del estado del torneo
+Entre los elementos principales se encuentran:
 
-### Estado actual del bracket
+- Usuarios y autenticación.
+- Equipos y parejas inscritas.
+- Información necesaria para la administración del sistema.
+- Datos relacionados con las operaciones del negocio.
 
-- el bracket compacto ya no se edita con clic
-- el bracket grande ya no funciona como editor manual
-- el jugador lo ve en solo lectura
-- el admin controla el avance desde el bloque del enfrentamiento actual dentro del mismo modulo `Torneo Boliche`
-- ya no existe un modulo aparte de `Jornadas` con rivales distintos al cuadro oficial
-- el rival que ve el jugador sale del mismo cuadro oficial que administra el panel
+La comunicación entre el frontend y el backend permite realizar las solicitudes necesarias para consultar y gestionar la información.
+
+---
+
+## 🏆 Módulo de torneo
+
+Es uno de los módulos principales del proyecto.
+
+### Funcionalidades
+
+- Bracket eliminatorio desde `16avos` hasta `Final`.
+- Configuración de la fase inicial:
+  - `16avos`
+  - `8avos`
+  - `Cuartos`
+  - `Semifinal`
+  - `Final`
+- Selección de parejas inscritas.
+- Sorteo de posiciones.
+- Validación del cupo mínimo según la fase elegida.
+- Avance de rondas.
+- Asignación estimada de fecha, hora y pista para los enfrentamientos.
+- Notificaciones al jugador cuando gana y avanza.
+- Mensaje especial cuando gana la final del torneo.
+- Identificación visual del campeón.
+
+### Estado del bracket
+
+- El bracket compacto ya no se edita mediante clics.
+- El bracket grande funciona como visualización del cuadro.
+- El jugador consulta el bracket en modo de solo lectura.
+- El administrador controla el avance desde el enfrentamiento actual dentro del módulo `Torneo Boliche`.
+- El rival que visualiza el jugador corresponde al cuadro oficial administrado por el sistema.
 
 ---
 
 ## 🎳 Captura del enfrentamiento actual
 
-Dentro del torneo existe un bloque de captura para el duelo activo.
+Dentro del módulo de torneo existe una sección para registrar los resultados del enfrentamiento activo.
 
 ### Incluye
 
-- score por pareja
-- 10 frames por pareja
-- validacion de tiros
-- calculo de score de boliche
-- avance automatico del ganador
+- Puntuación por pareja.
+- 10 frames por pareja.
+- Validación de tiros.
+- Cálculo de puntuaciones de boliche.
+- Avance del ganador a la siguiente ronda.
 
 ### Mejoras aplicadas
 
-- el frame 10 solo se expande si aparece el tiro bonus
-- los tiros se habilitan de forma guiada
-- si hay strike se bloquea el segundo tiro del frame
-- ya no brinca automaticamente al siguiente campo al escribir
-- se pueden capturar valores como `10` sin problema
-- se quitaron las flechas de los inputs numericos
+- El frame 10 se expande cuando se requiere un tiro adicional.
+- Los tiros se habilitan de forma guiada.
+- Cuando hay un strike, se bloquea el segundo tiro del frame.
+- Se permite capturar valores como `10` correctamente.
+- Se mejoró la navegación entre campos de captura.
 
 ---
 
 ## 📝 Inscripciones
 
-La inscripcion del torneo ya funciona tanto para jugador como para administrador.
+El módulo de inscripciones permite registrar y administrar parejas participantes en los torneos.
 
 Incluye:
 
-- formulario de alta de parejas
-- inscripcion en linea desde la cuenta del jugador
-- validacion de campos obligatorios
-- validacion de pareja obligatoria
-- validacion para evitar jugadores o equipos repetidos
-- costo segun categoria
-- bloqueo automatico si la convocatoria esta cerrada
-- bloqueo automatico cuando ya no hay cupos
-- tabla de directorio
-- conteo por categoria
-- total de parejas registradas
+- Formulario de registro de parejas.
+- Inscripción desde la cuenta del jugador.
+- Validación de campos obligatorios.
+- Validación de pareja obligatoria.
+- Validación para evitar jugadores o equipos repetidos.
+- Costo según categoría.
+- Bloqueo de inscripciones cuando la convocatoria está cerrada.
+- Control de cupos disponibles.
+- Tabla de parejas registradas.
+- Conteo por categoría.
+- Total de parejas inscritas.
 
-Categorias actuales:
+### Categorías actuales
 
 - `Profesional`
 - `Principiante`
@@ -292,42 +283,41 @@ Categorias actuales:
 
 ### Clientes
 
-El directorio de clientes muestra:
+El directorio de clientes contempla información como:
 
-- nombre y contacto
-- visitas
-- torneos jugados
-- consumo
-- promociones usadas
-- filtros y segmentos visuales
+- Nombre y contacto.
+- Visitas.
+- Torneos jugados.
+- Consumo.
+- Promociones utilizadas.
+- Filtros y segmentos visuales.
 
 ### Promociones
 
-El modulo de promociones ya permite:
+El módulo de promociones permite:
 
-- ver promos activas
-- registrar nuevas promos en pizarra
-- simular canje de promo
-- simular alcance promocional en redes
-
-> El boton de redes **no publica de verdad** en Facebook o Instagram. Solo incrementa un contador local y muestra una notificacion visual.
+- Consultar promociones disponibles.
+- Registrar nuevas promociones.
+- Administrar la información promocional.
+- Simular el canje de promociones.
+- Consultar actividades relacionadas con su difusión.
 
 ---
 
-## 📱 Responsividad y UX
+## 📱 Responsividad y experiencia de usuario
 
-Durante el desarrollo se trabajaron muchos ajustes:
+Durante el desarrollo se trabajaron diferentes mejoras en la experiencia de uso:
 
-- menu hamburguesa para vista publica
-- menu hamburguesa para vista de jugador
-- menu hamburguesa para panel admin
-- panel admin mas compacto
-- mejor uso de espacio en movil
-- modal de acceso mas claro
-- botones de login y registro mejor alineados
-- formulario de score mas usable
-- bracket movil mas visible y desplazable
-- textos menos tecnicos y mas orientados al negocio
+- Menú hamburguesa para la vista pública.
+- Menú hamburguesa para la vista de jugador.
+- Menú hamburguesa para el panel administrativo.
+- Panel administrativo más compacto.
+- Mejor distribución del espacio en dispositivos móviles.
+- Modal de acceso más claro.
+- Formularios de inicio de sesión y registro mejor alineados.
+- Formulario de captura de resultados más usable.
+- Bracket móvil más visible y desplazable.
+- Textos más claros y orientados al negocio.
 
 ---
 
@@ -335,101 +325,241 @@ Durante el desarrollo se trabajaron muchos ajustes:
 
 ```text
 BolKristal/
-|- README.md
-|- diagramas/
-|  |- Diagrama_AS-IS.pdf
-|  |- Diagrama_ER.mwb
-|  |- Diagrama_ER.pdf
-|  |- Diagrama_TO-BE.pdf
-|- documentacion/
-|  |- 02-Matriz_Requerimientos_Validada.xlsx
-|  |- Caso_Estudio_BolKristal.docx
-|  |- Entrevista_BolKristal.docx
-|  |- Guia_Entrevistas_Matriz_BolKristal.docx
-|  |- Matriz_Trazabilidad_BolKristal.xlsx
-|- minutas/
-|  |- MInuta Primera Reunion.pdf
-|  |- Minuta Segunda Reunion.pdf
-|  |- Minuta Validación Prototipo.pdf
-|- prototipo/
-|  |- index.html
-|  |- styles/
-|  |  |- neon.css
-|  |- js/
-|  |  |- app.js
-|  |- images/
-|     |- champion-bowling-crown.png
-|     |- champion-pin-crown.png
-|     |- hero-bowling-party.png
-|     |- neon_banner.png
-|     |- party-package.png
-|     |- tournament-strike.png
+│
+├── api/
+│   ├── index.js
+│
+├── backend/
+│   ├── config/
+│   │   └── database.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── equipoController.js
+│   │   └── usuarioController.js
+│   │
+│   ├── middleware/
+│   │   └── authMiddleware.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── equipoRoutes.js
+│   │   └── usuarioRoutes.js
+│   │
+│   ├── services/
+│   │   ├── authService.js
+│   │   ├── equipoService.js
+│   │   └── usuarioService.js
+│   │
+│   ├── tests/
+│   └── server.js
+│
+├── diagramas/
+│   ├── Diagrama_AS-IS.pdf
+│   ├── Diagrama_ER.mwb
+│   ├── Diagrama_ER.pdf
+│   └── Diagrama_TO_BE.pdf
+│
+├── documentacion/
+│   ├── 01-Especificacion_Final_Proyecto.pdf
+│   ├── 02-Matriz_Requerimientos_Validada.xlsx
+│   ├── Caso_Estudio_BolKristal.docx
+│   ├── Entrevista_BolKristal.docx
+│   ├── Guia_Entrevistas_Matriz_BolKristal.docx3
+│   └── Matriz_Trazabilidad_BolKristal.xlsx
+│
+├── minutas/
+│   ├── MInuta Primera Reunion.pdf
+│   ├── Minuta Segunda Reunion.pdf
+│   └── Minuta Validación Prototipo.pdf
+│
+├── prototipo/
+│   ├── images/
+│   ├── js/
+│   │   └── app.js
+│   ├── styles/
+│   │   └── neon.css
+│   └── index.html
+│
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── README.md
+└── vercel.json
 ```
 
-### Distribucion por carpetas
+### Distribución por carpetas
 
-- `diagramas/`: contiene los diagramas del proyecto, incluyendo el modelo editable `Diagrama_ER.mwb` y su version en pdf `Diagrama_ER.pdf`, diagramas de proceso de negocio `Diagrama_AS-IS.pdf` y `Diagrama_TO-BE.pdf`.
-- `documentacion/`: reune los documentos base del proyecto, como `Caso_Estudio_BolKristal.docx`, `Entrevista_BolKristal.docx`, `Guia_Entrevistas_Matriz_BolKristal.docx`, `02-Matriz_Requerimientos_Validada.xlsx` y `Matriz_Trazabilidad_BolKristal.xlsx`.
-- `minutas/`: guarda evidencia de reuniones y validaciones del proyecto, incluyendo `MInuta Primera Reunion.pdf`, `Minuta Segunda Reunion.pdf` y `Minuta Validación Prototipo.pdf`.
-- `prototipo/`: contiene el prototipo web funcional en `HTML`, `CSS` y `JavaScript`.
+- `api/`: contiene los recursos de API utilizados por la aplicación.
+- `backend/`: contiene la lógica del servidor.
+- `backend/config/`: contiene la configuración de conexión a PostgreSQL.
+- `backend/controllers/`: procesa las solicitudes de los diferentes módulos.
+- `backend/middleware/`: contiene funciones intermedias, como la autenticación.
+- `backend/routes/`: define las rutas disponibles del backend.
+- `backend/services/`: organiza la lógica de los servicios.
+- `backend/tests/`: contiene el espacio destinado a las pruebas.
+- `diagramas/`: almacena los diagramas del sistema.
+- `documentacion/`: reúne los documentos relacionados con el análisis y desarrollo.
+- `minutas/`: guarda los registros de reuniones y acuerdos del equipo.
+- `prototipo/`: contiene la interfaz web desarrollada con HTML, CSS y JavaScript.
 
 ---
 
-## 🧪 Tecnologias
+## 🧪 Tecnologías
 
 <div align="center">
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111)
-![Storage](https://img.shields.io/badge/localStorage-444?style=for-the-badge)
+
+![Node.js](https://img.shields.io/badge/Node.js-43853d?style=for-the-badge&logo=node.js&logoColor=white)
+
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
 </div>
 
 ---
 
+## ⚙️ Instalación y ejecución local
+
+### Requisitos
+
+- Node.js.
+- npm.
+- PostgreSQL.
+- Git.
+- Editor de código, como Visual Studio Code.
+
+### 1. Clonar el repositorio
+
+```bash
+git clone URL_DEL_REPOSITORIO
+```
+
+### 2. Entrar al proyecto
+
+```bash
+cd BolKristal
+```
+
+### 3. Instalar dependencias
+
+Desde la carpeta principal:
+
+```bash
+npm install
+```
+
+Si el backend cuenta con dependencias independientes:
+
+```bash
+cd backend
+npm install
+```
+
+### 4. Configurar variables de entorno
+
+Crear los archivos `.env` necesarios para la configuración del backend y la conexión con PostgreSQL.
+
+Las variables deben corresponder con las utilizadas en el archivo de configuración de la base de datos.
+
+**Importante:** No subir credenciales, contraseñas ni claves privadas al repositorio.
+
+### 5. Ejecutar el proyecto
+
+Consultar los scripts definidos en los archivos `package.json` para utilizar el comando de ejecución correspondiente.
+
+```bash
+npm run
+```
+
+---
+
+## ☁️ Despliegue
+
+BolKristal se encuentra desplegado en Vercel.
+
+**Aplicación:** https://bol-kristal.vercel.app/
+
+El sistema utiliza **Node.js, Express y PostgreSQL** para gestionar la información de sus usuarios y equipos.
+
+La configuración del despliegue se encuentra en:
+
+```text
+vercel.json
+```
+
+Los cambios integrados en la rama configurada para producción pueden generar una nueva versión desplegada en Vercel.
+
+---
+
+## 👥 Trabajo colaborativo
+
+El desarrollo de BolKristal se realiza mediante Git y GitHub, utilizando ramas independientes para organizar las modificaciones de cada integrante.
+
+### Flujo de trabajo
+
+1. Actualizar la rama principal.
+2. Crear una rama para la modificación.
+3. Realizar los cambios correspondientes.
+4. Crear un commit descriptivo.
+5. Subir la rama al repositorio remoto.
+6. Crear un Pull Request hacia `main`.
+7. Revisar e integrar los cambios.
+
+### Comandos básicos
+
+```bash
+git switch main
+git pull origin main
+git switch -c nombre-de-la-rama
+
+git add .
+git commit -m "Descripcion de los cambios"
+git push -u origin nombre-de-la-rama
+```
+
+---
+
 ## ✅ Estado actual
 
-Hoy el prototipo ya sirve para:
+BolKristal cuenta con una aplicación web desplegada en Vercel, una estructura backend organizada y una base de datos PostgreSQL.
 
-- presentar visualmente la marca
-- crear cuentas de jugador
-- iniciar sesion con usuarios demo
-- navegar entre vista publica, jugador y admin
-- inscribir parejas desde la cuenta del jugador
-- administrar parejas inscritas
-- generar y seguir un bracket
-- capturar scores del enfrentamiento actual
-- mostrar al jugador si avanzo o si gano el torneo
-- mostrar clientes y promociones
+Entre sus funcionalidades principales se encuentran:
 
----
-
-## ⚠️ Limitaciones actuales
-
-Todavia no incluye:
-
-- backend real
-- base de datos compartida
-- sincronizacion entre navegadores
-- sincronizacion entre dispositivos
-- analiticas personalizadas por jugador
-- persistencia compartida entre cuentas y torneos fuera del navegador actual
-- publicacion real a redes sociales
+- Presentación digital del negocio.
+- Registro e inicio de sesión de usuarios.
+- Navegación entre las vistas pública, jugador y administrativa.
+- Gestión de parejas inscritas.
+- Administración de torneos.
+- Generación y seguimiento de brackets.
+- Captura de resultados de enfrentamientos.
+- Consulta de clientes.
+- Administración de promociones.
 
 ---
 
-## 🎯 Siguiente paso recomendado
+## ⚠️ Consideraciones
 
-Si este prototipo sigue creciendo, el paso mas importante seria conectar:
+- El funcionamiento de la aplicación depende de la disponibilidad del backend y de la base de datos.
+- Las variables de entorno deben configurarse correctamente para ejecutar el sistema.
+- Las credenciales de acceso y configuración no deben compartirse públicamente.
+- Algunas funcionalidades pueden requerir pruebas adicionales antes de considerarse completamente terminadas.
 
-- usuarios
-- parejas inscritas
-- enfrentamientos
-- resultados
-- estadisticas
+---
 
-con una persistencia real para que funcione igual en cualquier navegador o dispositivo.
+## 🎯 Objetivo del proyecto
+
+Desarrollar un sistema de gestión digital que permita mejorar la administración de un negocio de boliche, facilitando la organización de torneos, el registro de jugadores, la gestión de clientes y el manejo de promociones desde una plataforma web.
 
 ---
 
@@ -437,8 +567,8 @@ con una persistencia real para que funcione igual en cualquier navegador o dispo
 
 <div align="center">
 
-[![Entrar a BolKristal](https://img.shields.io/badge/🎳%20Entrar%20a%20BolKristal-ff0055?style=for-the-badge&logoColor=white)](https://slorms.github.io/BolKristal/prototipo/)
+[![Entrar a BolKristal](https://img.shields.io/badge/🎳%20Entrar%20a%20BolKristal-ff0055?style=for-the-badge&logoColor=white)](https://bol-kristal.vercel.app/)
+
+**BolKristal — Más que un juego, una experiencia.**
 
 </div>
-
-<!-- Despliegue automatico Vercel -->
