@@ -92,6 +92,17 @@ La aplicación integra:
 
 ## 🧩 Vistas disponibles
 
+### 🧪 Cuentas de prueba
+
+Para facilitar la revisión y demostración del sistema, se pueden utilizar las siguientes cuentas:
+
+| Rol | Correo electrónico | Contraseña |
+|---|---|---|
+| Administrador | [admin@bolkristal.com] | [admin123] |
+| Jugador | [prueba@bolkristal.com] | [Prueba123!] |
+
+**Nota:** Estas credenciales son exclusivamente para pruebas y demostraciones.
+
 ### 🌐 Vista pública
 
 La página principal incluye:
